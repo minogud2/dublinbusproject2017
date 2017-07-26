@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Connections</title>
+
+        <!-- Bootstrap: Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Bootstrap: Optional theme: Look and Feel -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+        <!-- Link to jQuery libraries -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <!-- Needed for Glyphicons: Font Awesome CDN Source: http://fontawesome.io/ -->
+        <script src="https://use.fontawesome.com/e8a4c811a1.js"></script>
+        {% load staticfiles %}
+        <script type="text/javascript" src="{% static 'dublinbuspredict/js/main.js' %}"></script>
+        <link rel="stylesheet" href="{% static 'dublinbuspredict/css/style.css' %}">
+    </head>
+    <body>
+               <!-- Main container to give website 12-grid shape -->
+            <div class="container-fluid">
+                <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+                            <div class="navbar-collapse">
+                                <ul class="nav navbar-nav">
+                                    <li class="navbar-left"> 
+                                        <a href="#" class="custom-white" style="cursor:pointer"  onclick="openNav()">
+                                            <span class="glyphicon glyphicon-menu-hamburger"></span>
+                                        </a></li>
+                                {% load static%}
+                                <li class="navbar-right"><img id="db_logo" alt="Dublin Bus Logo" src="{% static 'dublinbuspredict/css/images/dblogo.png' %}" class="img-responsive" ></li>
+                            </ul> 
+                            </div>
+                    </nav>
+                <div id="mySidenav" class="sidenav">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                    <div id="w3-buttons"> 
+                    <a href="/dublinbuspredict/" class="w3-bar-item w3-button"><i class="fa fa-home fa-fw"></i>&nbsp;Home</a>
+                    <a href="/dublinbuspredict/tickets_fares" class="w3-bar-item w3-button"><i class="fa fa-eur fa-fw"></i>&nbsp;Tickets & Fares</a>
+                    <a href="/dublinbuspredict/connections" class="w3-bar-item w3-button"><i class="fa fa-train fa-fw"></i>&nbsp;Connections</a>
+                    <a href="/dublinbuspredict/contact" class="w3-bar-item w3-button"><i class="fa fa-phone fa-fw"></i>&nbsp;Contact Us</a>
+                    </div>
+                    <div id="social-media" class="row col-lg-12 my-social-icons">
+                    <a class="col-xs-2 btn btn-social-icon btn-twitter"><span class="fa fa-twitter"></span></a>
+                    <a class="col-xs-2 btn btn-social-icon btn-facebook"><span class="fa fa-facebook"></span></a>
+                    <a class="col-xs-2 btn btn-social-icon btn-instagram"><span class="fa fa-instagram"></span></a>
+                    <a class="col-xs-2 btn btn-social-icon btn-linkedin"><span class="fa fa-linkedin"></span></a>
+                    <a class="col-xs-2 btn btn-social-icon btn-google"><span class="fa fa-google"></span></a>
+                </div> 
+                </div>    
+        </div>
+
+        <!-- Cover Photo -->
+        <!-- Image Container: Do not add BS container or row as limits size -->
+        <div>
+            {% load static %}
+            <img src="{% static 'dublinbuspredict/css/images/NightLuas.jpg' %}" alt="cities" class="my-connections img-responsive hidden-xs" id="map">
+        </div>
+
+        <!-- Content within "pushed-content" moves when Sidebar opens -->
+        <div id="pushed-content">
+            <!-- Transport Information -->
+            <div class="container">
+                <div class="row my-connection-information">
+                    <h3>Connection Information</h3>
+                    <p class="lead"><small>Dublin is well-connected by numerous operators, serving both the City Centre and suburban areas.</small></p>
+                </div>
+            </div>
+
+            <!-- Container for main 3 Tranport Divs -->
+            <div class="container">
+                <div class="row col-lg-12 col-xs-12 my-connection-information">
+                    <h3><u>Taxis</u><br><small>Dublin City & Suburbs are supported by many well-established Taxis services. Most provide Real-Time tracking of your taxi which allow you to track your journey time from start to finish. For fare information, contact some of our Sponsors: <a href="http://www.lynk.ie/">Lynk, </a>and <a href="https://ie.mytaxi.com/hailoisnowmytaxi">MyTaxi</a>.</small></h3>
+                </div>
+                <div class="row col-lg-12 col-xs-12 my-connection-information">
+                    <h3><u>DART</u><br><small>In Dublin, the electric rail system called the <a href="http://www.irishrail.ie/about-us/dart-commuter">DART</a> (Dublin Area Rapid Transit) is a quick and easy way to get around Dublin. It runs along the coast of the Irish Sea from Malahide or Howth in north County Dublin soutwards as far as Greystones, Co Wicklow.</small></h3>
+                </div>
+                <div class="row col-lg-12 col-xs-12 my-connection-information">
+                    <h3><u>Luas</u><span class="dropdown-toggle caret" data-toggle="collapse" data-target="#contentLuas" role="button" aria-haspopup="true" aria-expanded="false"></span><br><small>Luas is a light-weight Tram serving Dublin City Centre and Suburbs. With two tram lines currently, Luas expand with the opening of Luas Cross-city at the end of 2017. <i>34.2 million passengers</i> were carried in 2016. On average, <i>90,000 passengers</i> are carried daily.<p><br>For timetable information, click the above tab</p></small></h3>
+
+                    <!-- Pass ID name to jQuery - jQuery reference requires a hash for ID -->
+                    <div class="col-xs-12 container collapse" id="contentLuas">
+                        <div class="row">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tr class="active">
+                                        <th>Route</th>
+                                        <th>Line</th>
+                                        <th>Mon/Fri</th>
+                                        <th>Sat</th>
+                                        <th>Sun/Bank Holiday</th>
+                                    </tr>
+                                    <tr>
+                                        <td>St Stephen’s Green to Brides Glen</td>
+                                        <td>Green</td>
+                                        <td>5:30am - 0:30am</td>
+                                        <td>6:30am - 0:30am</td>
+                                        <td>7am - 11:30pm</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Brides Glen to St Stephen’s Green</td>
+                                        <td>Green</td>
+                                        <td>5:30am - Midnight</td>
+                                        <td>6:30am - Midnight</td>
+                                        <td>7am - 11pm</td>
+                                    </tr>
+                                    <tr>
+                                        <td>The Point to Tallaght</td>
+                                        <td>Red</td>
+                                        <td>5:30am - 0:30am</td>
+                                        <td>6:30am - 0:30am</td>
+                                        <td>7am - 11:30pm</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tallaght to The Point</td>
+                                        <td>Red</td>
+                                        <td>5:30am - Midnight</td>
+                                        <td>6:30am - Midnight</td>
+                                        <td>7am - 11pm</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Saggart to Belgard</td>
+                                        <td>Red</td>
+                                        <td>5:30am - 11:50pm</td>
+                                        <td>6:30am - 11:50pm</td>
+                                        <td>7am - 10:50pm</td>
+                                    </tr>
+                                    <tr>
+                                        <td>The Point to Saggart</td>
+                                        <td>Red</td>
+                                        <td>5:30am - Midnight</td>
+                                        <td>6:30am - 11pm</td>
+                                        <td>7am - 11pm</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Row -->
+        <div id="container-fluid">
+        
+                <div class="row">
+            <footer class="col-sm-12 navbar-fixed-bottom my-footer" style="position:sticky">
+                <div class="row">
+                    {% load static %}
+                    <div class="col-sm-3 text-center"><img id="transport-logo" src="{% static 'dublinbuspredict/css/images/TFI%20(2).png' %}"></div>
+                    <div id="footer-text">
+                    <div id ="left-footer" class="col-sm-2 text-left"><h4>Information</h4>
+                        <a href="/dublinbuspredict/" class="footer-links">Home</a>
+                        <a href="/dublinbuspredict/tickets_fares" class="footer-links">Tickes and Fares</a><br>
+                        <a href="/dublinbuspredict/connections" class="footer-links">Connections</a><br>
+                        <a href="/dublinbuspredict/contact" class="footer-links">Contact Us</a><br>
+                    </div>
+                    <div id ="right-footer" class="col-sm-2 text-left"><h4>Other transport sites</h4>
+                        <a href="https://www.luas.ie/" class="footer-links">Luas</a><br>
+                        <a href="http://www.buseireann.ie/" class="footer-links">Bus eireann</a><br>
+                        <a href="http://www.irishrail.ie/" class="footer-links">Iarnrod eireann</a><br>
+                    </div>
+                    </div>
+                    {% load static %}
+                    <div id="bl-logo" class="col-sm-3"><img id="buslightyear" src="{% static 'dublinbuspredict/css/images/logonobg.png' %}">
+                    </div>
+                </div>
+                <br>
+                <br>
+                <p class="text-center" style="padding:10px;">&copy; Copyright 2017</p>
+            </footer>
+        </div>
+            </div>
+
+        <!-- Bootstrap Files: Documentation requested they be added to end of HTML page to avoid errors -->
+
+        <!-- jQuery file: Needs to be pasted above Bootstrap file to avoid errors -->    
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>    
+    </body>
+</html>

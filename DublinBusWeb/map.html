@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #map {
+        height: 400px;
+        width: 100%;
+       }
+    </style>
+  </head>
+  <body>
+    <h3>My Google Maps Demo</h3>
+    <div id="map"></div>
+    <script>
+      function initMap() {
+        var markers = [{title: 'Dublin', lat: 53.3498, lng: -6.2603}, {title:'Sligo', lat:54.2766, lng:-8.6065}, {title:'Galway', lat:53.2707, lng:-9.0568}]
+        var points = new Array();
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          center: {lat: 53.3498, lng: -6.2603}
+        });
+          
+        for(i = 0; i < markers.length; i++){
+          var myLatLng = new google.maps.LatLng(markers[i]['lat'], markers[i]['lng'])
+          points.push(myLatLng)
+          var marker = new google.maps.Marker({
+          position: {lat:markers[i]['lat'], lng:markers[i]['lng']},
+          map: map
+          });
+        }
+      //Initialize the Path Array
+        var path = new google.maps.MVCArray();
+ 
+        //Initialize the Direction Service
+        var service = new google.maps.DirectionsService();
+ 
+        //Set the Path Stroke Color
+        var poly = new google.maps.Polyline({ map: map, strokeColor: '#4986E7' });
+ 
+        //Loop and Draw Path Route between the Points on MAP
+        for (var i = 0; i < points.length; i++) {
+            if ((i + 1) < points.length) {
+                var src = points[i];
+                var des = points[i + 1];
+//                path.push(src);
+//                poly.setPath(path);
+                service.route({
+                    origin: src,
+                    destination: des,
+                    travelMode: google.maps.DirectionsTravelMode.TRANSIT
+                }, function (result, status) {
+                    if (status == google.maps.DirectionsStatus.OK) {
+                        poly.setPath(path);
+                        for (var i = 0, len = result.routes[0].overview_path.length; i < len; i++) {
+                            path.push(result.routes[0].overview_path[i]);
+                        }
+                    }
+                });
+            }
+        }
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHxpqeoG1jNA4VHBlFeopWuRmFoYTh-ME&callback=initMap">
+    </script>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.python.pydev.plugin.preferences.CheckDefaultPreferencesDialog">
+		<item value="674" key="width"/>
+		<item value="623" key="x"/>
+		<item value="96" key="y"/>
+		<item value="632" key="height"/>
+	</section>
+	<section name="org.python.pydev.django.debug.ui.actions.DjangoCustomCommand.shell">
+		<item value="840" key="width"/>
+		<item value="540" key="x"/>
+		<item value="27" key="y"/>
+		<item value="736" key="height"/>
+	</section>
+</section>

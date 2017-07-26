@@ -1,0 +1,163 @@
+/* index.html */
+/* Adapted from: https://bootsnipp.com/snippets/50AZX */
+
+.main-form .nav > li{
+	width: 33%;
+}
+
+.main-form .nav-tabs > li > a{
+	border-radius: 0;
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+	outline: 0;
+	text-transform: uppercase;
+	color: black;
+	font-weight: 600;
+	font-size: 13px;
+}
+
+.main-form .nav-tabs > li > a:hover{
+	color: grey;
+}
+
+.main-form .form-control{
+	margin-top: 15px;
+	border-radius: 0;
+	box-shadow: none;
+	border:1px solid #f0f0f0;
+}
+
+/* index.html */
+
+.my-sidebar-left{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.my-sidebar-center{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.my-sidebar-right{
+    margin-top: 20px;
+    float: right;
+    margin-bottom: 20px;
+}
+
+.navbar-toggle {
+  float: left;
+  margin-left: 10px;
+}
+
+.my-route-search{
+    position: absolute;
+    /*top: 60px;
+    left: 60px;*/
+    top: 45%;
+    background-color: white;    
+}
+
+.my-carousel{
+    margin-top: 60px;
+}
+
+/*dropdown menus for index.html*/
+
+.dropdown-list {
+    overflow: auto;
+    max-height: 250px;
+    height: 250px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    height: 10px;
+    list-style-type: none;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+
+/* timetable.html */
+.my-timetable{
+    margin-top: 60px;
+}
+
+/* tickets_fares.html */
+.my-tickets{
+    margin-top: 60px;
+}
+
+/* contact.html */
+.my-contact-forms{
+    margin-top: 60px;
+}
+
+/* connections.html */
+.my-connections{
+    margin-top: 60px;
+}
+
+/* footer style */
+.my-footer{
+    background-color: #0c2864;
+    color: white;
+}
+
+/* map.html */
+#map{
+    height: 400px;
+    width: 100%;
+       }
+
+.my-map-div{
+    margin-top: 50px;
+}
+
+.my-result{
+    margin-bottom: 50px;
+    margin-top: 10px;
+}
+
+.my-individual-result{
+    margin: 20px;
+    border: solid black 1px;
+}
+
+.my-changed-journey{
+    border: solid black 1px;
+    padding: 10px;
+    width: 100%;
+}
