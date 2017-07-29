@@ -37,10 +37,46 @@ def index(request):
 
 def pilot_routes(request):
     route_id = request.GET.get('route')
-    route_stops = PilotRoutes.objects.filter(route_id=route_id)
+    # route_stops = PilotRoutes.objects.filter(route_id=route_id)
+    db = pymysql.connect(user='lucas', db='summerProdb', passwd='hello_world', host='csi6220-3-vm3.ucd.ie')
+    cursor = db.cursor()
+    print('Direction!', direction)
+    query = "SELECT bus_timetable.trip_id " \
+            "FROM bus_timetable " \
+            "WHERE direction ='" + str(0) + "' and route_id ='" + str(route_id) + \
+            "' ORDER BY stop_sequence limit 1;"
+    print("queryyyy", query)
+    cursor.execute(query)
+    trip_outbound = cursor.fetchall()
+    query = "SELECT bus_timetable.trip_id " \
+            "FROM bus_timetable " \
+            "WHERE direction ='" + str(1) + "' and route_id ='" + str(route_id) + \
+            "' ORDER BY stop_sequence limit 1;"
+    print("queryyyy", query)
+    cursor.execute(query)
+    trip_inbound = cursor.fetchall()
+    query = "SELECT bus_timetable.stop_id " \
+            "FROM bus_timetable " \
+            "WHERE trip_id ='" + str(trip_inbound[0][0]) + "' and route_id ='" + str(route_id) + \
+            "' ORDER BY stop_sequence;"
+    print("queryyyy", query)
+    cursor.execute(query)
+    stops_inbound = cursor.fetchall()
+    query = "SELECT bus_timetable.stop_id " \
+            "FROM bus_timetable " \
+            "WHERE trip_id ='" + str(trip_outbound[0][0]) + "' and route_id ='" + str(route_id) + \
+            "' ORDER BY stop_sequence;"
+    print("queryyyy", query)
+    cursor.execute(query)
+    stops_outbound = cursor.fetchall()
+    print(stops_inbound, stops_outbound)
+    # Close connection
+    db.close()
     stops = []
-    for i in route_stops:
-        stops.append(i.stop_id)
+    for i in stops_inbound:
+        stops.append(i[0])
+    for j in stops_outbound:
+        stops.append(j[0])
     return HttpResponse(json.dumps({"stops":stops}), content_type='application/json')
 
 
@@ -48,17 +84,39 @@ def pilot_dest(request):
     source_id = request.GET.get('source')
     route_id = request.GET.get('route')
     global direction
-    direction = PilotRoutes.objects.filter(Q(route_id=route_id) & Q(stop_id=str(source_id))).values_list('direction')[0][0]
-    bus_stops = PilotRoutes.objects.filter(Q(route_id=route_id) & Q(direction=direction))
-
+    db = pymysql.connect(user='lucas', db='summerProdb', passwd='hello_world', host='csi6220-3-vm3.ucd.ie')
+    cursor = db.cursor()
+    query = "SELECT bus_timetable.direction " \
+                "FROM bus_timetable " \
+                "WHERE stop_id =" + str(source_id) + " and route_id ='" + str(route_id) + \
+                "' ORDER BY stop_sequence limit 1;"
+    cursor.execute(query)
+    direction = cursor.fetchall()
+    query = "SELECT bus_timetable.trip_id " \
+            "FROM bus_timetable " \
+            "WHERE direction ='" + str(direction[0][0]) + "' and route_id ='" + str(route_id) + \
+            "' ORDER BY stop_sequence limit 1;"
+    cursor.execute(query)
+    print(query)
+    trip_id = cursor.fetchall()
+    print('Trip_id', trip_id)
+    query = "SELECT bus_timetable.stop_id " \
+            "FROM bus_timetable " \
+            "WHERE trip_id ='" + str(trip_id[0][0]) + \
+            "' ORDER BY stop_sequence;"
+    print(query)
+    cursor.execute(query)
+    bus_stops = cursor.fetchall()
+    # bus_stops = PilotRoutes.objects.filter(Q(route_id=route_id) & Q(direction=direction))
+    print('Bus stops for maps!', bus_stops)
     stops = []
     found = False
     for i in bus_stops:
-        if str(i.stop_id) == str(source_id):
+        if str(i[0]) == str(source_id):
             found = True
             continue
         if found:
-            stops.append(i.stop_id)
+            stops.append(i[0])
     return HttpResponse(json.dumps({"stops":stops}), content_type='application/json')
 
 
@@ -124,12 +182,16 @@ def sampleQuery(rows):
     global source_id
     global destination_id
     global direction
+    print('Route:', route_id)
     db = MySQLdb.connect(user='lucas', db='summerProdb', passwd='hello_world', host='csi6220-3-vm3.ucd.ie')
     cursor = db.cursor()
-    cursor.execute('SELECT pilot_routes.sequence, bus_stops.name, bus_stops.long_name, bus_stops.lat, bus_stops.lon '
-                   'FROM pilot_routes, bus_stops '
-                   'WHERE direction = ' + str(direction) + ' AND pilot_routes.route_id = "' + str(route_id) + '" AND pilot_routes.stop_id = bus_stops.stop_id '
-                   'ORDER BY pilot_routes.sequence;')
+    cursor.execute("SELECT bus_timetable.stop_sequence, bus_stops.name, bus_stops.long_name, bus_stops.lat, bus_stops.lon "
+                   "FROM bus_timetable, bus_stops "
+                   "WHERE direction = '" + str(direction) + "' AND bus_timetable.route_id = '" + str(route_id) + "' AND bus_timetable.stop_id = bus_stops.stop_id "
+                   "ORDER BY bus_timetable.stop_sequence;")
     rows = cursor.fetchall()
+    # for i in rows:
+    #     print(i)
+    #     break
     db.close()
     return HttpResponse(json.dumps({'data': rows}), content_type="application/json")
