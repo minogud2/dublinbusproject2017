@@ -16,4 +16,6 @@ urlpatterns = [
     url(r'^loadRoutesForMap$', views.load_routes_for_map, name='load_routes_for_map'),
     url(r'^setInfoNextPage$', views.set_info_next_page, name='set_info_next_page'),
     url(r'^getInfoNextPage$', views.get_info_next_page, name='get_info_next_page'),
+    url(r'^getStopsStartingFromSource$', views.get_stops_starting_from_source, name='get_stops_starting_from_source'),
+    url(r'^getStopsDestExtraRoute$', views.get_stops_dest_extra_route, name='get_stops_dest_extra_route'),
     ]

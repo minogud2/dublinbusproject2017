@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 import requests
 # from dublinbusjourney.dublinbuspredict.Algorithms.model_prototype_1 import model
 from .model_prototype_1 import model
+# from sshtunnel import SSHTunnelForwarder
 
 def day(date):
     weekday = datetime.weekday(parser.parse(date))
@@ -21,7 +22,6 @@ def day(date):
 
 
 def get_all_stops(time, bus_route, source_stop, destination_stop, date):
-    # 1 request the lon and lat from a query in sql based on the stop id.
     query_day = day(date)
     p_holiday = holidays(date)[0]
     if p_holiday:
