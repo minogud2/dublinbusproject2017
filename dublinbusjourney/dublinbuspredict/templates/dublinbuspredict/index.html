@@ -2,21 +2,28 @@
 <html>
     <head>
         <meta charset="utf-8"/>
-        <title>BusLightyear App</title>
+
+        <title>Home - BusLightyear</title>
+
         <!-- If IE use the latest rendering engine -->
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <!-- Set the page to the width of the device and set the zoon level -->
+
+        <!-- Set the page to the width of the device and set the zoom level -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
         <!-- Google Maps -->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHxpqeoG1jNA4VHBlFeopWuRmFoYTh-ME&callback=initMap"></script>
+
         <!-- Font for side navbar Awesome CDN Source: http://fontawesome.io/ -->
         <script src="https://use.fontawesome.com/e8a4c811a1.js"></script>
+
         {% load staticfiles %}
-            <link rel="stylesheet" type="text/css" href="{% static 'dublinbuspredict/css/style.css' %}" />
-            <script type="text/javascript" src="{% static 'dublinbuspredict/js/jsIndex.js' %}"></script>
-            <script type="text/javascript" src="{% static 'dublinbuspredict/js/main.js' %}"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'dublinbuspredict/css/style.css' %}" />
+        <script type="text/javascript" src="{% static 'dublinbuspredict/js/jsIndex.js' %}"></script>
+        <script type="text/javascript" src="{% static 'dublinbuspredict/js/main.js' %}"></script>
     </head>
 
     <body>
@@ -35,20 +42,22 @@
                     </ul>
                 </div>
             </nav>
+            
             <div id="mySidenav" class="sidenav">
                 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                 <div id="w3-buttons">
                     <a href="/dublinbuspredict/" class="w3-bar-item w3-button"><i class="fa fa-home fa-fw"></i>&nbsp;Home</a>
                     <a href="/dublinbuspredict/tickets_fares" class="w3-bar-item w3-button"><i class="fa fa-eur fa-fw"></i>&nbsp;Tickets & Fares</a>
+                    <a href="/dublinbuspredict/tourism" class="w3-bar-item w3-button"><i class="fa fa-map fa-fw"></i></i>&nbsp;Tourism</a>
                     <a href="/dublinbuspredict/connections" class="w3-bar-item w3-button"><i class="fa fa-train fa-fw"></i>&nbsp;Connections</a>
                     <a href="/dublinbuspredict/contact" class="w3-bar-item w3-button"><i class="fa fa-phone fa-fw"></i>&nbsp;Contact Us</a>
                 </div>
                 <div id="social-media" class="row col-lg-12 my-social-icons">
-                    <a class="col-xs-2 btn btn-social-icon btn-twitter"><span class="fa fa-twitter"></span></a>
-                    <a class="col-xs-2 btn btn-social-icon btn-facebook"><span class="fa fa-facebook"></span></a>
-                    <a class="col-xs-2 btn btn-social-icon btn-instagram"><span class="fa fa-instagram"></span></a>
-                    <a class="col-xs-2 btn btn-social-icon btn-linkedin"><span class="fa fa-linkedin"></span></a>
-                    <a class="col-xs-2 btn btn-social-icon btn-google"><span class="fa fa-google"></span></a>
+                    <a target="_blank" href="https://twitter.com/" class="col-xs-2 btn btn-social-icon btn-twitter"><span class="fa fa-twitter"></span></a>
+                    <a target="_blank" href="https://facebook.com/" class="col-xs-2 btn btn-social-icon btn-facebook"><span class="fa fa-facebook"></span></a>
+                    <a target="_blank" href="https://instagram.com/" class="col-xs-2 btn btn-social-icon btn-instagram"><span class="fa fa-instagram"></span></a>
+                    <a target="_blank" href="https://linkedin.com/" class="col-xs-2 btn btn-social-icon btn-linkedin"><span class="fa fa-linkedin"></span></a>
+                    <a target="_blank" href="https://googleplus.com/" class="col-xs-2 btn btn-social-icon btn-google"><span class="fa fa-google"></span></a>
                 </div>
             </div>
         </div>
@@ -61,29 +70,29 @@
                     <div class="carousel-inner">
                         <div class="item active">
                             {% load static %}
-                                <img src="{% static 'dublinbuspredict/css/images/carousel1.jpg' %}" alt="City" >
-                                <div class="carousel-caption">
-                                </div>
+                            <img src="{% static 'dublinbuspredict/css/images/carousel1.jpg' %}" alt="City" >
+                            <div class="carousel-caption">
+                            </div>
                         </div>
                         <div class="item">
                             {% load static %}
-                                <img src="{% static 'dublinbuspredict/css/images/carousel2.jpg' %}" alt="City">
-                                <div class="carousel-caption">
-                                    <h1> </h1>
-                                </div>
+                            <img src="{% static 'dublinbuspredict/css/images/carousel2.jpg' %}" alt="City">
+                            <div class="carousel-caption">
+                                <h1> </h1>
+                            </div>
                         </div>
                         <div class="item">
                             {% load static %}
-                                <img src="{% static 'dublinbuspredict/css/images/carousel3.jpg' %}" alt="City">
-                                <div class="carousel-caption">
-                                    <h1> </h1>
-                                </div>
+                            <img src="{% static 'dublinbuspredict/css/images/carousel3.jpg' %}" alt="City">
+                            <div class="carousel-caption">
+                                <h1> </h1>
+                            </div>
                         </div>
                         <div class="item">
                             {% load static %}
-                                <img src="{% static 'dublinbuspredict/css/images/carousel4.jpg' %}" alt="City">
-                                <div class="carousel-caption">
-                                </div>
+                            <img src="{% static 'dublinbuspredict/css/images/carousel4.jpg' %}" alt="City">
+                            <div class="carousel-caption">
+                            </div>
                         </div>
                     </div>
                     <a class="left carousel-control" href="#my-carousel" data-slide="prev">
@@ -94,11 +103,29 @@
                     </a>
                 </div>
             </div>
-            
-            <div class="container-fluid my-index-form" id="pushed-content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-xs-12">
+            <div class="container-fluid my-index-form">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <!-- <form action="" method="" class="form-inline text-center" role="form">
+                                <div class="form-group my-changed-journey">
+                                    {% load static %}
+                                    <div class="form-group dropdown">
+                                        <input class="form-control" id="search-box-1" oninput="searchFunctionRoute()" type="text" name="search" placeholder="Enter a route">
+                                        <div class="dropdown-content">
+                                            <ul class="dropdown-list" id ="dropdown-list-1">
+                                                {% for route in list_routes %}
+                                                <li style="cursor:pointer"><a onclick='getStops("{{ route }}")'>{{ route }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>  
+                                    </div>
+
+                                    <div class="form-group dropdown">
+                                        <input  class="form-control" id="search-box-2" oninput="searchFunctionSRC()" type="text" name="search2" placeholder="Select a stop">
+                                        <div class="dropdown-content">
+                                            <ul class="dropdown-list" id="dropdown-list-2"></ul>
+                                        </div> -->
 
                         <form action="" method="" class="form-inline text-center" role="form">
                             <div class="form-group my-changed-journey">
@@ -123,117 +150,47 @@
                                             <li style="cursor:pointer"><a onclick='getStopsStartingFromSource("{{ stop }}")'>{{ stop }}</a></li>
                                         {% endfor %}
                                         </ul>
+
                                     </div>
-                                </div>
 
-                                <div class="form-group dropdown">
-                                    <input class="form-control" id="search-box-3" oninput="searchFunctionDest()" type="text" name="search2" placeholder="Select a destination">
-                                    <div class="dropdown-content">
-                                        <ul class="dropdown-list" id="dropdown-list-3"></ul>
+                                    <div class="form-group dropdown">
+                                        <input class="form-control" id="search-box-3" oninput="searchFunctionDest()" type="text" name="search2" placeholder="Select a destination">
+                                        <div class="dropdown-content">
+                                            <ul class="dropdown-list" id="dropdown-list-3"></ul>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="form-group">
-                                    <input class="form-control" type="date" id="date-input-index" placeholder="Today">
-                                </div>      
+                                    <div class="form-group">
+                                        <input class="form-control" type="date" id="date-input-index" placeholder="Today">
+                                    </div>      
 
-                                <div class="form-group">
-                                    <input class="form-control" type="time" id="time-input-index" placeholder="Now">
+                                    <div class="form-group">
+                                        <input class="form-control" type="time" id="time-input-index" placeholder="Now">
+                                    </div>
+                                    <button type="button" id="submit-route" onclick="window.location='http://127.0.0.1:8000/dublinbuspredict/map';" class="form-control btn btn-primary">Find Journey</button>
+                                    <script>
+                                        document.getElementById("submit-route").addEventListener("click", function(){
+                                            route = document.getElementById("search-box-1").value;
+                                            source = document.getElementById("search-box-2").value;
+                                            destination = document.getElementById("search-box-3").value;
+                                            date = document.getElementById("date-input-index").value;
+                                            time = document.getElementById("time-input-index").value;
+                                            console.log('Route:', route)
+                                            console.log('Source:', source)
+                                            console.log('Destination:', destination)
+                                            console.log('Time:', time)
+                                            console.log('Date:', date)
+                                            $.getJSON("http://127.0.0.1:8000/dublinbuspredict/setInfoNextPage", {"route":route, "source":source, "destination":destination, "time":time, "date":date}, function(d) {});
+                                        });
+                                    </script>
                                 </div>
-                                <button type="button" id="submit-route" onclick="window.location='http://127.0.0.1:8000/dublinbuspredict/map';" class="form-control btn btn-primary">Find Journey</button>
-                                <script>
-                                    document.getElementById("submit-route").addEventListener("click", function(){
-                                        route = document.getElementById("search-box-1").value;
-                                        source = document.getElementById("search-box-2").value;
-                                        destination = document.getElementById("search-box-3").value;
-                                        date = document.getElementById("date-input-index").value;
-                                        time = document.getElementById("time-input-index").value;
-                                        console.log('Route:', route)
-                                        console.log('Source:', source)
-                                        console.log('Destination:', destination)
-                                        console.log('Time:', time)
-                                        console.log('Date:', date)
-                                        $.getJSON("http://127.0.0.1:8000/dublinbuspredict/setInfoNextPage", {"route":route, "source":source, "destination":destination, "time":time, "date":date}, function(d) {});
-                                    });
-                                </script>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-            
-            <!--<div class="container-fluid">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <form action="" method="" class="form-inline">
-                            <div id="form-holder">
-                                {% load static %}
-                                    <div id="form-input">
-                                        <div class="form-group">
-                                            {% load static %}
-                                                <div class="dropdown">
-                                                    <input id="search-box-1" oninput="searchFunctionRoute()" type="text" name="search" placeholder="Enter a route">
-                                                    <div class="dropdown-content">
-                                                        <ul class="dropdown-list" id ="dropdown-list-1">
-                                                        {% for route in list_routes %}
-                                                            <li><a onclick='getStops("{{ route }}")'>{{ route }}</a></li>
-                                                        {% endfor %}
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="dropdown">
-                                                <input id="search-box-2" oninput="searchFunctionSRC()" type="text" name="search2" placeholder="Enter starting stop!">
-                                                <div class="dropdown-content">
-                                                    <ul class="dropdown-list" id="dropdown-list-2">
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="dropdown">
-                                                <input id="search-box-3" oninput="searchFunctionDest()" type="text" name="search2" placeholder="Enter destination stop!">
-                                                <div class="dropdown-content">
-                                                    <ul class="dropdown-list" id="dropdown-list-3"></ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <input class="form-control" type="date" id="date-input-index" placeholder="Today">
-                                        </div>
-                                        <div class="form-group">
-                                            <input class="form-control" type="time" id="time-input-index" placeholder="Now">
-                                        </div>
-                                            <!--What is this for? (don't know who wrote this: lucas)-->
-                                        <div class="form-group">
-                                            <!--<form action="map.html" method="get" accept-charset="utf-8">-->
-                                            <!--<button type="button" id="submit-route" onclick="window.location='http://127.0.0.1:8000/dublinbuspredict/map';" class="form-control btn btn-primary">Find Journey</button>
-                                            <script>
-                                                document.getElementById("submit-route").addEventListener("click", function(){
-                                                    route = document.getElementById("search-box-1").value;
-                                                    source = document.getElementById("search-box-2").value;
-                                                    destination = document.getElementById("search-box-3").value;
-                                                    date = document.getElementById("date-input-index").value;
-                                                    time = document.getElementById("time-input-index").value;
-                                                    console.log('Route:', route)
-                                                    console.log('Source:', source)
-                                                    console.log('Destination:', destination)
-                                                    console.log('Time:', time)
-                                                    console.log('Date:', date)
-                                                    $.getJSON("http://127.0.0.1:8000/dublinbuspredict/setInfoNextPage", {"route":route, "source":source, "destination":destination, "time":time, "date":date}, function(d) {});
-                                                });
-                                            </script>
-                                        </div>
-                                    </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>-->
-            </div>
-        </div>
-        
+
         <div class="container-fluid">
             <div id="scrollpage">
                 <a href="#traffic-div">
@@ -242,8 +199,28 @@
             </div>
         </div>
         
-    
-        
+        <div class="container-fluid my-twitter-feed">
+            <aside class="col-md-3 my-sidebar-left">
+                <div class="col-md-12 my-twitter-content">Left 1</div>
+                <div class="col-md-12 my-twitter-content">Left 2</div>
+                <div class="col-md-12 my-twitter-content">Left 3</div>
+            </aside>
+            <aside class="col-md-3 my-sidebar-center">
+                <div class="col-md-12 my-twitter-content">Centre Left 1</div>
+                <div class="col-md-12 my-twitter-content">Centre Left 2</div>
+                <div class="col-md-12 my-twitter-content">Centre Left 3</div>
+            </aside>
+            <aside class="col-md-3 my-sidebar-center">
+                <div class="col-md-12 my-twitter-content">Right 1</div>
+                <div class="col-md-12 my-twitter-content">Right 2</div>
+                <div class="col-md-12 my-twitter-content">Right 3</div>
+            </aside>
+            <aside class="col-md-3 my-sidebar-right">
+                <a class="twitter-timeline" href="https://twitter.com/aaroadwatch" data-tweet-limit="5" data-chrome="nofooter noborders">Traffic Updates</a>
+                <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </aside>
+        </div>
+
         <div class="container" id="traffic-div">
             <div class="row col-lg-12 col-xs-12 my-index-information">
                 <h3><u>Traffic</u><br>
@@ -264,35 +241,37 @@
                 </h3>
             </div>
         </div>
-        
-        <div class="container-fluid">
-            <div class="row">
-                <footer class="col-sm-12 navbar-fixed-bottom my-footer" style="position:sticky">
-                    <div class="row">
-                        {% load static %}
-                        <div class="col-sm-3 text-center"><img id="transport-logo" src="{% static 'dublinbuspredict/css/images/TFI%20(2).png' %}"></div>
-                        <div id="footer-text">
-                            <div id ="left-footer" class="col-sm-2 text-left"><h4>Information</h4>
-                                <a href="/dublinbuspredict/" class="footer-links">Home</a>
-                                <a href="/dublinbuspredict/tickets_fares" class="footer-links">Tickes and Fares</a><br>
-                                <a href="/dublinbuspredict/connections" class="footer-links">Connections</a><br>
-                                <a href="/dublinbuspredict/contact" class="footer-links">Contact Us</a><br>
-                            </div>
-                            <div id ="right-footer" class="col-sm-2 text-left"><h4>Other transport sites</h4>
-                                <a href="https://www.luas.ie/" class="footer-links">Luas</a><br>
-                                <a href="http://www.buseireann.ie/" class="footer-links">Bus eireann</a><br>
-                                <a href="http://www.irishrail.ie/" class="footer-links">Iarnrod eireann</a><br>
-                            </div>
-                        </div>
-                        {% load static %}
-                            <div id="bl-logo" class="col-sm-3"><img id="buslightyear" src="{% static 'dublinbuspredict/css/images/logonobg.png' %}"></div>
+		
+		<div class="container-fluid">
+			<div class="row">
+            <footer class="fixed-bottom my-new-footer">
+                <div class="row">
+                	{% load static %}
+                    <div class="col-sm-3 text-center hidden-xs"><img src="{% static 'dublinbuspredict/css/images/TFI%20(2).png' %}">
                     </div>
-                    <br>
-                    <br>
-                    <p class="text-center" style="padding:10px;">&copy; Copyright 2017</p>
-                </footer>
+                    <div class="col-sm-3 text-center"><h4>Information</h4>
+                        <li><a href="/dublinbuspredict/">Home</a></li>
+                        <li><a href="/dublinbuspredict/tickets_fares">Tickets & Fares</a></li>
+                        <li><a href="/dublinbuspredict/tourism">Tourism</a></li>
+                        <li><a href="/dublinbuspredict/connections">Connections</a></li>
+                        <li><a href="/dublinbuspredict/contact">Contact Us</a></li>
+                    </div>
+                    <div class="col-sm-3 text-center"><h4>External Links</h4>
+                        <li><a target="_blank" href="https://www.luas.ie/">Luas</a></li>
+                        <li><a target="_blank" href="http://www.buseireann.ie/">Bus Eireann</a></li>
+                        <li><a target="_blank" href="http://www.irishrail.ie/">Irish Rail</a></li>
+                    </div>
+                    <div class="col-sm-3 text-center hidden-xs"><img id="bly_img" src="{% static 'dublinbuspredict/css/images/logonobg.png' %}">
+                    </div>
+                </div>
+
+                <!-- Footer: Copyright Section -->
+                <p class="text-center" style="padding:10px;">&copy; Copyright 2017</p>
+            </footer>
             </div>
         </div>
+		
+        
         <!-- jQuery file: Needs to be pasted above Bootstrap file to avoid errors -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 

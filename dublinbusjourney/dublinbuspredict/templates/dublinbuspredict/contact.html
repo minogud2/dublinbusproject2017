@@ -16,41 +16,42 @@
         <!-- Needed for Glyphicons: Font Awesome CDN Source: http://fontawesome.io/ -->
         <script src="https://use.fontawesome.com/e8a4c811a1.js"></script>
         {% load staticfiles %}
-    	<link rel="stylesheet" type="text/css" href="{% static 'dublinbuspredict/css/style.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'dublinbuspredict/css/style.css' %}" />
         <script type="text/javascript" src="{% static 'dublinbuspredict/js/main.js' %}"></script>
 
     </head>
     <body>
-               <!-- Main container to give website 12-grid shape -->
-            <div class="container-fluid">
-                <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-                            <div class="navbar-collapse">
-                                <ul class="nav navbar-nav">
-                                    <li class="navbar-left"> 
-                                        <a href="#" class="custom-white" style="cursor:pointer"  onclick="openNav()">
-                                            <span class="glyphicon glyphicon-menu-hamburger"></span>
-                                        </a></li>
-                                {% load static %}
-                                <li class="navbar-right"><img id="db_logo" alt="Dublin Bus Logo" src="{% static 'dublinbuspredict/css/images/dblogo.png' %}" class="img-responsive" ></li>
-                            </ul> 
-                            </div>
-                    </nav>
-                <div id="mySidenav" class="sidenav">
-                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                    <div id="w3-buttons"> 
+        <!-- Main container to give website 12-grid shape -->
+        <div class="container-fluid">
+            <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+                <div class="navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="navbar-left"> 
+                            <a href="#" class="custom-white" style="cursor:pointer"  onclick="openNav()">
+                                <span class="glyphicon glyphicon-menu-hamburger"></span>
+                            </a></li>
+                        {% load static %}
+                        <li class="navbar-right"><img id="db_logo" alt="Dublin Bus Logo" src="{% static 'dublinbuspredict/css/images/dblogo.png' %}" class="img-responsive" ></li>
+                    </ul> 
+                </div>
+            </nav>
+            <div id="mySidenav" class="sidenav">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <div id="w3-buttons">
                     <a href="/dublinbuspredict/" class="w3-bar-item w3-button"><i class="fa fa-home fa-fw"></i>&nbsp;Home</a>
                     <a href="/dublinbuspredict/tickets_fares" class="w3-bar-item w3-button"><i class="fa fa-eur fa-fw"></i>&nbsp;Tickets & Fares</a>
+                    <a href="/dublinbuspredict/tourism" class="w3-bar-item w3-button"><i class="fa fa-map fa-fw"></i></i>&nbsp;Tourism</a>
                     <a href="/dublinbuspredict/connections" class="w3-bar-item w3-button"><i class="fa fa-train fa-fw"></i>&nbsp;Connections</a>
                     <a href="/dublinbuspredict/contact" class="w3-bar-item w3-button"><i class="fa fa-phone fa-fw"></i>&nbsp;Contact Us</a>
-                    </div>
-                    <div id="social-media" class="row col-lg-12 my-social-icons">
-                    <a class="col-xs-2 btn btn-social-icon btn-twitter"><span class="fa fa-twitter"></span></a>
-                    <a class="col-xs-2 btn btn-social-icon btn-facebook"><span class="fa fa-facebook"></span></a>
-                    <a class="col-xs-2 btn btn-social-icon btn-instagram"><span class="fa fa-instagram"></span></a>
-                    <a class="col-xs-2 btn btn-social-icon btn-linkedin"><span class="fa fa-linkedin"></span></a>
-                    <a class="col-xs-2 btn btn-social-icon btn-google"><span class="fa fa-google"></span></a>
+                </div>
+                <div id="social-media" class="row col-lg-12 my-social-icons">
+                    <a target="_blank" href="https://twitter.com/" class="col-xs-2 btn btn-social-icon btn-twitter"><span class="fa fa-twitter"></span></a>
+                    <a target="_blank" href="https://facebook.com/" class="col-xs-2 btn btn-social-icon btn-facebook"><span class="fa fa-facebook"></span></a>
+                    <a target="_blank" href="https://instagram.com/" class="col-xs-2 btn btn-social-icon btn-instagram"><span class="fa fa-instagram"></span></a>
+                    <a target="_blank" href="https://linkedin.com/" class="col-xs-2 btn btn-social-icon btn-linkedin"><span class="fa fa-linkedin"></span></a>
+                    <a target="_blank" href="https://googleplus.com/" class="col-xs-2 btn btn-social-icon btn-google"><span class="fa fa-google"></span></a>
                 </div> 
-                </div>    
+            </div>    
         </div>
         <!-- Cover Photo -->
         <!-- Image Container: Do not add BS container or row as limits size -->
@@ -134,36 +135,34 @@
         </div>
 
         <!-- Footer Row -->
-        <div id="container-fluid">
-        
-                <div class="row">
-            <footer class="col-sm-12 navbar-fixed-bottom my-footer" style="position:sticky">
-                <div class="row">
-                    {% load static %}
-                    <div class="col-sm-3 text-center"><img id="transport-logo" src="{% static 'dublinbuspredict/css/images/TFI%20(2).png' %}"></div>
-                    <div id="footer-text">
-                    <div id ="left-footer" class="col-sm-2 text-left"><h4>Information</h4>
-                        <a href="/dublinbuspredict/" class="footer-links">Home</a>
-                        <a href="/dublinbuspredict/tickets_fares" class="footer-links">Tickes and Fares</a><br>
-                        <a href="/dublinbuspredict/connections" class="footer-links">Connections</a><br>
-                        <a href="/dublinbuspredict/contact" class="footer-links">Contact Us</a><br>
+        <div class="container-fluid">
+            <div class="row">
+                <footer class="fixed-bottom my-new-footer">
+                    <div class="row">
+                        {% load static %}
+                        <div class="col-sm-3 text-center hidden-xs"><img src="{% static 'dublinbuspredict/css/images/TFI%20(2).png' %}">
+                        </div>
+                        <div class="col-sm-3 text-center"><h4>Information</h4>
+                            <li><a href="/dublinbuspredict/">Home</a></li>
+                            <li><a href="/dublinbuspredict/tickets_fares">Tickets & Fares</a></li>
+                            <li><a href="/dublinbuspredict/tourism">Tourism</a></li>
+                            <li><a href="/dublinbuspredict/connections">Connections</a></li>
+                            <li><a href="/dublinbuspredict/contact">Contact Us</a></li>
+                        </div>
+                        <div class="col-sm-3 text-center"><h4>External Links</h4>
+                            <li><a target="_blank" href="https://www.luas.ie/">Luas</a></li>
+                            <li><a target="_blank" href="http://www.buseireann.ie/">Bus Eireann</a></li>
+                            <li><a target="_blank" href="http://www.irishrail.ie/">Irish Rail</a></li>
+                        </div>
+                        <div class="col-sm-3 text-center hidden-xs"><img id="bly_img" src="{% static 'dublinbuspredict/css/images/logonobg.png' %}">
+                        </div>
                     </div>
-                    <div id ="right-footer" class="col-sm-2 text-left"><h4>Other transport sites</h4>
-                        <a href="https://www.luas.ie/" class="footer-links">Luas</a><br>
-                        <a href="http://www.buseireann.ie/" class="footer-links">Bus eireann</a><br>
-                        <a href="http://www.irishrail.ie/" class="footer-links">Iarnrod eireann</a><br>
-                    </div>
-                    </div>
-                    {% load static %}
-                    <div id="bl-logo" class="col-sm-3"><img id="buslightyear" src="{% static 'dublinbuspredict/css/images/logonobg.png' %}">
-                    </div>
-                    </div>
-                <br>
-                <br>
-                <p class="text-center" style="padding:10px;">&copy; Copyright 2017</p>
-            </footer>
-        </div>
+
+                    <!-- Footer: Copyright Section -->
+                    <p class="text-center" style="padding:10px;">&copy; Copyright 2017</p>
+                </footer>
             </div>
+        </div>
 
         <!-- Bootstrap Files: Documentation requested they be added to end of HTML page to avoid errors -->
 
