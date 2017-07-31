@@ -103,12 +103,11 @@
                     </a>
                 </div>
             </div>
-
             <div class="container-fluid my-index-form">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-xs-12">
-                            <form action="" method="" class="form-inline text-center" role="form">
+                            <!-- <form action="" method="" class="form-inline text-center" role="form">
                                 <div class="form-group my-changed-journey">
                                     {% load static %}
                                     <div class="form-group dropdown">
@@ -126,7 +125,32 @@
                                         <input  class="form-control" id="search-box-2" oninput="searchFunctionSRC()" type="text" name="search2" placeholder="Select a stop">
                                         <div class="dropdown-content">
                                             <ul class="dropdown-list" id="dropdown-list-2"></ul>
-                                        </div>
+                                        </div> -->
+
+                        <form action="" method="" class="form-inline text-center" role="form">
+                            <div class="form-group my-changed-journey">
+                                {% load static %}
+                                <button type="button" id="reset-1" onclick="loadRoutes()" class="form-control btn btn-primary">Reset</button>
+                                <div class="form-group dropdown">
+                                    <input class="form-control" id="search-box-1" oninput="searchFunctionRoute()" type="text" name="search" placeholder="Enter a route">
+                                    <div class="dropdown-content">
+                                        <ul class="dropdown-list" id ="dropdown-list-1">
+                                            {% for route in list_routes %}
+                                            <li style="cursor:pointer"><a onclick='getStops("{{ route }}")'>{{ route }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>  
+                                </div>
+
+                                <div class="form-group dropdown">
+                                    <input  class="form-control" id="search-box-2" oninput="searchFunctionSRC()" type="text" name="search2" placeholder="Select a stop">
+                                    <div class="dropdown-content">
+                                        <ul class="dropdown-list" id="dropdown-list-2">
+                                        {% for stop in list_stops %}
+                                            <li style="cursor:pointer"><a onclick='getStopsStartingFromSource("{{ stop }}")'>{{ stop }}</a></li>
+                                        {% endfor %}
+                                        </ul>
+
                                     </div>
 
                                     <div class="form-group dropdown">

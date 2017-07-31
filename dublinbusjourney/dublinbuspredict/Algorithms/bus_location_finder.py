@@ -16,20 +16,27 @@ def get_stop_list(route, direction):
         direction = 0
     db = pymysql.connect(user='lucas', db='summerProdb', passwd='hello_world', host='csi6220-3-vm3.ucd.ie')
     cursor = db.cursor()
-    query = "SELECT pilot_routes.stop_id " \
-            "FROM pilot_routes " \
+    query = "SELECT bus_timetable.trip_id " \
+            "FROM bus_timetable " \
             "WHERE direction =" + str(direction) + " and route_id ='" + str(route) + \
-            "' ORDER BY sequence;"
-    # print("queryyyy", query)
+            "' ORDER BY stop_sequence limit 1;"
+    print("queryyyy", query)
     cursor.execute(query)
     rows = cursor.fetchall()
-
+    query = "SELECT bus_timetable.stop_id " \
+            "FROM bus_timetable " \
+            "WHERE trip_id ='" + str(rows[0][0]) + "' and route_id ='" + str(route) + \
+            "' ORDER BY stop_sequence;"
+    print("queryyyy", query)
+    cursor.execute(query)
+    rows2 = cursor.fetchall()
+    print(rows2)
     # Close connection
     db.close()
 
     # Create and populate a list with all the bus stop ids retrieved from the database
     stop_list = []
-    for i in rows:
+    for i in rows2:
         stop_list.append(i[0])
     return stop_list
 
