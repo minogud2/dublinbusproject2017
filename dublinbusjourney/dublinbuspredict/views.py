@@ -115,6 +115,9 @@ def connections(request):
 def contact(request):
     return render(request, 'dublinbuspredict/contact.html')
 
+def tourism(request):
+    return render(request, 'dublinbuspredict/tourism.html')
+
 def tickets_fares(request):
     return render(request, 'dublinbuspredict/tickets_fares.html')
 

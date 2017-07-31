@@ -224,64 +224,25 @@ ul {
 
 
 /* Multiple Pages - Footer */
-footer{
-    display: block;
-    bottom: 0;  
-}
-
-#transport-logo{
-    margin-top: 50px;
-    height: 70px;
-    width: 180px;
-}
-
-#buslightyear{
-    height: 80px;
-    width: 180px;
-    margin-left: 50px;
-}
-
-#bl-logo{
-    float: right;
-    }
-
-#footer-text{
-    margin-top: 50px;
-    margin-left: 450px;
-}
-
-#left-footer {
-  margin-right: 50px;
-}
-
-#right-footer {
-  margin-left: 50px;
-}
-
-.footer-links{
-    display: inline-block;
-    padding: 5px;
-}
-
-h4{
-    font-weight: bold;
-    width: 180px;
-    display: inline-block;
-    font-size: 16px;
-}
-
-.my-footer{
+.my-new-footer{
     background-color: #0c2864;
-    width: 100%;
-    font-size: 12px;
+    list-style-type: none;
     color: white;
-    bottom: 0; 
-    height: 300px;
-    margin-top: 130px;
+    font-size: 12px;
+    margin-top: 100px;
+    bottom: 0;
+    width: 100%;
+    
+     
 }
 
-.my-footer a{
+.my-new-footer a{
     color: white;
+}
+
+#bly_img{
+	height: 80px;
+    width: 180px;
 }
 
 
@@ -316,7 +277,7 @@ h4{
     font-weight: bold;
 }
 
-#secondary{
+/*#secondary{
     margin-left: 120px;
     width: 1000px;
     margin-top: -40px;
@@ -334,7 +295,7 @@ h4{
     height: 300px;
     display: block;
     margin-bottom: 10px;
-}
+}*/
 
 .my-index-information{
 	margin-top: 50px;
@@ -388,7 +349,7 @@ h4{
 
 /* map.html */
 .my-timetable{
-    margin-top: 70px;
+    margin-top: 100px;
 }
 
 
@@ -424,13 +385,44 @@ h4{
 
 
 
+/* pointsOfInterest.html */
+.my-twitter-feed{
+    margin: 10px;
+    max-height: 300px;
+    
+}
+
+.my-twitter-content{
+    padding-bottom: 150px;
+    border: solid black 1px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.my-sidebar-left{
+    margin-top: 20px;    
+}
+
+.my-sidebar-center{
+    margin-top: 20px;
+}
+
+.my-sidebar-right{
+    margin-top: 20px;
+    float: right;
+}
+
+
+
+
 /* contact.html */
 .my-contact{
     margin-top: 65px;
 }
 
-.my-contact-information{
-    margin-top: 30px;
+.my-contact-information{ 
+	margin-top: 100px;
+	margin-bottom: 20px;
 }
 
 .my-profile{
