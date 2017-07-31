@@ -130,7 +130,7 @@
                         <form action="" method="" class="form-inline text-center" role="form">
                             <div class="form-group my-changed-journey">
                                 {% load static %}
-                                <button type="button" id="reset-1" onclick="loadRoutes()" class="form-control btn btn-primary">Reset</button>
+                                
                                 <div class="form-group dropdown">
                                     <input class="form-control" id="search-box-1" oninput="searchFunctionRoute()" type="text" name="search" placeholder="Enter a route">
                                     <div class="dropdown-content">
@@ -167,6 +167,7 @@
                                     <div class="form-group">
                                         <input class="form-control" type="time" id="time-input-index" placeholder="Now">
                                     </div>
+                                    <!--<button type="button" id="reset-1" onclick="loadRoutes()" class="form-control btn btn-primary">Reset</button>-->
                                     <button type="button" id="submit-route" onclick="window.location='http://127.0.0.1:8000/dublinbuspredict/map';" class="form-control btn btn-primary">Find Journey</button>
                                     <script>
                                         document.getElementById("submit-route").addEventListener("click", function(){
