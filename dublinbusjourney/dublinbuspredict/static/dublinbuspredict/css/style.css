@@ -428,3 +428,21 @@ ul {
 .my-profile{
     padding: 15px;
 }
+
+
+/* Tourism page */
+#map_tourism{
+    height: 400px;
+    width: 100%;
+}
+
+
+/* map.html */
+#map{
+    height: 400px;
+    width: 100%;
+       }
+
+.my-map-div{
+    margin-top: 50px;
+}
