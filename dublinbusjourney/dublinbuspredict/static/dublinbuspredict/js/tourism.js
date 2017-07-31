@@ -1,5 +1,6 @@
 
 function tourismMap(){
+    console.log('here')
     var points_of_interest = [
         [1, "Guinness Storehouse,<br>St James's Gate,<br>Dublin 8<br>" + '<a target="_blank" href="https://www.guinness-storehouse.com/en">Guinness Storehouse - Website</a>', '53.3419', '-6.2868'],
         [2, "Dublin Zoo,<br>Phoenix Park,<br>Dublin 8<br>" + '<a target="_blank" href="https://www.dublinzoo.ie/">Dublin Zoo - Website</a>', '53.3561935', '-6.305289799999969'],
