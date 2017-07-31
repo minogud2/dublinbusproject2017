@@ -24,10 +24,9 @@
 
         {% load staticfiles %}
             <link rel="stylesheet" type="text/css" href="{% static 'dublinbuspredict/css/style.css' %}" />
-            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHxpqeoG1jNA4VHBlFeopWuRmFoYTh-ME&callback=initMap"></script>
             <script type="text/javascript" src="{% static 'dublinbuspredict/js/displaySearch.js' %}"></script>
             <script type="text/javascript" src="{% static 'dublinbuspredict/js/main.js' %}"></script>
-
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHxpqeoG1jNA4VHBlFeopWuRmFoYTh-ME&callback=initMap"></script>
 		    <link rel="stylesheet" type="text/css" href="{% static 'dublinbuspredict/style.css' %}" />
 <!--<script type="text/javascript" src="/js/main.js"></script>-->
 <!--<script type="text/javascript" src="/js/displaySearch.js"></script>-->
@@ -81,6 +80,8 @@
                         <form action="" method="" class="form-inline">
                             <div class="form-group my-changed-journey">
                                 <label for="route">Route</label>
+                                {% load static %}
+                                <button type="button" id="reset-2" onclick="loadRoutes2()" class="form-control btn btn-primary">Reset</button>
                                 <div class="form-group">
                                     <!--<input type="text" class="form-control" placeholder="Enter a route">-->
                                     {% load static %}
