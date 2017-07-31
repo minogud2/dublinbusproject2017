@@ -53,10 +53,10 @@
             </div>
         </div>
 
-        <div class="container-fluid">
+        <div>
             <!-- Image Carousel -->
-            <div id="primary">
-                <div id="my-carousel" class="carousel slide hidden-xs" data-ride="carousel">
+            <div class="hidden-xs" id="primary">
+                <div id="my-carousel" class="carousel slide" data-ride="carousel">
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner">
                         <div class="item active">
@@ -94,7 +94,76 @@
                     </a>
                 </div>
             </div>
+            
+            <div class="container-fluid my-index-form" id="pushed-content">
             <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-12">
+
+                        <form action="" method="" class="form-inline text-center" role="form">
+                            <div class="form-group my-changed-journey">
+                                {% load static %}
+                                <button type="button" id="reset-1" onclick="loadRoutes()" class="form-control btn btn-primary">Reset</button>
+                                <div class="form-group dropdown">
+                                    <input class="form-control" id="search-box-1" oninput="searchFunctionRoute()" type="text" name="search" placeholder="Enter a route">
+                                    <div class="dropdown-content">
+                                        <ul class="dropdown-list" id ="dropdown-list-1">
+                                            {% for route in list_routes %}
+                                            <li style="cursor:pointer"><a onclick='getStops("{{ route }}")'>{{ route }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>  
+                                </div>
+
+                                <div class="form-group dropdown">
+                                    <input  class="form-control" id="search-box-2" oninput="searchFunctionSRC()" type="text" name="search2" placeholder="Select a stop">
+                                    <div class="dropdown-content">
+                                        <ul class="dropdown-list" id="dropdown-list-2">
+                                        {% for stop in list_stops %}
+                                            <li style="cursor:pointer"><a onclick='getStopsStartingFromSource("{{ stop }}")'>{{ stop }}</a></li>
+                                        {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="form-group dropdown">
+                                    <input class="form-control" id="search-box-3" oninput="searchFunctionDest()" type="text" name="search2" placeholder="Select a destination">
+                                    <div class="dropdown-content">
+                                        <ul class="dropdown-list" id="dropdown-list-3"></ul>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <input class="form-control" type="date" id="date-input-index" placeholder="Today">
+                                </div>      
+
+                                <div class="form-group">
+                                    <input class="form-control" type="time" id="time-input-index" placeholder="Now">
+                                </div>
+                                <button type="button" id="submit-route" onclick="window.location='http://127.0.0.1:8000/dublinbuspredict/map';" class="form-control btn btn-primary">Find Journey</button>
+                                <script>
+                                    document.getElementById("submit-route").addEventListener("click", function(){
+                                        route = document.getElementById("search-box-1").value;
+                                        source = document.getElementById("search-box-2").value;
+                                        destination = document.getElementById("search-box-3").value;
+                                        date = document.getElementById("date-input-index").value;
+                                        time = document.getElementById("time-input-index").value;
+                                        console.log('Route:', route)
+                                        console.log('Source:', source)
+                                        console.log('Destination:', destination)
+                                        console.log('Time:', time)
+                                        console.log('Date:', date)
+                                        $.getJSON("http://127.0.0.1:8000/dublinbuspredict/setInfoNextPage", {"route":route, "source":source, "destination":destination, "time":time, "date":date}, function(d) {});
+                                    });
+                                </script>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+            <!--<div class="container-fluid">
                 <div class="row">
                     <div class="col-xs-12">
                         <form action="" method="" class="form-inline">
@@ -104,7 +173,7 @@
                                         <div class="form-group">
                                             {% load static %}
                                                 <div class="dropdown">
-                                                    <input id="search-box-1" oninput="searchFunctionRoute()" type="text" name="search" placeholder="Enter route nº...">
+                                                    <input id="search-box-1" oninput="searchFunctionRoute()" type="text" name="search" placeholder="Enter a route">
                                                     <div class="dropdown-content">
                                                         <ul class="dropdown-list" id ="dropdown-list-1">
                                                         {% for route in list_routes %}
@@ -140,7 +209,7 @@
                                             <!--What is this for? (don't know who wrote this: lucas)-->
                                         <div class="form-group">
                                             <!--<form action="map.html" method="get" accept-charset="utf-8">-->
-                                            <button type="button" id="submit-route" onclick="window.location='http://127.0.0.1:8000/dublinbuspredict/map';" class="form-control btn btn-primary">Find Journey</button>
+                                            <!--<button type="button" id="submit-route" onclick="window.location='http://127.0.0.1:8000/dublinbuspredict/map';" class="form-control btn btn-primary">Find Journey</button>
                                             <script>
                                                 document.getElementById("submit-route").addEventListener("click", function(){
                                                     route = document.getElementById("search-box-1").value;
@@ -161,9 +230,10 @@
                             </div>
                         </form>
                     </div>
-                </div>
+                </div>-->
             </div>
         </div>
+        
         <div class="container-fluid">
             <div id="scrollpage">
                 <a href="#traffic-div">
@@ -171,22 +241,30 @@
                 </a>
             </div>
         </div>
-        <div class="container-fluid">
-            <div id="secondary" class="visible-xs-*">
-                <div id="traffic-div">
-                    <h1>Traffic</h1>
-                    <p> I need is to show the content of a web page in the center of the browser, no matter what screen size it is, big or small, resolution high or low, it always gets automatically adjusted to the center of the browser. Thanks in advance. My Html and css code is below.HTML code</p>
-                    <p> I need is to show the content of a web page in the center of the browser, no matter what screen size it is, big or small, resolution high or low, it always gets automatically adjusted to the center of the browser. Thanks in advance. My Html and css code is below.HTML code</p>
-                    <p> I need is to show the content of a web page in the center of the browser, no matter what screen size it is, big or small, resolution high or low, it always gets automatically adjusted to the center of the browser. Thanks in advance. My Html and css code is below.HTML code</p>
-                </div>
-                <div id="roadwatch-div">
-                    <h1>Roadwatch</h1>
-                    <p> I need is to show the content of a web page in the center of the browser, no matter what screen size it is, big or small, resolution high or low, it always gets automatically adjusted to the center of the browser. Thanks in advance. My Html and css code is below.HTML code</p>
-                    <p> I need is to show the content of a web page in the center of the browser, no matter what screen size it is, big or small, resolution high or low, it always gets automatically adjusted to the center of the browser. Thanks in advance. My Html and css code is below.HTML code</p>
-                    <p> I need is to show the content of a web page in the center of the browser, no matter what screen size it is, big or small, resolution high or low, it always gets automatically adjusted to the center of the browser. Thanks in advance. My Html and css code is below.HTML code</p>
-                </div>
+        
+    
+        
+        <div class="container" id="traffic-div">
+            <div class="row col-lg-12 col-xs-12 my-index-information">
+                <h3><u>Traffic</u><br>
+                    <small>
+                        I need is to show the content of a web page in the center of the browser, no matter what screen size it is, big or small, resolution high or low, it always gets automatically adjusted to the center of the browser. Thanks in advance. My Html and css code is below.HTML code
+                        I need is to show the content of a web page in the center of the browser, no matter what screen size it is, big or small, resolution high or low, it always gets automatically adjusted to the center of the browser. Thanks in advance. My Html and css code is below.HTML code
+                        I need is to show the content of a web page in the center of the browser, no matter what screen size it is, big or small, resolution high or low, it always gets automatically adjusted to the center of the browser. Thanks in advance. My Html and css code is below.HTML code
+                    </small>
+                </h3>
+            </div>
+            <div class="row col-lg-12 col-xs-12 my-index-information">
+                <h3><u>Roadwatch</u><br>
+                    <small>
+                        I need is to show the content of a web page in the center of the browser, no matter what screen size it is, big or small, resolution high or low, it always gets automatically adjusted to the center of the browser. Thanks in advance. My Html and css code is below.HTML code
+                        I need is to show the content of a web page in the center of the browser, no matter what screen size it is, big or small, resolution high or low, it always gets automatically adjusted to the center of the browser. Thanks in advance. My Html and css code is below.HTML code
+                        I need is to show the content of a web page in the center of the browser, no matter what screen size it is, big or small, resolution high or low, it always gets automatically adjusted to the center of the browser. Thanks in advance. My Html and css code is below.HTML code
+                    </small>
+                </h3>
             </div>
         </div>
+        
         <div class="container-fluid">
             <div class="row">
                 <footer class="col-sm-12 navbar-fixed-bottom my-footer" style="position:sticky">

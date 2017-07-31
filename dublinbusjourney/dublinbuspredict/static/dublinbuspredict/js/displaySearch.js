@@ -1,26 +1,27 @@
-
-// Toggle function for route div on map.html
-$(document).ready(function(){
-	$("#showDetails").click(function(){
-		$("#toggleDetailsRes").toggle(1000);
-	});
-});
-
-// Toggle function for route div on map.html
-$(document).ready(function(){
-	$("#RouteMap").click(function(){
-		$("#toggleRouteMap").toggle(1000);
-	});
-});
-
-// Map and Marker related functions for map.html
-$(document).ready(function() {
-    initMap();
-});
+//
+//// Toggle function for route div on map.html
+//$(document).ready(function(){
+//	$("#showDetails").click(function(){
+//		$("#toggleDetailsRes").toggle(1000);
+//	});
+//});
+//
+//// Toggle function for route div on map.html
+//$(document).ready(function(){
+//	$("#RouteMap").click(function(){
+//		$("#toggleRouteMap").toggle(1000);
+//	});
+//});
+//
+//// Map and Marker related functions for map.html
+//$(document).ready(function() {
+//    initMap();
+//});
 
 var map; // define a map as a global variable for use of different functions
 var directionsDisplay;
-var directionsService = new google.maps.DirectionsService();
+//var directionsService = new google.maps.DirectionsService();
+var service;
 
 function initMap() {
     console.log('inside map!')
@@ -30,14 +31,6 @@ function initMap() {
         zoom: 12,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }); //closing map creation
-
-//	  Add traffic layer to the map.
-	  var trafficLayer = new google.maps.TrafficLayer();
-	  trafficLayer.setMap(map);
-
-//	  Add Public transit layer to the map.
-	  var transitLayer = new google.maps.TransitLayer();
-	  transitLayer.setMap(map);
 
 //	Function to pull in the json from the url.
     $.getJSON("http://127.0.0.1:8000/dublinbuspredict/sampleQuery", null, function(d) {
@@ -67,7 +60,7 @@ function initMap() {
       var path = new google.maps.MVCArray();
 
       //Initialize the Direction Service
-      var service = new google.maps.DirectionsService();
+      service = new google.maps.DirectionsService();
 
       //Set the Path Stroke Color
       var poly = new google.maps.Polyline({ map: map, strokeColor: '#4986E7' });
@@ -85,9 +78,16 @@ function initMap() {
                   travelMode: google.maps.DirectionsTravelMode.TRANSIT
               })
           }
-          }
-    });
+      }
 
+//    Add traffic layer to the map.
+	  var trafficLayer = new google.maps.TrafficLayer();
+	  trafficLayer.setMap(map);
+
+//	  Add Public transit layer to the map.
+	  var transitLayer = new google.maps.TransitLayer();
+	  transitLayer.setMap(map);
+    });
 }
 
 function loadRoutes(){
@@ -96,6 +96,9 @@ function loadRoutes(){
     var a = $.getJSON("http://127.0.0.1:8000/dublinbuspredict/loadRoutesForMap", null, function(d) {
         $.each(d['list_routes'], function(i, p) {
             $('#dropdown-list-4').append($('<li></li>').val(p).html('<a onclick=getStops2("' + p + '")>' + p + '</a>'));
+        })
+        $.each(d['list_stops'], function(i, p) {
+            $('#dropdown-list-5').append($('<li></li>').val(p).html('<a onclick=getStopsStartingFromSource2("' + p + '")>' + p + '</a>'));
         })
     });
     var b = $.getJSON("http://127.0.0.1:8000/dublinbuspredict/getInfoNextPage", null, function(d) {
@@ -200,4 +203,56 @@ function searchFunctionDest2() {
             li[i].style.display = "none";
         }
     }
+}
+
+function getStopsStartingFromSource2(stop){
+    console.log('Stop is', stop)
+    document.getElementById("search-box-5").value = stop
+    $.getJSON("http://127.0.0.1:8000/dublinbuspredict/getStopsStartingFromSource", {"source":stop}, function(d) {
+        console.log(d)
+        document.getElementById("dropdown-list-4").innerHTML = "";
+        document.getElementById("search-box-4").value = "";
+        document.getElementById("dropdown-list-6").innerHTML = "";
+        document.getElementById("search-box-6").value = "";
+    $.each(d['stops'], function(i, p) {
+        console.log(p)
+        $('#dropdown-list-6').append($('<li></li>').val(p).html('<a onclick=getStopsDestExtraRoute2(' + p + ')>'+ p + '</a>'));
+    });
+    });
+}
+
+function getStopsDestExtraRoute2(route){
+    document.getElementById("search-box-6").value = route;
+    source = document.getElementById("search-box-5").value;
+    dest = document.getElementById("search-box-6").value;
+    $.getJSON("http://127.0.0.1:8000/dublinbuspredict/getStopsDestExtraRoute", {"source":source, "dest":dest}, function(d) {
+        console.log(d)
+    $.each(d['routes'], function(i, p) {
+        console.log(p)
+        $('#dropdown-list-4').append($('<li></li>').val(p).html('<a onclick=getExtraRoute2(' + p + ')>'+ p + '</a>'));
+    });
+    });
+}
+
+function getExtraRoute2(route){
+    document.getElementById("search-box-4").value = route;
+}
+
+function loadRoutes2(){
+    console.log('HEReeeeeeeeeeeeeee!')
+    var counter = 0
+    document.getElementById("dropdown-list-4").innerHTML = "";
+    document.getElementById("search-box-4").value = "";
+    document.getElementById("dropdown-list-5").innerHTML = "";
+    document.getElementById("search-box-5").value = "";
+    document.getElementById("dropdown-list-6").innerHTML = "";
+    document.getElementById("search-box-6").value = "";
+    var a = $.getJSON("http://127.0.0.1:8000/dublinbuspredict/loadRoutesForMap", null, function(d) {
+        $.each(d['list_routes'], function(i, p) {
+            $('#dropdown-list-4').append($('<li></li>').val(p).html('<a onclick=getStops2("' + p + '")>' + p + '</a>'));
+        })
+        $.each(d['list_stops'], function(i, p) {
+            $('#dropdown-list-5').append($('<li></li>').val(p).html('<a onclick=getStopsStartingFromSource2("' + p + '")>' + p + '</a>'));
+        })
+    });
 }
