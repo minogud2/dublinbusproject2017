@@ -1,18 +1,17 @@
-//
 //// Toggle function for route div on map.html
-//$(document).ready(function(){
-//	$("#showDetails").click(function(){
-//		$("#toggleDetailsRes").toggle(1000);
-//	});
-//});
-//
+$(document).ready(function(){
+	$("#showDetails").click(function(){
+		$("#toggleDetailsRes").toggle(1000);
+	});
+});
+
 //// Toggle function for route div on map.html
-//$(document).ready(function(){
-//	$("#RouteMap").click(function(){
-//		$("#toggleRouteMap").toggle(1000);
-//	});
-//});
-//
+$(document).ready(function(){
+	$("#RouteMap").click(function(){
+		$("#toggleRouteMap").toggle(1000);
+	});
+});
+
 //// Map and Marker related functions for map.html
 //$(document).ready(function() {
 //    initMap();
