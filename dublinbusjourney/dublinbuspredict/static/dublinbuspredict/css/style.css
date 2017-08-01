@@ -430,6 +430,8 @@ ul {
 }
 
 
+
+
 /* Tourism page */
 #map_tourism{
     height: 400px;
@@ -441,8 +443,23 @@ ul {
 #map{
     height: 400px;
     width: 100%;
-       }
+}
 
 .my-map-div{
     margin-top: 50px;
+}
+
+.my-result{
+    margin-bottom: 50px;
+    margin-top: 10px;
+}
+
+.my-individual-result{
+    margin: 20px;
+    border: solid black 1px;
+}
+
+.my-changed-journey{
+    padding: 10px;
+    width: 100%;
 }
