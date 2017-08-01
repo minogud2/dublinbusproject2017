@@ -17,8 +17,15 @@ h2{
     font-size: 18px;
 }
 
+#map{
+    height: 400px;
+    width: 300%
+}
 
 
+.my-map-div{
+    margin-top: 50px;
+}
 
 /* Multiple Pages - FontPalace, 2016  */
 @font-face {

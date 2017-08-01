@@ -27,12 +27,13 @@
             <script type="text/javascript" src="{% static 'dublinbuspredict/js/displaySearch.js' %}"></script>
             <script type="text/javascript" src="{% static 'dublinbuspredict/js/main.js' %}"></script>
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHxpqeoG1jNA4VHBlFeopWuRmFoYTh-ME&callback=initMap"></script>
-		    <link rel="stylesheet" type="text/css" href="{% static 'dublinbuspredict/style.css' %}" />
+	    <!--<link rel="stylesheet" type="text/css" href="{% static 'dublinbuspredict/style.css' %}" />-->
 <!--<script type="text/javascript" src="/js/main.js"></script>-->
 <!--<script type="text/javascript" src="/js/displaySearch.js"></script>-->
 
     </head>
-    <body onload="loadRoutes()">
+    	{% load static %}
+	<body onload="loadRoutes()">
                 <!-- Main container to give website 12-grid shape -->
             <div class="container-fluid">
                 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -140,13 +141,13 @@
                                         initMap()
                                         if (time == "" || date == ""){
                                             console.log('now')
-                                            $.getJSON("http://127.0.0.1:8000/dublinbuspredict/runModel", {"route":route, "source":source, "destination":destination}, function(d) {
+                                            $.getJSON("http://137.43.49.41:8001/dublinbuspredict/runModel", {"route":route, "source":source, "destination":destination}, function(d) {
                                             console.log('here', d)
                                         });
                                         }
                                         else{
                                             console.log('date and time')
-                                            $.getJSON("http://127.0.0.1:8000/dublinbuspredict/runPlanner", {"route":route, "source":source, "destination":destination, "date":date, "time":time}, function(d) {
+                                            $.getJSON("http://137.43.49.41:8001/dublinbuspredict/runPlanner", {"route":route, "source":source, "destination":destination, "date":date, "time":time}, function(d) {
                                             console.log('here', d)
                                         });
                                         }

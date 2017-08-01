@@ -25,20 +25,27 @@ var service;
 
 function initMap() {
     console.log('inside map!')
-//	Function to pull in the map.
+//	Function to pull in the map
 	map = new google.maps.Map(document.getElementById('map'), {
         center: new google.maps.LatLng(53.3498053, -6.260309699999993),
         zoom: 12,
         mapTypeId: google.maps.MapTypeId.ROADMAP
-    }); //closing map creation
+    }); //closing map creation	
+
+//    Add traffic layer to the map.
+	  var trafficLayer = new google.maps.TrafficLayer();
+	  trafficLayer.setMap(map);
+
+//	  Add Public transit layer to the map.
+	  var transitLayer = new google.maps.TransitLayer();
+	  transitLayer.setMap(map);
 
 //	Function to pull in the json from the url.
-    $.getJSON("http://127.0.0.1:8000/dublinbuspredict/sampleQuery", null, function(d) {
+    $.getJSON("http://137.43.49.41:8001/dublinbuspredict/sampleQuery", null, function(d) {
         var data = d.data;
         var points = new Array;
         var marker, i;
         var infowindow = new google.maps.InfoWindow();
-        var bounds = new google.maps.LatLngBounds();
         for (i = 0; i < data.length; i++) {
                 var myLatLng = new google.maps.LatLng(data[i][3], data[i][4])
                 marker = new google.maps.Marker({
@@ -79,21 +86,13 @@ function initMap() {
               })
           }
       }
-
-//    Add traffic layer to the map.
-	  var trafficLayer = new google.maps.TrafficLayer();
-	  trafficLayer.setMap(map);
-
-//	  Add Public transit layer to the map.
-	  var transitLayer = new google.maps.TransitLayer();
-	  transitLayer.setMap(map);
     });
 }
 
 function loadRoutes(){
     console.log('HEReeeeeeeeeeeeeee!')
     var counter = 0
-    var a = $.getJSON("http://127.0.0.1:8000/dublinbuspredict/loadRoutesForMap", null, function(d) {
+    var a = $.getJSON("http://137.43.49.41:8001/dublinbuspredict/loadRoutesForMap", null, function(d) {
         $.each(d['list_routes'], function(i, p) {
             $('#dropdown-list-4').append($('<li></li>').val(p).html('<a onclick=getStops2("' + p + '")>' + p + '</a>'));
         })
@@ -101,7 +100,7 @@ function loadRoutes(){
             $('#dropdown-list-5').append($('<li></li>').val(p).html('<a onclick=getStopsStartingFromSource2("' + p + '")>' + p + '</a>'));
         })
     });
-    var b = $.getJSON("http://127.0.0.1:8000/dublinbuspredict/getInfoNextPage", null, function(d) {
+    var b = $.getJSON("http://137.43.49.41:8001/dublinbuspredict/getInfoNextPage", null, function(d) {
         console.log('Second call!');
         console.log('Results:', d);
         route = d['route'];
@@ -111,12 +110,12 @@ function loadRoutes(){
         date = d['date']
         initMap()
         if (time != "" || date != ""){
-            $.getJSON("http://127.0.0.1:8000/dublinbuspredict/runPlanner", {"route":route, "source":source, "destination":destination, "date":date, "time":time}, function(d) {
+            $.getJSON("http://137.43.49.41:8001/dublinbuspredict/runPlanner", {"route":route, "source":source, "destination":destination, "date":date, "time":time}, function(d) {
                 console.log('here', d)
             });
         }
         else{
-            $.getJSON("http://127.0.0.1:8000/dublinbuspredict/runModel", {"route":route, "source":source, "destination":destination}, function(d) {
+            $.getJSON("http://137.43.49.41:8001/dublinbuspredict/runModel", {"route":route, "source":source, "destination":destination}, function(d) {
                 console.log('here', d)
             });
         }
@@ -143,7 +142,7 @@ function searchFunctionRoute2() {
 function getStops2(route) {
     document.getElementById("search-box-4").value = route;
     console.log(route);
-    $.getJSON("http://127.0.0.1:8000/dublinbuspredict/pilotRoutes", {"route":route}, function(d) {
+    $.getJSON("http://137.43.49.41:8001/dublinbuspredict/pilotRoutes", {"route":route}, function(d) {
         console.log(d)
         document.getElementById("dropdown-list-5").innerHTML = "";
         document.getElementById("search-box-5").value = "";
@@ -175,7 +174,7 @@ function getStopsDest2(source) {
     console.log('Source:', source);
     route = document.getElementById("search-box-4").value;
     console.log ('Route:', route)
-    $.getJSON("http://127.0.0.1:8000/dublinbuspredict/pilotDest", {"route":route, "source":source}, function(d) {
+    $.getJSON("http://137.43.49.41:8001/dublinbuspredict/pilotDest", {"route":route, "source":source}, function(d) {
         console.log(d)
         document.getElementById("dropdown-list-6").innerHTML = "";
         document.getElementById("search-box-6").value = "";
@@ -208,7 +207,7 @@ function searchFunctionDest2() {
 function getStopsStartingFromSource2(stop){
     console.log('Stop is', stop)
     document.getElementById("search-box-5").value = stop
-    $.getJSON("http://127.0.0.1:8000/dublinbuspredict/getStopsStartingFromSource", {"source":stop}, function(d) {
+    $.getJSON("http://137.43.49.41:8001/dublinbuspredict/getStopsStartingFromSource", {"source":stop}, function(d) {
         console.log(d)
         document.getElementById("dropdown-list-4").innerHTML = "";
         document.getElementById("search-box-4").value = "";
@@ -225,7 +224,7 @@ function getStopsDestExtraRoute2(route){
     document.getElementById("search-box-6").value = route;
     source = document.getElementById("search-box-5").value;
     dest = document.getElementById("search-box-6").value;
-    $.getJSON("http://127.0.0.1:8000/dublinbuspredict/getStopsDestExtraRoute", {"source":source, "dest":dest}, function(d) {
+    $.getJSON("http://137.43.49.41:8001/dublinbuspredict/getStopsDestExtraRoute", {"source":source, "dest":dest}, function(d) {
         console.log(d)
     $.each(d['routes'], function(i, p) {
         console.log(p)
@@ -247,7 +246,7 @@ function loadRoutes2(){
     document.getElementById("search-box-5").value = "";
     document.getElementById("dropdown-list-6").innerHTML = "";
     document.getElementById("search-box-6").value = "";
-    var a = $.getJSON("http://127.0.0.1:8000/dublinbuspredict/loadRoutesForMap", null, function(d) {
+    var a = $.getJSON("http://137.43.49.41:8001/dublinbuspredict/loadRoutesForMap", null, function(d) {
         $.each(d['list_routes'], function(i, p) {
             $('#dropdown-list-4').append($('<li></li>').val(p).html('<a onclick=getStops2("' + p + '")>' + p + '</a>'));
         })

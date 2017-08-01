@@ -140,7 +140,7 @@
                                 <div class="form-group">
                                     <input class="form-control" type="time" id="time-input-index" placeholder="Now">
                                 </div>
-                                <button type="button" id="submit-route" onclick="window.location='http://127.0.0.1:8000/dublinbuspredict/map';" class="form-control btn btn-primary">Find Journey</button>
+                                <button type="button" id="submit-route" onclick="window.location='http://137.43.49.41:8001/dublinbuspredict/map';" class="form-control btn btn-primary">Find Journey</button>
                                 <script>
                                     document.getElementById("submit-route").addEventListener("click", function(){
                                         route = document.getElementById("search-box-1").value;
@@ -153,7 +153,7 @@
                                         console.log('Destination:', destination)
                                         console.log('Time:', time)
                                         console.log('Date:', date)
-                                        $.getJSON("http://127.0.0.1:8000/dublinbuspredict/setInfoNextPage", {"route":route, "source":source, "destination":destination, "time":time, "date":date}, function(d) {});
+                                        $.getJSON("http://137.43.49.41:8001/dublinbuspredict/setInfoNextPage", {"route":route, "source":source, "destination":destination, "time":time, "date":date}, function(d) {});
                                     });
                                 </script>
                             </div>
@@ -209,7 +209,7 @@
                                             <!--What is this for? (don't know who wrote this: lucas)-->
                                         <div class="form-group">
                                             <!--<form action="map.html" method="get" accept-charset="utf-8">-->
-                                            <!--<button type="button" id="submit-route" onclick="window.location='http://127.0.0.1:8000/dublinbuspredict/map';" class="form-control btn btn-primary">Find Journey</button>
+                                            <!--<button type="button" id="submit-route" onclick="window.location='http://137.43.49.41:8001/dublinbuspredict/map';" class="form-control btn btn-primary">Find Journey</button>
                                             <script>
                                                 document.getElementById("submit-route").addEventListener("click", function(){
                                                     route = document.getElementById("search-box-1").value;
@@ -222,7 +222,7 @@
                                                     console.log('Destination:', destination)
                                                     console.log('Time:', time)
                                                     console.log('Date:', date)
-                                                    $.getJSON("http://127.0.0.1:8000/dublinbuspredict/setInfoNextPage", {"route":route, "source":source, "destination":destination, "time":time, "date":date}, function(d) {});
+                                                    $.getJSON("http://137.43.49.41:8001/dublinbuspredict/setInfoNextPage", {"route":route, "source":source, "destination":destination, "time":time, "date":date}, function(d) {});
                                                 });
                                             </script>
                                         </div>
