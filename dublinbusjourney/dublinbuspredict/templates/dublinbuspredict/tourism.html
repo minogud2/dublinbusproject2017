@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+
+        <title>Home - BusLightyear</title>
+
+        <!-- If IE use the latest rendering engine -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <!-- Set the page to the width of the device and set the zoom level -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Google Maps -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHxpqeoG1jNA4VHBlFeopWuRmFoYTh-ME&callback=tourismMap"></script>
+
+        <!-- Font for side navbar Awesome CDN Source: http://fontawesome.io/ -->
+        <script src="https://use.fontawesome.com/e8a4c811a1.js"></script>
+
+        {% load staticfiles %}
+        <link rel="stylesheet" type="text/css" href="{% static 'dublinbuspredict/css/style.css' %}" />
+        <script type="text/javascript" src="{% static 'dublinbuspredict/js/jsIndex.js' %}"></script>
+        <script type="text/javascript" src="{% static 'dublinbuspredict/js/main.js' %}"></script>
+        <script type="text/javascript" src="{% static 'dublinbuspredict/js/tourism.js' %}"></script>
+
+    </head>
+    {% load static %}
+    <body onload="tourismMap()">
+        <!-- Main container to give website 12-grid shape -->
+        <div class="container-fluid">
+            <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+                <div class="navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="navbar-left">
+                            <a href="#" class="custom-white" style="cursor:pointer"  onclick="openNav()">
+                                <span class="glyphicon glyphicon-menu-hamburger"></span>
+                            </a></li>
+                        {% load static %}
+                        <li class="navbar-right"><img id="db_logo" alt="Dublin Bus Logo" src="{% static 'dublinbuspredict/css/images/dblogo.png' %}" class="img-responsive" ></li>
+                    </ul>
+                </div>
+            </nav>
+            
+            <div id="mySidenav" class="sidenav">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <div id="w3-buttons">
+                    <a href="/dublinbuspredict/" class="w3-bar-item w3-button"><i class="fa fa-home fa-fw"></i>&nbsp;Home</a>
+                    <a href="/dublinbuspredict/tickets_fares" class="w3-bar-item w3-button"><i class="fa fa-eur fa-fw"></i>&nbsp;Tickets & Fares</a>
+                    <a href="/dublinbuspredict/tourism" class="w3-bar-item w3-button"><i class="fa fa-map fa-fw"></i></i>&nbsp;Tourism</a>
+                    <a href="/dublinbuspredict/connections" class="w3-bar-item w3-button"><i class="fa fa-train fa-fw"></i>&nbsp;Connections</a>
+                    <a href="/dublinbuspredict/contact" class="w3-bar-item w3-button"><i class="fa fa-phone fa-fw"></i>&nbsp;Contact Us</a>
+                </div>
+                <div id="social-media" class="row col-lg-12 my-social-icons">
+                    <a target="_blank" href="https://twitter.com/" class="col-xs-2 btn btn-social-icon btn-twitter"><span class="fa fa-twitter"></span></a>
+                    <a target="_blank" href="https://facebook.com/" class="col-xs-2 btn btn-social-icon btn-facebook"><span class="fa fa-facebook"></span></a>
+                    <a target="_blank" href="https://instagram.com/" class="col-xs-2 btn btn-social-icon btn-instagram"><span class="fa fa-instagram"></span></a>
+                    <a target="_blank" href="https://linkedin.com/" class="col-xs-2 btn btn-social-icon btn-linkedin"><span class="fa fa-linkedin"></span></a>
+                    <a target="_blank" href="https://googleplus.com/" class="col-xs-2 btn btn-social-icon btn-google"><span class="fa fa-google"></span></a>
+                </div>
+            </div>
+        </div>
+
+        <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC035PwcDeGjTnReRow47QObcOOoGxw3Ko&callback=tourismMap"></script>-->
+        {% load staticfiles %}
+        <div class="container-fluid my-index-form" id="pushed-content" onload="tourismMap()">
+            <div class="row">
+                <h3>Dublin <small>Points of Interest</small></h3>
+                <div id="map_tourism"></div>
+            </div>
+        </div>
+
+        <!--<script type="text/javascript">-->
+
+            <!--var points_of_interest = [-->
+                <!--[1, "Guinness Storehouse,<br>St James's Gate,<br>Dublin 8<br>" + '<a target="_blank" href="https://www.guinness-storehouse.com/en">Guinness Storehouse - Website</a>', '53.3419', '-6.2868'],-->
+                <!--[2, "Dublin Zoo,<br>Phoenix Park,<br>Dublin 8<br>" + '<a target="_blank" href="https://www.dublinzoo.ie/">Dublin Zoo - Website</a>', '53.3561935', '-6.305289799999969'],-->
+                <!--[3, "Trinity College Dublin,<br>College Green,<br>Dublin 2<br>" + '<a target="_blank" href="https://www.tcd.ie/visitors/book-of-kells/">Trinity College - Website</a>', '53.34369', '-6.25919'],-->
+                <!--[4, "National Gallery of Ireland,<br>Merrion Square West,<br>Dublin 2<br>" + '<a target="_blank" href="https://www.nationalgallery.ie/">National Gallery - Website</a>', '53.3409059', '-6.252502499999991'],-->
+                <!--[5, "National Botanic Gardens,<br>Glasnevin,<br>Dublin 9<br>" + '<a target="_blank" href="http://www.botanicgardens.ie/">Botanic Gardens - Website</a>', '53.3716672', '-6.270401799999945'],-->
+                <!--[6, "St. Patrick's Cathedral,<br>Wood Quay,<br>Dublin 8<br>" + '<a target="_blank" href="https://www.stpatrickscathedral.ie/">St. Patricks Cathedral - Website</a>', '53.3395154', '-6.271476699999994'],-->
+                <!--[7, "Irish Museum of Modern Art (IMMA),<br>Royal Hospital Kilmainham, Military Rd,<br>Dublin 8<br>" + '<a target="_blank" href="http://www.imma.ie/en/index.htm">IMMA - Website</a>', '53.344719', '-6.300155'],-->
+                <!--[8, "Farmleigh House,<br>White's Road,<br>Dublin 8<br>" + '<a target="_blank" href="http://www.farmleigh.ie/">Farmleigh House - Website</a>', '53.36510000000001', '-6.3585050000000365'],-->
+                <!--[9, "Old Jameson Distellery,<br>Bow Street, Smithfield Village,<br>Dublin 7<br>" + '<a target="_blank" href="https://www.jamesonwhiskey.com/ie/visit-us/jameson-distillery-bow-st">Jameson Distellery - Website</a>', '53.3483761', '-6.277354400000036'],-->
+                <!--[10, "Grafton Street,<br><br>Dublin 2<br>" + '<a target="_blank" href="http://graftonstreet.ie/">Grafton Street - Website</a>', '53.342154', '-6.259843499999988'],-->
+                <!--[11, "St. Stephen's Green ,<br><br>Dublin 2<br>" + '<a target="_blank" href="http://ststephensgreenpark.ie/">St. Stephens Green - Website</a>', '53.3381736', '-6.259119000000055'],-->
+                <!--[12, "The Little Museum of Dublin,<br>15 St Stephen's Green,<br>Dublin 2<br>" + '<a target="_blank" href="https://www.littlemuseum.ie/">The Little Museum of Dublin - Website</a>', '53.339612', '-6.258326000000011'],-->
+                <!--[13, "The G.P.O,<br>O'Connell Street Lower<br>Dublin 1<br>" + '<a target="_blank" href="http://www.gpowitnesshistory.ie/">The G.P.O - Website</a>', '53.349349', '-6.2607209999999895'],-->
+                <!--[14, "Collins Barracks,<br>Benburb Street,<br>Dublin 7<br>" + '<a target="_blank" href="http://www.museum.ie/Decorative-Arts-History">Museum - Website</a>', '53.3479417', '-6.285923099999991'],-->
+                <!--[15, "Dublin Castle,<br>Dame Street,<br>Dublin 2<br>" + '<a target="_blank" href="http://www.dublincastle.ie/">Dublin Castle - Website</a>', '53.34288609999999', '-6.267428399999972'],-->
+                <!--[16, "The Point,<br>North Wall Quay, North Dock,<br>Dublin 1", '53.347496', '-6.228508'],-->
+                <!--[17, "Croke Park,<br>Jones' Rd, Drumcondra,<br> Dublin 3", '53.360712', '-6.251209'],-->
+                <!--[18, "The National Concert Hall,<br>Earlsfort Terrace,<br> Dublin 2", '53.334784', '-6.258189'],-->
+                <!--[19, "Vicar Street,<br>58-59 Thomas St, The Liberties,<br> Dublin 8", '53.342607', '-6.277983'],-->
+                <!--[20, "The Academy,<br>57 Abbey Street Middle, North City,<br> Dublin 1", '53.348030', '-6.261998'],-->
+                <!--[21, "The Olympia Theatre,<br>72 Dame St, Temple Bar,<br> Dublin 2", '53.344313', '-6.266080'],-->
+                <!--[22, "Aviva Stadium,<br>Lansdowne Rd,<br> Dublin 4", '53.335232', '-6.228457'],-->
+                <!--[23, "RDS Arena,<br><br> Dublin 4", '53.325718', '-6.229688'],-->
+                <!--[24, "Phoenix Park,<br><br> Dublin 8", '53.355882', '-6.329813'],-->
+                <!--[25, "Irish Museum of Modern Art (IMMA),<br>Royal Hospital Kilmainham, Military Rd,<br>Dublin 8", '53.343605', '-6.304168'],-->
+                <!--[24, "The Convention Centre,<br>Spencer Dock, N Wall Quay, North Dock,<br> Dublin 1", '53.348052', '-6.239398'],-->
+                <!--[24, "Iveagh Gardens,<br>Clonmel St, Saint Kevin's,<br> Dublin 2", '53.335138', '-6.261034'],-->
+                <!--[25, "Bord Gais Energy Theatre,<br>Grand Canal Quay, Grand Canal Dock,<br> Dublin 2", '53.344213', '-6.240104'],-->
+                <!--[25, "Marlay Park,<br>Grange Road, Rathfarnham,<br> Dublin 16", '53.2733', '-6.2689'],-->
+
+            <!--];-->
+
+
+            <!--var map = new google.maps.Map(document.getElementById('map_tourism'), {-->
+                <!--zoom: 11,-->
+                <!--center: new google.maps.LatLng(53.35410685206609, -6.285796167333956),-->
+                <!--mapTypeId: google.maps.MapTypeId.ROADMAP-->
+            <!--});-->
+
+            <!--var infowindow = new google.maps.InfoWindow();-->
+            <!--var marker, i;-->
+
+            <!--for (i = 0; i < 15; i++) { -->
+                <!--marker = new google.maps.Marker({-->
+                    <!--position: new google.maps.LatLng(points_of_interest[i][2], points_of_interest[i][3]),-->
+                    <!--map: map,-->
+                    <!--icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'-->
+                <!--});-->
+
+                <!--google.maps.event.addListener(marker, 'click', (function(marker, i) {-->
+                    <!--return function() {-->
+                        <!--infowindow.setContent(points_of_interest[i][1]);-->
+                        <!--infowindow.open(map, marker);-->
+                    <!--}-->
+                <!--})(marker, i));-->
+
+            <!--}-->
+
+
+            <!--for (i = 15; i < points_of_interest.length; i++) { -->
+                <!--marker = new google.maps.Marker({-->
+                    <!--position: new google.maps.LatLng(points_of_interest[i][2], points_of_interest[i][3]),-->
+                    <!--map: map,-->
+                    <!--icon: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'-->
+                <!--});-->
+
+                <!--google.maps.event.addListener(marker, 'click', (function(marker, i) {-->
+                    <!--return function() {-->
+                        <!--infowindow.setContent(points_of_interest[i][1]);-->
+                        <!--infowindow.open(map, marker);-->
+                    <!--}-->
+                <!--})(marker, i));-->
+
+            <!--}-->
+
+            <!--infoWindow = new google.maps.InfoWindow;-->
+
+            <!--// Try HTML5 geolocation.-->
+            <!--if (navigator.geolocation) {-->
+                <!--navigator.geolocation.getCurrentPosition(function(position) {-->
+                    <!--var pos = {-->
+                        <!--lat: position.coords.latitude,-->
+                        <!--lng: position.coords.longitude-->
+                    <!--};-->
+
+                    <!--infoWindow.setPosition(pos);-->
+                    <!--infoWindow.setContent('Location found.');-->
+                    <!--infoWindow.open(map);-->
+                    <!--map.setCenter(pos);-->
+                <!--}, function() {-->
+                    <!--handleLocationError(true, infoWindow, map.getCenter());-->
+                <!--});-->
+            <!--} else {-->
+                <!--// Browser doesn't support Geolocation-->
+                <!--handleLocationError(false, infoWindow, map.getCenter());-->
+            <!--}-->
+
+
+            <!--function handleLocationError(browserHasGeolocation, infoWindow, pos) {-->
+                <!--infoWindow.setPosition(pos);-->
+                <!--infoWindow.setContent(browserHasGeolocation ?-->
+                                      <!--'Error: The Geolocation service failed.' :-->
+                                      <!--'Error: Your browser doesn\'t support geolocation.');-->
+                <!--infoWindow.open(map);-->
+            <!--}-->
+        <!--</script>-->
+
+        <div class="container-fluid">
+			<div class="row">
+            <footer class="fixed-bottom my-new-footer">
+                <div class="row">
+                	{% load static %}
+                    <div class="col-sm-3 text-center hidden-xs"><img src="{% static 'dublinbuspredict/css/images/TFI%20(2).png' %}">
+                    </div>
+                    <div class="col-sm-3 text-center"><h4>Information</h4>
+                        <li><a href="/dublinbuspredict/">Home</a></li>
+                        <li><a href="/dublinbuspredict/tickets_fares">Tickets & Fares</a></li>
+                        <li><a href="/dublinbuspredict/tourism">Tourism</a></li>
+                        <li><a href="/dublinbuspredict/connections">Connections</a></li>
+                        <li><a href="/dublinbuspredict/contact">Contact Us</a></li>
+                    </div>
+                    <div class="col-sm-3 text-center"><h4>External Links</h4>
+                        <li><a target="_blank" href="https://www.luas.ie/">Luas</a></li>
+                        <li><a target="_blank" href="http://www.buseireann.ie/">Bus Eireann</a></li>
+                        <li><a target="_blank" href="http://www.irishrail.ie/">Irish Rail</a></li>
+                    </div>
+                    <div class="col-sm-3 text-center hidden-xs"><img id="bly_img" src="{% static 'dublinbuspredict/css/images/logonobg.png' %}">
+                    </div>
+                </div>
+
+                <!-- Footer: Copyright Section -->
+                <p class="text-center" style="padding:10px;">&copy; Copyright 2017</p>
+            </footer>
+            </div>
+        </div>
+
+        <!-- Darragh: why are we importing it twice?-->
+        <!-- jQuery file: Needs to be pasted above Bootstrap file to avoid errors -->    
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+    </body>
+</html>

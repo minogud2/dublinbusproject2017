@@ -10,9 +10,9 @@
         <!-- Bootstrap: Optional theme: Look and Feel -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-<!-- CSS: Link to the CSS stylesheet-->
-<!--<link rel="stylesheet" href="/css/main.css">-->
-        
+        <!-- CSS: Link to the CSS stylesheet-->
+        <!--<link rel="stylesheet" href="/css/main.css">-->
+
         <!-- Link to jQuery libraries -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
@@ -23,6 +23,7 @@
 
 
         {% load staticfiles %}
+<<<<<<< HEAD
             <link rel="stylesheet" type="text/css" href="{% static 'dublinbuspredict/css/style.css' %}" />
             <script type="text/javascript" src="{% static 'dublinbuspredict/js/displaySearch.js' %}"></script>
             <script type="text/javascript" src="{% static 'dublinbuspredict/js/main.js' %}"></script>
@@ -30,8 +31,24 @@
 	    <!--<link rel="stylesheet" type="text/css" href="{% static 'dublinbuspredict/style.css' %}" />-->
 <!--<script type="text/javascript" src="/js/main.js"></script>-->
 <!--<script type="text/javascript" src="/js/displaySearch.js"></script>-->
+=======
+<!-- <<<<<<< HEAD
+        <link rel="stylesheet" type="text/css" href="{% static 'dublinbuspredict/css/style.css' %}" />
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHxpqeoG1jNA4VHBlFeopWuRmFoYTh-ME&callback=initMap"></script>
+        <script type="text/javascript" src="{% static 'dublinbuspredict/js/displaySearch.js' %}"></script>
+        <script type="text/javascript" src="{% static 'dublinbuspredict/js/main.js' %}"></script>
+>>>>>>> 1ff390f47d17ba680a1171a644b0dd11621a20de
 
+        <link rel="stylesheet" type="text/css" href="{% static 'dublinbuspredict/style.css' %}" />
+       
+======= -->
+        <link rel="stylesheet" type="text/css" href="{% static 'dublinbuspredict/css/style.css' %}" />
+        <script type="text/javascript" src="{% static 'dublinbuspredict/js/displaySearch.js' %}"></script>
+        <script type="text/javascript" src="{% static 'dublinbuspredict/js/main.js' %}"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHxpqeoG1jNA4VHBlFeopWuRmFoYTh-ME&callback=initMap"></script>
+	    <link rel="stylesheet" type="text/css" href="{% static 'dublinbuspredict/style.css' %}" />
     </head>
+<<<<<<< HEAD
     	{% load static %}
 	<body onload="loadRoutes()">
                 <!-- Main container to give website 12-grid shape -->
@@ -51,23 +68,44 @@
                 <div id="mySidenav" class="sidenav">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                     <div id="w3-buttons"> 
+=======
+    <body onload="loadRoutes()">
+        <!-- Main container to give website 12-grid shape -->
+        <div class="container-fluid">
+            <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+                <div class="navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="navbar-left"> 
+                            <a href="#" class="custom-white" style="cursor:pointer"  onclick="openNav()">
+                                <span class="glyphicon glyphicon-menu-hamburger"></span>
+                            </a></li>
+                        {% load static %}
+                        <li class="navbar-right"><img id="db_logo" alt="Dublin Bus Logo" src="{% static 'dublinbuspredict/css/images/dblogo.png' %}" class="img-responsive" ></li>
+                    </ul> 
+                </div>
+            </nav>
+            <div id="mySidenav" class="sidenav">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <div id="w3-buttons">
+>>>>>>> 1ff390f47d17ba680a1171a644b0dd11621a20de
                     <a href="/dublinbuspredict/" class="w3-bar-item w3-button"><i class="fa fa-home fa-fw"></i>&nbsp;Home</a>
                     <a href="/dublinbuspredict/tickets_fares" class="w3-bar-item w3-button"><i class="fa fa-eur fa-fw"></i>&nbsp;Tickets & Fares</a>
+                    <a href="/dublinbuspredict/tourism" class="w3-bar-item w3-button"><i class="fa fa-map fa-fw"></i></i>&nbsp;Tourism</a>
                     <a href="/dublinbuspredict/connections" class="w3-bar-item w3-button"><i class="fa fa-train fa-fw"></i>&nbsp;Connections</a>
                     <a href="/dublinbuspredict/contact" class="w3-bar-item w3-button"><i class="fa fa-phone fa-fw"></i>&nbsp;Contact Us</a>
-                    </div>
-                    <div id="social-media" class="row col-lg-12 my-social-icons">
-                    <a class="col-xs-2 btn btn-social-icon btn-twitter"><span class="fa fa-twitter"></span></a>
-                    <a class="col-xs-2 btn btn-social-icon btn-facebook"><span class="fa fa-facebook"></span></a>
-                    <a class="col-xs-2 btn btn-social-icon btn-instagram"><span class="fa fa-instagram"></span></a>
-                    <a class="col-xs-2 btn btn-social-icon btn-linkedin"><span class="fa fa-linkedin"></span></a>
-                    <a class="col-xs-2 btn btn-social-icon btn-google"><span class="fa fa-google"></span></a>
+                </div>
+                <div id="social-media" class="row col-lg-12 my-social-icons">
+                    <a target="_blank" href="https://twitter.com/" class="col-xs-2 btn btn-social-icon btn-twitter"><span class="fa fa-twitter"></span></a>
+                    <a target="_blank" href="https://facebook.com/" class="col-xs-2 btn btn-social-icon btn-facebook"><span class="fa fa-facebook"></span></a>
+                    <a target="_blank" href="https://instagram.com/" class="col-xs-2 btn btn-social-icon btn-instagram"><span class="fa fa-instagram"></span></a>
+                    <a target="_blank" href="https://linkedin.com/" class="col-xs-2 btn btn-social-icon btn-linkedin"><span class="fa fa-linkedin"></span></a>
+                    <a target="_blank" href="https://googleplus.com/" class="col-xs-2 btn btn-social-icon btn-google"><span class="fa fa-google"></span></a>
                 </div> 
-                </div>    
+            </div>    
         </div>
 
         <!-- Map Container -->
-        <div class="container-fluid my-map-div" id="pushed-content">
+        <div class="container-fluid my-index-form" id="pushed-content">
             <div class="row">
                 <h3>Dublin Bus <small>Route Planner</small></h3>
                 <div id="map"></div>
@@ -141,6 +179,7 @@
                                         initMap()
                                         if (time == "" || date == ""){
                                             console.log('now')
+<<<<<<< HEAD
                                             $.getJSON("http://137.43.49.41:8001/dublinbuspredict/runModel", {"route":route, "source":source, "destination":destination}, function(d) {
                                             console.log('here', d)
                                         });
@@ -150,6 +189,17 @@
                                             $.getJSON("http://137.43.49.41:8001/dublinbuspredict/runPlanner", {"route":route, "source":source, "destination":destination, "date":date, "time":time}, function(d) {
                                             console.log('here', d)
                                         });
+=======
+                                            $.getJSON("http://127.0.0.1:8000/dublinbuspredict/runModel", {"route":route, "source":source, "destination":destination}, function(d) {
+                                                console.log('here', d)
+                                            });
+                                        }
+                                        else{
+                                            console.log('date and time')
+                                            $.getJSON("http://127.0.0.1:8000/dublinbuspredict/runPlanner", {"route":route, "source":source, "destination":destination, "date":date, "time":time}, function(d) {
+                                                console.log('here', d)
+                                            });
+>>>>>>> 1ff390f47d17ba680a1171a644b0dd11621a20de
                                         }
 
 
@@ -220,36 +270,34 @@
         </div>
 
         <!-- Footer Row -->
-        <div id="container-fluid">
-        
-                <div class="row">
-            <footer class="col-sm-12 navbar-fixed-bottom my-footer" style="position:sticky">
-                <div class="row">
-                    {% load static %}
-                    <div class="col-sm-3 text-center"><img id="transport-logo" src="{% static 'dublinbuspredict/css/images/TFI%20(2).png' %}"></div>
-                    <div id="footer-text">
-                    <div id ="left-footer" class="col-sm-2 text-left"><h4>Information</h4>
-                        <a href="/dublinbuspredict/" class="footer-links">Home</a>
-                        <a href="/dublinbuspredict/tickets_fares" class="footer-links">Tickes and Fares</a><br>
-                        <a href="/dublinbuspredict/connections" class="footer-links">Connections</a><br>
-                        <a href="/dublinbuspredict/contact" class="footer-links">Contact Us</a><br>
+        <div class="container-fluid">
+            <div class="row">
+                <footer class="fixed-bottom my-new-footer">
+                    <div class="row">
+                        {% load static %}
+                        <div class="col-sm-3 text-center hidden-xs"><img src="{% static 'dublinbuspredict/css/images/TFI%20(2).png' %}">
+                        </div>
+                        <div class="col-sm-3 text-center"><h4>Information</h4>
+                            <li><a href="/dublinbuspredict/">Home</a></li>
+                            <li><a href="/dublinbuspredict/tickets_fares">Tickets & Fares</a></li>
+                            <li><a href="/dublinbuspredict/tourism">Tourism</a></li>
+                            <li><a href="/dublinbuspredict/connections">Connections</a></li>
+                            <li><a href="/dublinbuspredict/contact">Contact Us</a></li>
+                        </div>
+                        <div class="col-sm-3 text-center"><h4>External Links</h4>
+                            <li><a target="_blank" href="https://www.luas.ie/">Luas</a></li>
+                            <li><a target="_blank" href="http://www.buseireann.ie/">Bus Eireann</a></li>
+                            <li><a target="_blank" href="http://www.irishrail.ie/">Irish Rail</a></li>
+                        </div>
+                        <div class="col-sm-3 text-center hidden-xs"><img id="bly_img" src="{% static 'dublinbuspredict/css/images/logonobg.png' %}">
+                        </div>
                     </div>
-                    <div id ="right-footer" class="col-sm-2 text-left"><h4>Other transport sites</h4>
-                        <a href="https://www.luas.ie/" class="footer-links">Luas</a><br>
-                        <a href="http://www.buseireann.ie/" class="footer-links">Bus eireann</a><br>
-                        <a href="http://www.irishrail.ie/" class="footer-links">Iarnrod eireann</a><br>
-                    </div>
-                    </div>
-                    {% load static %}
-                    <div id="bl-logo" class="col-sm-3"><img id="buslightyear" src="{% static 'dublinbuspredict/css/images/logonobg.png' %}">
-                    </div>
-                    </div>
-                <br>
-                <br>
-                <p class="text-center" style="padding:10px;">&copy; Copyright 2017</p>
-            </footer>
-        </div>
+
+                    <!-- Footer: Copyright Section -->
+                    <p class="text-center" style="padding:10px;">&copy; Copyright 2017</p>
+                </footer>
             </div>
+        </div>
 
         <!-- Bootstrap Files: Documentation requested they be added to end of HTML page to avoid errors -->
 
