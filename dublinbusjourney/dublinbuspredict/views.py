@@ -29,8 +29,6 @@ list_routes = ['1', '4', '7', '9', '11', '13', '14', '15', '16', '17', '18', '25
                    '44B', '45A', '46A', '46E', '51D', '51X', '54A', '56A', '65B', '66A', '66B', '66X', '67X', '68A',
                    '68X', '69X', '70D', '76A', '77A', '77X', '79A', '7A', '7B', '7D', '83A', '84A', '84X']
 
-
-
 def index(request):
     global list_routes
     db = MySQLdb.connect(user='lucas', db='summerProdb', passwd='hello_world', host='csi6220-3-vm3.ucd.ie')
@@ -49,7 +47,6 @@ def index(request):
     for i in rows2:
         stops.append(i[0])
     return render(request, 'dublinbuspredict/index.html', {'list_routes': routes, 'list_stops': stops})
-
 
 def pilot_routes(request):
     route_id = request.GET.get('route')

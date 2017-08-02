@@ -38,13 +38,12 @@ def holidays(date):
         s_holiday = True
     return p_holiday, s_holiday
 
-
-def weather():
-    base_url_time_machine = 'http://api.wunderground.com/api/c59c002ced7bb1cb/conditions/q/IE/Dublin.json'
-    response = requests.get(base_url_time_machine)
-    results = response.json()
-    return results['current_observation']['precip_1hr_metric'][1:], results['current_observation']['wind_kph'], results['current_observation']['temp_c']
-
+# 
+# def weather():
+#     base_url_time_machine = 'http://api.wunderground.com/api/c59c002ced7bb1cb/conditions/q/IE/Dublin.json'
+#     response = requests.get(base_url_time_machine)
+#     results = response.json()
+#     return results['current_observation']['precip_1hr_metric'][1:], results['current_observation']['wind_kph'], results['current_observation']['temp_c']
 
 
 def time_to_arrive(datetime, sec):
@@ -60,10 +59,10 @@ def main(bus_route, source_stop, destination_stop):
     information_from_bus_finder = main_bus_finder(source_stop, destination_stop, bus_route)
     if type(information_from_bus_finder) == str:
         return information_from_bus_finder
-    forecast = weather()
-    rain = forecast[0]
-    wind = forecast[1]
-    temp = forecast[2]
+#     forecast = weather()
+#     rain = forecast[0]
+#     wind = forecast[1]
+#     temp = forecast[2]
     for i in information_from_bus_finder:
         for j in i:
             # delay = j['delay']
@@ -72,7 +71,7 @@ def main(bus_route, source_stop, destination_stop):
             holiday = holidays(j['datetime'])
             p_holiday = holiday[0]
             s_holiday = holiday[1]
-            j['duration'] = model(bus_route, j['stopid'], hour, weekday, p_holiday, s_holiday, rain, wind, temp)[0]
+            j['duration'] = model(bus_route, j['stopid'], hour, weekday, p_holiday, s_holiday)[0]
             j['predicted_arrival_time'] = (time_to_arrive(parser.parse(j['datetime']), j['duration']))
             if str(j['stopid']) == source_stop:
                 j['status'] = 'src'
@@ -80,7 +79,6 @@ def main(bus_route, source_stop, destination_stop):
                 j['status'] = 'dest'
             else:
                 j['status'] = 'normal'
-
     return information_from_bus_finder
 
 if __name__ == '__main__':

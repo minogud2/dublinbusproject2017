@@ -14,9 +14,6 @@
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-        <!-- Google Maps -->
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHxpqeoG1jNA4VHBlFeopWuRmFoYTh-ME&callback=initMap"></script>
-
         <!-- Font for side navbar Awesome CDN Source: http://fontawesome.io/ -->
         <script src="https://use.fontawesome.com/e8a4c811a1.js"></script>
 
@@ -186,109 +183,13 @@
                                         });
                                     </script>
                                 </div>
-<<<<<<< HEAD
-                                <button type="button" id="submit-route" onclick="window.location='http://137.43.49.41:8001/dublinbuspredict/map';" class="form-control btn btn-primary">Find Journey</button>
-                                <script>
-                                    document.getElementById("submit-route").addEventListener("click", function(){
-                                        route = document.getElementById("search-box-1").value;
-                                        source = document.getElementById("search-box-2").value;
-                                        destination = document.getElementById("search-box-3").value;
-                                        date = document.getElementById("date-input-index").value;
-                                        time = document.getElementById("time-input-index").value;
-                                        console.log('Route:', route)
-                                        console.log('Source:', source)
-                                        console.log('Destination:', destination)
-                                        console.log('Time:', time)
-                                        console.log('Date:', date)
-                                        $.getJSON("http://137.43.49.41:8001/dublinbuspredict/setInfoNextPage", {"route":route, "source":source, "destination":destination, "time":time, "date":date}, function(d) {});
-                                    });
-                                </script>
-                            </div>
-                        </form>
-=======
                             </form>
                         </div>
->>>>>>> 1ff390f47d17ba680a1171a644b0dd11621a20de
                     </div>
                 </div>
             </div>
         </div>
-<<<<<<< HEAD
-            
-            <!--<div class="container-fluid">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <form action="" method="" class="form-inline">
-                            <div id="form-holder">
-                                {% load static %}
-                                    <div id="form-input">
-                                        <div class="form-group">
-                                            {% load static %}
-                                                <div class="dropdown">
-                                                    <input id="search-box-1" oninput="searchFunctionRoute()" type="text" name="search" placeholder="Enter a route">
-                                                    <div class="dropdown-content">
-                                                        <ul class="dropdown-list" id ="dropdown-list-1">
-                                                        {% for route in list_routes %}
-                                                            <li><a onclick='getStops("{{ route }}")'>{{ route }}</a></li>
-                                                        {% endfor %}
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="dropdown">
-                                                <input id="search-box-2" oninput="searchFunctionSRC()" type="text" name="search2" placeholder="Enter starting stop!">
-                                                <div class="dropdown-content">
-                                                    <ul class="dropdown-list" id="dropdown-list-2">
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="dropdown">
-                                                <input id="search-box-3" oninput="searchFunctionDest()" type="text" name="search2" placeholder="Enter destination stop!">
-                                                <div class="dropdown-content">
-                                                    <ul class="dropdown-list" id="dropdown-list-3"></ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <input class="form-control" type="date" id="date-input-index" placeholder="Today">
-                                        </div>
-                                        <div class="form-group">
-                                            <input class="form-control" type="time" id="time-input-index" placeholder="Now">
-                                        </div>
-                                            <!--What is this for? (don't know who wrote this: lucas)-->
-                                        <div class="form-group">
-                                            <!--<form action="map.html" method="get" accept-charset="utf-8">-->
-                                            <!--<button type="button" id="submit-route" onclick="window.location='http://137.43.49.41:8001/dublinbuspredict/map';" class="form-control btn btn-primary">Find Journey</button>
-                                            <script>
-                                                document.getElementById("submit-route").addEventListener("click", function(){
-                                                    route = document.getElementById("search-box-1").value;
-                                                    source = document.getElementById("search-box-2").value;
-                                                    destination = document.getElementById("search-box-3").value;
-                                                    date = document.getElementById("date-input-index").value;
-                                                    time = document.getElementById("time-input-index").value;
-                                                    console.log('Route:', route)
-                                                    console.log('Source:', source)
-                                                    console.log('Destination:', destination)
-                                                    console.log('Time:', time)
-                                                    console.log('Date:', date)
-                                                    $.getJSON("http://137.43.49.41:8001/dublinbuspredict/setInfoNextPage", {"route":route, "source":source, "destination":destination, "time":time, "date":date}, function(d) {});
-                                                });
-                                            </script>
-                                        </div>
-                                    </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>-->
-            </div>
-        </div>
-        
-=======
 
->>>>>>> 1ff390f47d17ba680a1171a644b0dd11621a20de
         <div class="container-fluid">
             <div id="scrollpage">
                 <a href="#traffic-div">

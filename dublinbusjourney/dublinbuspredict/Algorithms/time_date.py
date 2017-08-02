@@ -82,14 +82,14 @@ def holidays(date):
         s_holiday = True
     return p_holiday, s_holiday
 
-
-def weather():
-    base_url_time_machine = 'http://api.wunderground.com/api/c59c002ced7bb1cb/conditions/q/IE/Dublin.json'
-    response = requests.get(base_url_time_machine)
-    results = response.json()
-    return results['current_observation']['precip_1hr_metric'][1:], results['current_observation']['wind_kph'], results['current_observation']['temp_c']
-    # for i in results['current_observation']:
-    #     print(i)
+# 
+# def weather():
+#     base_url_time_machine = 'http://api.wunderground.com/api/c59c002ced7bb1cb/conditions/q/IE/Dublin.json'
+#     response = requests.get(base_url_time_machine)
+#     results = response.json()
+#     return results['current_observation']['precip_1hr_metric'][1:], results['current_observation']['wind_kph'], results['current_observation']['temp_c']
+#     # for i in results['current_observation']:
+#     #     print(i)
 
 def time_to_arrive(datetime, sec):
     print(datetime, sec)
@@ -105,9 +105,6 @@ def time_date(bus_route, source_stop, destination_stop, date, time):
     s_holiday = holiday[1]
     weekday = datetime.weekday(parser.parse(date))
     # forecast = weather()
-    rain = 0
-    wind = 0.0
-    temp = 0.0
     print('stops', stops)
     dict = []
     status = 0
@@ -119,7 +116,7 @@ def time_date(bus_route, source_stop, destination_stop, date, time):
             status = 'dest'
         else:
             status = 'normal'
-        duration = model(bus_route, i[0], str(i[1]), weekday, p_holiday, s_holiday, rain, wind, temp)[0]
+        duration = model(bus_route, i[0], str(i[1]), weekday, p_holiday, s_holiday)[0]
         predicted_arrival_time = (time_to_arrive(parser.parse(date + ' ' + str(i[1])), duration))
         # predicted_arrival_time = (time_to_arrive(parser.parse(j['datetime']), j['duration']))
         print(predicted_arrival_time)

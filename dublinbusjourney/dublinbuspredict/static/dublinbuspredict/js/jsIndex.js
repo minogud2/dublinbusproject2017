@@ -17,7 +17,7 @@ function searchFunctionRoute() {
 function getStops(route) {
     document.getElementById("search-box-1").value = route;
     console.log(route);
-    $.getJSON("http://137.43.49.41:8001/dublinbuspredict/pilotRoutes", {"route":route}, function(d) {
+    $.getJSON("http://127.0.0.1:8000/dublinbuspredict/pilotRoutes", {"route":route}, function(d) {
         console.log(d)
         document.getElementById("dropdown-list-2").innerHTML = "";
         document.getElementById("search-box-2").value = "";
@@ -48,7 +48,7 @@ function getStopsDest(source) {
     document.getElementById("search-box-2").value = source;
     console.log('Source:', source);
     route = document.getElementById("search-box-1").value;
-    $.getJSON("http://137.43.49.41:8001/dublinbuspredict/pilotDest", {"route":route, "source":source}, function(d) {
+    $.getJSON("http://127.0.0.1:8000/dublinbuspredict/pilotDest", {"route":route, "source":source}, function(d) {
         console.log(d)
         document.getElementById("dropdown-list-3").innerHTML = "";
         document.getElementById("search-box-3").value = "";
@@ -81,7 +81,7 @@ function searchFunctionDest() {
 function getStopsStartingFromSource(stop){
     console.log('Stop is', stop)
     document.getElementById("search-box-2").value = stop
-    $.getJSON("http://137.43.49.41:8001/dublinbuspredict/getStopsStartingFromSource", {"source":stop}, function(d) {
+    $.getJSON("http://127.0.0.1:8000/dublinbuspredict/getStopsStartingFromSource", {"source":stop}, function(d) {
         console.log(d)
         document.getElementById("dropdown-list-1").innerHTML = "";
         document.getElementById("search-box-1").value = "";
@@ -98,7 +98,7 @@ function getStopsDestExtraRoute(route){
     document.getElementById("search-box-3").value = route;
     source = document.getElementById("search-box-2").value;
     dest = document.getElementById("search-box-3").value;
-    $.getJSON("http://137.43.49.41:8001/dublinbuspredict/getStopsDestExtraRoute", {"source":source, "dest":dest}, function(d) {
+    $.getJSON("http://127.0.0.1:8000/dublinbuspredict/getStopsDestExtraRoute", {"source":source, "dest":dest}, function(d) {
         console.log(d)
     $.each(d['routes'], function(i, p) {
         console.log(p)
@@ -120,7 +120,7 @@ function loadRoutes(){
     document.getElementById("search-box-2").value = "";
     document.getElementById("dropdown-list-3").innerHTML = "";
     document.getElementById("search-box-3").value = "";
-    var a = $.getJSON("http://137.43.49.41:8001/dublinbuspredict/loadRoutesForMap", null, function(d) {
+    var a = $.getJSON("http://127.0.0.1:8000/dublinbuspredict/loadRoutesForMap", null, function(d) {
         $.each(d['list_routes'], function(i, p) {
             $('#dropdown-list-1').append($('<li></li>').val(p).html('<a onclick=getStops("' + p + '")>' + p + '</a>'));
         })

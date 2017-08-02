@@ -1,14 +1,13 @@
 //// Toggle function for route div on map.html
 $(document).ready(function(){
-	$("#showDetails").click(function(){
-		$("#toggleDetailsRes").toggle(1000);
-	});
+	$("#RouteMap1").click(function(){
+		$("#toggleRouteMap1").toggle();
 });
-
-//// Toggle function for route div on map.html
+});
+////Toggle function for route div on map.html
 $(document).ready(function(){
-	$("#RouteMap").click(function(){
-		$("#toggleRouteMap").toggle(1000);
+	$("#RouteMap2").click(function(){
+		$("#toggleRouteMap2").toggle();
 	});
 });
 
@@ -40,7 +39,7 @@ function initMap() {
 	  transitLayer.setMap(map);
 
 //	Function to pull in the json from the url.
-    $.getJSON("http://137.43.49.41:8001/dublinbuspredict/sampleQuery", null, function(d) {
+    $.getJSON("http://127.0.0.1:8000/dublinbuspredict/sampleQuery", null, function(d) {
         var data = d.data;
         var points = new Array;
         var marker, i;
@@ -49,10 +48,10 @@ function initMap() {
                 var myLatLng = new google.maps.LatLng(data[i][3], data[i][4])
                 marker = new google.maps.Marker({
                 position: new google.maps.LatLng(data[i][3], data[i][4]),
-                map: map
+                map: map,
+                icon: stops_icon
             });
          points.push(marker.getPosition());
-         bounds.extend(marker.position);
 
         google.maps.event.addListener(marker, 'click', (function(marker, i){
         	return function() {
@@ -69,7 +68,7 @@ function initMap() {
       service = new google.maps.DirectionsService();
 
       //Set the Path Stroke Color
-      var poly = new google.maps.Polyline({ map: map, strokeColor: '#4986E7' });
+      var poly = new google.maps.Polyline({ map: map, strokeColor: '#3594D4' });
 
       //Loop and Draw Path Route between the Points on MAP
       for (var i = 0; i < points.length; i++) {
@@ -91,7 +90,7 @@ function initMap() {
 function loadRoutes(){
     console.log('HEReeeeeeeeeeeeeee!')
     var counter = 0
-    var a = $.getJSON("http://137.43.49.41:8001/dublinbuspredict/loadRoutesForMap", null, function(d) {
+    var a = $.getJSON("http://127.0.0.1:8000/dublinbuspredict/loadRoutesForMap", null, function(d) {
         $.each(d['list_routes'], function(i, p) {
             $('#dropdown-list-4').append($('<li></li>').val(p).html('<a onclick=getStops2("' + p + '")>' + p + '</a>'));
         })
@@ -99,7 +98,7 @@ function loadRoutes(){
             $('#dropdown-list-5').append($('<li></li>').val(p).html('<a onclick=getStopsStartingFromSource2("' + p + '")>' + p + '</a>'));
         })
     });
-    var b = $.getJSON("http://137.43.49.41:8001/dublinbuspredict/getInfoNextPage", null, function(d) {
+    var b = $.getJSON("http://127.0.0.1:8000/dublinbuspredict/getInfoNextPage", null, function(d) {
         console.log('Second call!');
         console.log('Results:', d);
         route = d['route'];
@@ -109,13 +108,74 @@ function loadRoutes(){
         date = d['date']
         initMap()
         if (time != "" || date != ""){
-            $.getJSON("http://137.43.49.41:8001/dublinbuspredict/runPlanner", {"route":route, "source":source, "destination":destination, "date":date, "time":time}, function(d) {
+            $.getJSON("http://127.0.0.1:8000/dublinbuspredict/runPlanner", {"route":route, "source":source, "destination":destination, "date":date, "time":time}, function(d) {
                 console.log('here', d)
             });
         }
         else{
-            $.getJSON("http://137.43.49.41:8001/dublinbuspredict/runModel", {"route":route, "source":source, "destination":destination}, function(d) {
+            $.getJSON("http://127.0.0.1:8000/dublinbuspredict/runModel", {"route":route, "source":source, "destination":destination}, function(d) {
                 console.log('here', d)
+                var d2 = d.info_buses;
+                var bus1 = d2[1];
+                var bus2 = d2[2];
+                console.log("Due time",bus1[0].predicted_arrival_time)
+                var first_arrival = new Date(bus1[0].predicted_arrival_time);
+                var second_arrival = new Date(bus2[0].predicted_arrival_time);
+                console.log("ArrivalTIME", first_arrival)
+                var currentTime = new Date();
+                console.log(currentTime)
+                var diff1 = Math.abs(first_arrival - currentTime);
+                var diff2 = Math.abs(second_arrival - currentTime);
+                var journey_time1 = 0;
+                var journey_time2 = 0;
+                var no_stops1;
+                var no_stops2;
+                                                
+                for (var i = 0; i < bus1.length; i++) {
+                	var arrival1 = bus1[i].predicted_arrival_time;
+                	var newArrival1 = arrival1.slice(11);
+                	var stop1 = bus1[i].stopid;
+                	journey_time1 += bus1[i].duration;
+                	$('#ulOutput1').append('<li class="passed"><b>Arrival Time:&nbsp</b>' + newArrival1 + '<br><b>Stop ID:&nbsp</b>' + stop1 + '</li>');        		
+                	no_stops1 +=1;
+                }
+                $('#dueTime1').append("<b>" + Math.floor(diff1/60000) + " minutes" + "<b>" +"<br>")
+                $('#journeyTime1').append("<b>" + Math.floor(journey_time1/ 60) + " minutes" + "</b>" +"<br>")
+                
+                  if (no_stops1.length < 4) {
+                    $('#journeyPrice1').append("<b>Adult:</b> €2.00" + "<br>");
+                    $('#journeyPrice1').append("<b>Leap Card:</b> €1.50" + "<br>");
+                } else if (no_stops1.length > 3 && no_stops.length < 13){
+                    $('#journeyPrice1').append("<b>Adult:</b> €2.70" + "<br>");
+                    $('#journeyPrice1').append("<b>Leap Card:</b> €2.05" + "<br>");
+                }
+                else{
+                    $('#journeyPrice1').append("<b>Adult:</b> €3.30" + "<br>");
+                    $('#journeyPrice1').append("<b>Leap Card:</b> €2.60" + "<br>");
+                }
+                
+                for (var i = 0; i < bus2.length; i++) {
+                	var arrival2 = bus2[i].predicted_arrival_time;
+                	var newArrival2 = arrival2.slice(11);
+                	var stop2 = bus2[i].stopid;
+                	journey_time2 += bus2[i].duration;
+                	$('#ulOutput2').append('<li class="passed"><b>Arrival Time:&nbsp</b>' + newArrival2 + '<br><b>Stop ID:&nbsp</b>' + stop2 + '</li>');        		
+                	no_stops2 +=1;
+                }
+                $('#dueTime2').append("<b>" + Math.floor(diff2/60000) + " minutes" + "</b>" +"<br>")
+                $('#journeyTime2').append("<b>" + Math.floor(journey_time2/ 60) + " minutes" + "</b>" +"<br>")
+                
+                if (no_stops2.length < 4) {
+                    $('#journeyPrice2').append("<b>Adult:</b> €2.00" + "<br>");
+                    $('#journeyPrice2').append("<b>Leap Card:</b> €1.50" + "<br>");
+                } else if (no_stops2.length > 3 && no_stops.length < 13){
+                    $('#journeyPrice2').append("<b>Adult:</b> €2.70" + "<br>");
+                    $('#journeyPrice2').append("<b>Leap Card:</b> €2.05" + "<br>");
+                }
+                else{
+                    $('#journeyPrice2').append("<b>Adult:</b> €3.30" + "<br>");
+                    $('#journeyPrice2').append("<b>Leap Card:</b> €2.60" + "<br>");
+                }
             });
         }
     });
@@ -141,7 +201,7 @@ function searchFunctionRoute2() {
 function getStops2(route) {
     document.getElementById("search-box-4").value = route;
     console.log(route);
-    $.getJSON("http://137.43.49.41:8001/dublinbuspredict/pilotRoutes", {"route":route}, function(d) {
+    $.getJSON("http://127.0.0.1:8000/dublinbuspredict/pilotRoutes", {"route":route}, function(d) {
         console.log(d)
         document.getElementById("dropdown-list-5").innerHTML = "";
         document.getElementById("search-box-5").value = "";
@@ -173,7 +233,7 @@ function getStopsDest2(source) {
     console.log('Source:', source);
     route = document.getElementById("search-box-4").value;
     console.log ('Route:', route)
-    $.getJSON("http://137.43.49.41:8001/dublinbuspredict/pilotDest", {"route":route, "source":source}, function(d) {
+    $.getJSON("http://127.0.0.1:8000/dublinbuspredict/pilotDest", {"route":route, "source":source}, function(d) {
         console.log(d)
         document.getElementById("dropdown-list-6").innerHTML = "";
         document.getElementById("search-box-6").value = "";
@@ -206,7 +266,7 @@ function searchFunctionDest2() {
 function getStopsStartingFromSource2(stop){
     console.log('Stop is', stop)
     document.getElementById("search-box-5").value = stop
-    $.getJSON("http://137.43.49.41:8001/dublinbuspredict/getStopsStartingFromSource", {"source":stop}, function(d) {
+    $.getJSON("http://127.0.0.1:8000/dublinbuspredict/getStopsStartingFromSource", {"source":stop}, function(d) {
         console.log(d)
         document.getElementById("dropdown-list-4").innerHTML = "";
         document.getElementById("search-box-4").value = "";
@@ -223,7 +283,7 @@ function getStopsDestExtraRoute2(route){
     document.getElementById("search-box-6").value = route;
     source = document.getElementById("search-box-5").value;
     dest = document.getElementById("search-box-6").value;
-    $.getJSON("http://137.43.49.41:8001/dublinbuspredict/getStopsDestExtraRoute", {"source":source, "dest":dest}, function(d) {
+    $.getJSON("http://127.0.0.1:8000/dublinbuspredict/getStopsDestExtraRoute", {"source":source, "dest":dest}, function(d) {
         console.log(d)
     $.each(d['routes'], function(i, p) {
         console.log(p)
@@ -245,7 +305,7 @@ function loadRoutes2(){
     document.getElementById("search-box-5").value = "";
     document.getElementById("dropdown-list-6").innerHTML = "";
     document.getElementById("search-box-6").value = "";
-    var a = $.getJSON("http://137.43.49.41:8001/dublinbuspredict/loadRoutesForMap", null, function(d) {
+    var a = $.getJSON("http://127.0.0.1:8000/dublinbuspredict/loadRoutesForMap", null, function(d) {
         $.each(d['list_routes'], function(i, p) {
             $('#dropdown-list-4').append($('<li></li>').val(p).html('<a onclick=getStops2("' + p + '")>' + p + '</a>'));
         })

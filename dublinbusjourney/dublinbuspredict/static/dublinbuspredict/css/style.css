@@ -13,8 +13,26 @@ body{
   }
 }
 
+@font-face {
+  font-family: 'London-Tube';
+  src: url('../fonts/London-Tube.ttf');
+  src: local('London-Tube.ttf')
+}
+
 h2{
     font-size: 18px;
+    font-family: 'London-Tube';
+}
+
+h3{
+	font-family: 'London-Tube';
+}
+h3{
+	font-family: 'London-Tube';
+}
+
+p{
+	font-family: 'London-Tube';
 }
 
 #map{
@@ -32,9 +50,6 @@ h2{
     font-family: VolvoBroad;
     src: url(VolvoBroad.ttf);
 }
-
-
-
 
 /* Multiple Pages - Navigation bar. */
 .navbar-fixed-top{
@@ -228,8 +243,6 @@ ul {
 }
 
 
-
-
 /* Multiple Pages - Footer */
 .my-new-footer{
     background-color: #0c2864;
@@ -239,8 +252,6 @@ ul {
     margin-top: 100px;
     bottom: 0;
     width: 100%;
-    
-     
 }
 
 .my-new-footer a{
@@ -253,8 +264,6 @@ ul {
 }
 
 
-
-
 /* index.html */
 #primary{
     position: relative;
@@ -264,7 +273,7 @@ ul {
 }
 
 #my-carousel{
-    height:560px;
+    height:470px;
     max-height:560px;
     overflow: hidden;
 }
@@ -310,12 +319,59 @@ ul {
 	margin-bottom: -20px;
 }
 
+/* Display result*/
 
+.output{
+  list-style: none;
+  padding: 0;
+  font: normal 16px/22px;
+  font-family: London-Tube;
+  color: #999;
+}
+
+li.passed {
+  margin-left: 100px;
+  overflow: hidden;
+  position: relative;
+  padding: 0 0 10px 35px;
+  }
+
+li.passed::before {
+    content: '';
+    position: absolute;
+    left: 9px;
+    top: 9px;
+    width: 20px;
+    height: 999px;
+    border: 2px solid #3594D4;
+    border-width: 2px 0 0 2px;
+    }
+    li.passed:last-child::before {
+      border-width: 2px 0 0;
+      }
+  li.passed::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 16px;
+    height: 16px;
+    background: #fff;
+    border: 2px solid #3594D4;
+    border-radius: 50%;
+    }
+  li.passed {
+    color: #000;
+    }
+    li.passed::before,
+    li.passed::after {
+      border-color: #3594D4;
+      }
 
 
 /* index.html - Form */
 .my-index-form{
-	margin-top: 100px;
+	margin-top: 85px;
 	margin-bottom: 20px;
 }
 
@@ -351,16 +407,10 @@ ul {
     color: white;
 }*/
 
-
-
-
 /* map.html */
 .my-timetable{
     margin-top: 100px;
 }
-
-
-
 
 /* connections.html */
 .my-connections{
@@ -370,8 +420,6 @@ ul {
 .my-connection-information{
     margin-left: 40px;    
 }
-
-
 
 
 /* tickets_fares.html */
@@ -435,11 +483,6 @@ ul {
 .my-profile{
     padding: 15px;
 }
-<<<<<<< HEAD
-=======
-
-
-
 
 /* Tourism page */
 #map_tourism{
@@ -463,10 +506,46 @@ ul {
     margin-top: 10px;
 }
 
-.my-individual-result{
-    margin: 20px;
-    border: solid black 1px;
+.show-details-result{
+	display: inline;
 }
+
+#journeyPrice1{
+	text-align: left;
+}
+#journeyPrice2{
+	text-align: left;
+}
+
+h6{
+	letter-spacing:1px;
+	font-size:14px;
+	font-family: London-Tube;
+	color: #232943;
+	font-weight: bold;
+}
+
+.resultHeadings{
+	text-align: left;
+}
+
+h5{
+	font-size:12px;
+	font-weight: bold;
+	font-family: 'London-Tube';
+}
+
+.my-individual-result{
+	text-align: left;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    height: 20px;
+}
+.show-details-result{
+	margin-top: 10px;
+	text-align: left;
+	}
+
 
 .my-changed-journey{
     padding: 10px;
