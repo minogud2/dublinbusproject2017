@@ -10,9 +10,6 @@
         <!-- Bootstrap: Optional theme: Look and Feel -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-        <!-- CSS: Link to the CSS stylesheet-->
-        <!--<link rel="stylesheet" href="/css/main.css">-->
-
         <!-- Link to jQuery libraries -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
@@ -20,6 +17,9 @@
         <script src="https://use.fontawesome.com/e8a4c811a1.js"></script>
         <!-- Font Awesome CDN Source: http://fontawesome.io/ -->
         <script src="https://use.fontawesome.com/e8a4c811a1.js"></script>
+        <!-- CSS: Link to weather icons-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.5/css/weather-icons.min.css">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         
         {% load staticfiles %}
         <link rel="stylesheet" type="text/css" href="{% static 'dublinbuspredict/css/style.css' %}" />
@@ -34,7 +34,10 @@
     				} 
 		</style>
     	<script>
-    		var stops_icon = "{% static "dublinbuspredict/images/icon.png" %}";
+    		var stopsIcon = "{% static "dublinbuspredict/images/icon.png" %}";
+    		var stopsIconSrc = "{% static "dublinbuspredict/images/src_icon.png" %}";
+    		var stopsIconDst = "{% static "dublinbuspredict/images/dst_icon.png" %}";
+    		console.log(stopsIconSrc)
     	</script>
     </head>
     <body onload="loadRoutes()">
@@ -72,10 +75,24 @@
         </div>
 
         <!-- Map Container -->
-        <div class="container-fluid my-index-form" id="pushed-content">
+        <div class="my-index-form" id="pushed-content">
             <div class="row">
-                <h3>Dublin Bus <small>Route Planner</small></h3>
-                <div id="map"></div>
+            </div>
+            <div id="wrapper">
+             <div id="map"></div>
+              <div id="displayWeather">
+                <br>
+                <p id="wTemp1">
+                </p>
+                <p id="wTemp2">
+                </p>
+                <p id="wTemp3">
+                </p>
+                <p id="wIcon">
+                </p>
+                <p id="wDesc">
+                </p>
+            </div>
             </div>
 
             <!-- Inline Forms -->
@@ -174,20 +191,18 @@
                         <h4>Results</h4>
                         <!-- Headings-->
                         <div class="row resultHeadings">
-                            <div class="col-sm-3 text-center"><h6>Due</h6></div>
-                            <div class="col-sm-3 text-center"><h6>Journey Time</h6></div>
-                            <div class="col-sm-3 text-left"><h6>Cost</h6></div>
-                          <!--  <div class="col-sm-2 text-center"><h4>Journey Time</h4></div>
-                            -->
+                            <div class="col-sm-2 text-center"><h6>Due</h6></div>
+                            <div class="col-sm-2 text-center"><h6>Journey Time</h6></div>
+                            <div class="col-sm-2 text-left"><h6>Cost</h6></div>
+                          <div class="col-sm-2 text-center"><h6>Distance</h6></div>
                         </div>
                         <!-- 1st journey"-->
                         <div class="row my-individual-result rounded-top" id="toggleDetailsRes1">
-                            <div class="col-sm-3 text-center" id = "dueTime1"></div>
-                            <div class="col-sm-3 text-center" id="journeyTime1"></div>
-                            <div class="col-sm-3 text-left" id="journeyPrice1"></div>
-                       <!-- <div class="col-sm-2 text-center" id="distance1"></div>
-                             -->
-                            <div class="col-sm-3 text-center-1"><p><i id="RouteMap1" style="cursor:pointer" class="fa fa-plus-square" aria-hidden="true"></i><b>&nbsp Show Details</b></p></div>
+                            <div class="col-sm-2 text-center" id = "dueTime1"></div>
+                            <div class="col-sm-2 text-center" id="journeyTime1"></div>
+                            <div class="col-sm-2 text-left" id="journeyPrice1"></div>
+                       		<div class="col-sm-2 text-center" id="distance1"></div>
+                            <div class="col-sm-2 text-center-1"><p><i id="RouteMap1" style="cursor:pointer" class="fa fa-plus-square" aria-hidden="true"></i><b>&nbsp Show Details</b></p></div>
                         </div>
                         <!-- 1st journey: Hidden by Default: Shows Loading Spinner OnClick "More Information" -->
                         <div class="row" id="toggleLoad" style="display:none">
@@ -202,12 +217,11 @@
                              <!-- 2nd Journey: Hidden by Default: Shows OnClick "Show Details"-->
                              <br>
                         <div class="row my-individual-result rounded-top" id="toggleDetailsRes2">
-                            <div class="col-sm-3 text-center" id = "dueTime2"></div>
-                            <div class="col-sm-3 text-center" id="journeyTime2"></div>
-                            <div class="col-sm-3 text-left" id="journeyPrice2"></div>
-   <!--                     <div class="col-sm-2 text-center" id="distance2"></div>
-                             -->
-                            <div class="col-sm-3 text-center-2"><p><i id="RouteMap2" style="cursor:pointer" class="fa fa-plus-square" aria-hidden="true"></i><b>&nbsp Show Details</b></p></div>
+                            <div class="col-sm-2 text-center" id = "dueTime2"></div>
+                            <div class="col-sm-2 text-center" id="journeyTime2"></div>
+                            <div class="col-sm-2 text-left" id="journeyPrice2"></div>
+   							<div class="col-sm-2 text-center" id="distance2"></div>
+                            <div class="col-sm-2 text-center-2"><p><i id="RouteMap2" style="cursor:pointer" class="fa fa-plus-square" aria-hidden="true"></i><b>&nbsp Show Details</b></p></div>
                         </div>
                         <!-- 2nd Journey: Hidden by Default: Shows Loading Spinner OnClick "More Information" -->
                         <div class="row" id="toggleLoad" style="display:none">
@@ -239,7 +253,7 @@
                             <li><a href="/dublinbuspredict/connections">Connections</a></li>
                             <li><a href="/dublinbuspredict/contact">Contact Us</a></li>
                         </div>
-                        <div class="col-sm-3 text-center"><h4>External Links</h4>
+                        <div class="col-sm-3 text-center"><h4>Transportation Links</h4>
                             <li><a target="_blank" href="https://www.luas.ie/">Luas</a></li>
                             <li><a target="_blank" href="http://www.buseireann.ie/">Bus Eireann</a></li>
                             <li><a target="_blank" href="http://www.irishrail.ie/">Irish Rail</a></li>

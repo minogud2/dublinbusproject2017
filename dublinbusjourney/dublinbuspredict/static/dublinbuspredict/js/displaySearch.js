@@ -20,6 +20,8 @@ var map; // define a map as a global variable for use of different functions
 var directionsDisplay;
 //var directionsService = new google.maps.DirectionsService();
 var service;
+var source;
+var destination;
 
 function initMap() {
     console.log('inside map!')
@@ -41,22 +43,44 @@ function initMap() {
 //	Function to pull in the json from the url.
     $.getJSON("http://127.0.0.1:8000/dublinbuspredict/sampleQuery", null, function(d) {
         var data = d.data;
-        var points = new Array;
+        var points = new Array; 
+        
         var marker, i;
         var infowindow = new google.maps.InfoWindow();
         for (i = 0; i < data.length; i++) {
-                var myLatLng = new google.maps.LatLng(data[i][3], data[i][4])
+                var newMarker;
+                var intSrc = parseInt(source);
+                var intDst = parseInt(destination);               
+                if (data[i][0] == intSrc){
+               	 newMarker = stopsIconSrc;
+                } else if (data[i][0] == intDst){
+               	 newMarker = stopsIconDst;
+                } else {
+               	 newMarker = stopsIcon;
+                }     
                 marker = new google.maps.Marker({
-                position: new google.maps.LatLng(data[i][3], data[i][4]),
+                position: new google.maps.LatLng(data[i][4], data[i][5]),
                 map: map,
-                icon: stops_icon
+                icon: newMarker
             });
          points.push(marker.getPosition());
+       
 
         google.maps.event.addListener(marker, 'click', (function(marker, i){
         	return function() {
-        		infowindow.setContent(data[i][1] + "<br>" + data[i][2]);
+        		if (data[i][0] == intSrc){
+        			infowindow.setContent("<b>Selected Source<br>Stop ID:&nbsp</b>" + data[i][0] + "<br>" + 	
+            				"<b>Location:&nbsp</b>" + data[i][2] + "<br>" + "<b>Street:&nbsp</b>" + data[i][3]);
+        			infowindow.open(map,marker);
+        		} else if(data[i][0] == intDst){
+        			infowindow.setContent("<b>Selected Destination<br>Stop ID:&nbsp</b>" + data[i][0] + "<br>" + 	
+        				"<b>Location:&nbsp</b>" + data[i][2] + "<br>" + "<b>Street:&nbsp</b>" + data[i][3]);
         		infowindow.open(map,marker);
+        		}
+        		else {
+        			infowindow.setContent("<b>	Stop ID:&nbsp</b>" + data[i][0] + "<br>" + 	
+            				"<b>Location:&nbsp</b>" + data[i][2] + "<br>" + "<b>Street:&nbsp</b>" + data[i][3]);
+            		infowindow.open(map,marker);}
         	}
         })(marker, i));
         }
@@ -85,6 +109,56 @@ function initMap() {
           }
       }
     });
+}
+
+//load in the weather onto map
+    var dWeather;
+$.getJSON("http://api.openweathermap.org/data/2.5/weather?q=Dublin&units=metric&APPID=33e340fbba76a4645e26160abb37f014", null, function(dWeather) {
+    var weatherID = dWeather.weather[0].id;
+    var weatherTemp = dWeather.main.temp;
+    var weatherDesc = dWeather.weather[0].description;
+    weatherDesc = titleCase(weatherDesc);
+    var weatherIcon = changeWeatherIcon(weatherDesc);
+
+    $("#wTemp1").addClass("wi wi-thermometer");
+    $('#wTemp2').html("&nbsp" + weatherTemp);
+    $('#wTemp3').html("°C");
+    $('#wIcon').html(weatherIcon);
+    $('#wDesc').html(weatherDesc);
+    });
+
+function changeWeatherIcon(weatherType) {
+    weatherType = weatherType.toLowerCase();
+    $("#wIcon").text("");
+    $("#wIcon").append("<i></i>");
+
+    if (weatherType.indexOf("clouds") != -1) {
+        return $("#wIcon").addClass("wi wi-cloudy");
+    } else if (weatherType.indexOf("rain") != -1) {
+        return $("#wIcon").addClass("wi wi-rain");
+    } else if (weatherType.indexOf("thunderstorm") != -1) {
+        return $("#wIcon").addClass("wi wi-thunderstorm");
+    } else if (weatherType.indexOf("snow") != -1) {
+        return $("#wIcon").addClass("wi wi-snow");
+    } else if (weatherType.indexOf("mist") != -1) {
+        return $("#wIcon").addClass("wi wi-smoke");
+    } else {
+        return $("#wIcon").addClass("wi wi-day-sunny");
+    }
+}
+
+function titleCase(str) {
+    var array = str.split(" ");
+    for (var i = 0; i < array.length; i++) {
+        var temp_array = array[i].split(''); // "ab" => "a","b"
+        temp_array[0] = temp_array[0].toUpperCase(); // "a","b" => "A","b"
+
+        for (var j = 1; j < temp_array.length; j++)
+            temp_array[j] = temp_array[j].toLowerCase(); // "a","b" => "A","b"
+        array[i] = temp_array.join(''); // "A","b" => "Ab"
+    }
+
+    return array.join(' ');
 }
 
 function loadRoutes(){
@@ -180,7 +254,6 @@ function loadRoutes(){
         }
     });
 }
-
 
 function searchFunctionRoute2() {
     var input, filter, ul, li, a, i;

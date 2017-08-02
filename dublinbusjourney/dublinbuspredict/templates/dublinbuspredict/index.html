@@ -59,12 +59,11 @@
             </div>
         </div>
 
-        <div>
             <!-- Image Carousel -->
-            <div class="hidden-xs" id="primary">
+            <div class="hidden-xs">
                 <div id="my-carousel" class="carousel slide" data-ride="carousel">
                     <!-- Wrapper for slides -->
-                    <div class="carousel-inner">
+                    <div class="carou	sel-inner">
                         <div class="item active">
                             {% load static %}
                             <img src="{% static 'dublinbuspredict/css/images/carousel1.jpg' %}" alt="City" >
@@ -188,7 +187,6 @@
                     </div>
                 </div>
             </div>
-        </div>
 
         <div class="container-fluid">
             <div id="scrollpage">
@@ -197,48 +195,21 @@
                 </a>
             </div>
         </div>
-        
+        <div class="container-fluid" id=primary>
         <div class="container-fluid my-twitter-feed">
-            <aside class="col-md-3 my-sidebar-left">
+            <aside class="col-md-4 my-sidebar-left">
                 <div class="col-md-12 my-twitter-content">Left 1</div>
                 <div class="col-md-12 my-twitter-content">Left 2</div>
-                <div class="col-md-12 my-twitter-content">Left 3</div>
             </aside>
-            <aside class="col-md-3 my-sidebar-center">
-                <div class="col-md-12 my-twitter-content">Centre Left 1</div>
-                <div class="col-md-12 my-twitter-content">Centre Left 2</div>
-                <div class="col-md-12 my-twitter-content">Centre Left 3</div>
-            </aside>
-            <aside class="col-md-3 my-sidebar-center">
-                <div class="col-md-12 my-twitter-content">Right 1</div>
-                <div class="col-md-12 my-twitter-content">Right 2</div>
-                <div class="col-md-12 my-twitter-content">Right 3</div>
+            <aside class="col-md-4 my-sidebar-center">
+                <div class="col-md-12 my-twitter-content">Right Left 1</div>
+                <div class="col-md-12 my-twitter-content">Right Left 2</div>
             </aside>
             <aside class="col-md-3 my-sidebar-right">
                 <a class="twitter-timeline" href="https://twitter.com/aaroadwatch" data-tweet-limit="5" data-chrome="nofooter noborders">Traffic Updates</a>
                 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
             </aside>
         </div>
-
-        <div class="container" id="traffic-div">
-            <div class="row col-lg-12 col-xs-12 my-index-information">
-                <h3><u>Traffic</u><br>
-                    <small>
-                        I need is to show the content of a web page in the center of the browser, no matter what screen size it is, big or small, resolution high or low, it always gets automatically adjusted to the center of the browser. Thanks in advance. My Html and css code is below.HTML code
-                        I need is to show the content of a web page in the center of the browser, no matter what screen size it is, big or small, resolution high or low, it always gets automatically adjusted to the center of the browser. Thanks in advance. My Html and css code is below.HTML code
-                        I need is to show the content of a web page in the center of the browser, no matter what screen size it is, big or small, resolution high or low, it always gets automatically adjusted to the center of the browser. Thanks in advance. My Html and css code is below.HTML code
-                    </small>
-                </h3>
-            </div>
-            <div class="row col-lg-12 col-xs-12 my-index-information">
-                <h3><u>Roadwatch</u><br>
-                    <small>
-                        I need is to show the content of a web page in the center of the browser, no matter what screen size it is, big or small, resolution high or low, it always gets automatically adjusted to the center of the browser. Thanks in advance. My Html and css code is below.HTML code
-                        I need is to show the content of a web page in the center of the browser, no matter what screen size it is, big or small, resolution high or low, it always gets automatically adjusted to the center of the browser. Thanks in advance. My Html and css code is below.HTML code
-                        I need is to show the content of a web page in the center of the browser, no matter what screen size it is, big or small, resolution high or low, it always gets automatically adjusted to the center of the browser. Thanks in advance. My Html and css code is below.HTML code
-                    </small>
-                </h3>
-            </div>
         </div>
 		
 		<div class="container-fluid">
@@ -255,7 +226,7 @@
                         <li><a href="/dublinbuspredict/connections">Connections</a></li>
                         <li><a href="/dublinbuspredict/contact">Contact Us</a></li>
                     </div>
-                    <div class="col-sm-3 text-center"><h4>External Links</h4>
+                    <div class="col-sm-3 text-center"><h4>Transport Links</h4>
                         <li><a target="_blank" href="https://www.luas.ie/">Luas</a></li>
                         <li><a target="_blank" href="http://www.buseireann.ie/">Bus Eireann</a></li>
                         <li><a target="_blank" href="http://www.irishrail.ie/">Irish Rail</a></li>
@@ -263,6 +234,7 @@
                     <div class="col-sm-3 text-center hidden-xs"><img id="bly_img" src="{% static 'dublinbuspredict/css/images/logonobg.png' %}">
                     </div>
                 </div>
+                
 
                 <!-- Footer: Copyright Section -->
                 <p class="text-center" style="padding:10px;">&copy; Copyright 2017</p>

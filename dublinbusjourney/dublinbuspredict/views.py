@@ -216,7 +216,7 @@ def sampleQuery(rows):
     print('direction:', direction)
     db = MySQLdb.connect(user='lucas', db='summerProdb', passwd='hello_world', host='csi6220-3-vm3.ucd.ie')
     cursor = db.cursor()
-    cursor.execute("SELECT bus_routes.stop_sequence, bus_stops.name, bus_stops.long_name, bus_stops.lat, bus_stops.lon "
+    cursor.execute("SELECT bus_routes.stop_id, bus_routes.stop_sequence, bus_stops.name, bus_stops.long_name, bus_stops.lat, bus_stops.lon "
                    "FROM bus_routes, bus_stops "
                    "WHERE bus_routes.direction = '" + str(direction) + "' AND bus_routes.route_id = '" + str(route_id) + "' AND bus_routes.stop_id = bus_stops.stop_id "
                    "ORDER BY bus_routes.stop_sequence;")
