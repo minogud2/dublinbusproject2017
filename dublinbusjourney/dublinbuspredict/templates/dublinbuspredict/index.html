@@ -173,6 +173,7 @@
                                     </div>
                                     <div class="form-group"><button type="button" id="submit-route" onclick="window.location='http://127.0.0.1:8000/dublinbuspredict/map';" class="form-control btn btn-primary">Find Journey</button></div>
                                     <div class="form-group"><button type="button" id="reset-1" onclick="loadRoutes()" class="form-control btn btn-primary">Reset</button></div>
+                                    <!--<button type="button" onclick="window.location='http://127.0.0.1:8000/dublinbuspredict/map';" class="form-control btn btn-primary"><img class="geolocation_button" src="{% static 'dublinbuspredict/css/images/geolocation.png' %}"width="25" height="25"></button>-->
                                     <script>
                                         document.getElementById("submit-route").addEventListener("click", function(){
                                             route = document.getElementById("search-box-1").value;
