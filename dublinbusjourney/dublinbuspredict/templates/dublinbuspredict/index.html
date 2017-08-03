@@ -54,7 +54,7 @@
                     <a href="/dublinbuspredict/tickets_fares" class="w3-bar-item w3-button"><i class="fa fa-eur fa-fw"></i>&nbsp;Tickets & Fares</a>
                     <a href="/dublinbuspredict/tourism" class="w3-bar-item w3-button"><i class="fa fa-map fa-fw"></i></i>&nbsp;Tourism</a>
                     <a href="/dublinbuspredict/connections" class="w3-bar-item w3-button"><i class="fa fa-train fa-fw"></i>&nbsp;Connections</a>
-                    <a href="/dublinbuspredict/contact" class="w3-bar-item w3-button"><i class="fa fa-phone fa-fw"></i>&nbsp;Contact Us</a>z
+                    <a href="/dublinbuspredict/contact" class="w3-bar-item w3-button"><i class="fa fa-phone fa-fw"></i>&nbsp;Contact Us</a>
                 </div>
                 <div id="social-media" class="row col-lg-12 my-social-icons">
                     <a target="_blank" href="https://twitter.com/" class="col-xs-2 btn btn-social-icon btn-twitter"><span class="fa fa-twitter"></span></a>
@@ -173,6 +173,7 @@
                                     </div>
                                     <div class="form-group"><button type="button" id="submit-route" onclick="window.location='http://127.0.0.1:8000/dublinbuspredict/map';" class="form-control btn btn-primary">Find Journey</button></div>
                                     <div class="form-group"><button type="button" id="reset-1" onclick="loadRoutes()" class="form-control btn btn-primary">Reset</button></div>
+                                    <script>                                    
                                     <!--<button type="button" onclick="window.location='http://127.0.0.1:8000/dublinbuspredict/map';" class="form-control btn btn-primary"><img class="geolocation_button" src="{% static 'dublinbuspredict/css/images/geolocation.png' %}"width="25" height="25"></button>-->
                                     <script>
                                         document.getElementById("submit-route").addEventListener("click", function(){
@@ -181,13 +182,9 @@
                                             destination = document.getElementById("search-box-3").value;
                                             date = document.getElementById("date-input-index").value;
                                             time = document.getElementById("time-input-index").value;
-                                            console.log('Route:', route)
-                                            console.log('Source:', source)
-                                            console.log('Destination:', destination)
-                                            console.log('Time:', time)
-                                            console.log('Date:', date)
                                             $.getJSON("http://127.0.0.1:8000/dublinbuspredict/setInfoNextPage", {"route":route, "source":source, "destination":destination, "time":time, "date":date}, function(d) {});
                                         });
+                                                                                
                                     </script>
                                 </div>
                             </form>
@@ -207,12 +204,11 @@
         <div id="google_translate_element"></div>
         <script type="text/javascript">
 			function googleTranslateElementInit() {
-  				new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'es', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false}, 'google_translate_element');
-			}
+  				new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+				}
 		</script>
 		<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-		
-        
+		        
         <div class="container-fluid" id=primary>
         <div class="container-fluid my-twitter-feed">
             <aside class="col-md-4 my-sidebar-left">

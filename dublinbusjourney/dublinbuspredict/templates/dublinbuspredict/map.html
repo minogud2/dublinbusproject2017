@@ -174,8 +174,6 @@
                                                 console.log('here', d)
                                             });
                                         }
-
-
                                     });
                                 </script>
                             </div>
@@ -190,6 +188,7 @@
                     <div class="col-xs-12">
                         <h4>Results</h4>
                         <!-- Headings-->
+                        <div id=displayResults>
                         <div class="row resultHeadings">
                             <div class="col-sm-2 text-center"><h6>Due</h6></div>
                             <div class="col-sm-2 text-center"><h6>Journey Time</h6></div>
@@ -202,7 +201,7 @@
                             <div class="col-sm-2 text-center" id="journeyTime1"></div>
                             <div class="col-sm-2 text-left" id="journeyPrice1"></div>
                        		<div class="col-sm-2 text-center" id="distance1"></div>
-                            <div class="col-sm-2 text-center-1"><p><i id="RouteMap1" style="cursor:pointer" class="fa fa-plus-square" aria-hidden="true"></i><b>&nbsp Show Details</b></p></div>
+                            <div id="showDetails1" class="col-sm-3 text-right-1"><p><i id="RouteMap1" style="cursor:pointer" class="fa fa-plus-square" aria-hidden="true"></i><b>&nbsp Show Details</b></p></div>
                         </div>
                         <!-- 1st journey: Hidden by Default: Shows Loading Spinner OnClick "More Information" -->
                         <div class="row" id="toggleLoad" style="display:none">
@@ -210,7 +209,7 @@
                         </div>
                         <!-- 1st Journey: Hidden by Default: Shows Delayed OnClick "More Information" after Loading Spinner -->
                         <div class="row show-details-result" id="toggleRouteMap1" style="display:none">
-                            <div class="col-sm-6 text-left"><ul id="ulOutput1" class="output">
+                            <div class="col-sm-11 text-left"><ul id="ulOutput1" class="output">
                             </ul>
                             </div>
                             </div>
@@ -221,7 +220,7 @@
                             <div class="col-sm-2 text-center" id="journeyTime2"></div>
                             <div class="col-sm-2 text-left" id="journeyPrice2"></div>
    							<div class="col-sm-2 text-center" id="distance2"></div>
-                            <div class="col-sm-2 text-center-2"><p><i id="RouteMap2" style="cursor:pointer" class="fa fa-plus-square" aria-hidden="true"></i><b>&nbsp Show Details</b></p></div>
+                            <div id="showDetails2" class="col-sm-3 text-right-2"><p><i id="RouteMap2" style="cursor:pointer" class="fa fa-plus-square" aria-hidden="true"></i><b>&nbsp Show Details</b></p></div>
                         </div>
                         <!-- 2nd Journey: Hidden by Default: Shows Loading Spinner OnClick "More Information" -->
                         <div class="row" id="toggleLoad" style="display:none">
@@ -229,11 +228,12 @@
                         </div>
                         <!-- 2nd Journey: Hidden by Default: Shows Delayed OnClick "More Information" after Loading Spinner -->
                         <div class="row show-details-result" id="toggleRouteMap2" style="display:none">
-                            <div class="col-sm-6 text-left"><ul id="ulOutput2" class="output">
+                            <div class="col-sm-11 text-left"><ul id="ulOutput2" class="output">
                             </ul>
                             </div>
                         </div>
                     </div> 
+                    </div>
                 </div>
             </div>
         </div>
