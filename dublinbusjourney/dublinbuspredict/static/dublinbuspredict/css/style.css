@@ -240,6 +240,18 @@ ul {
 }
 
 /* index.html */
+/*#google_translate_element{
+	background-color: #FFD527;
+	text-align: center;
+	
+}*/
+#google_translate_element {
+	right: 0;
+	position: absolute;
+	top: 65px;
+	background-color: #FFD527;
+}
+
 #primary{
     position: relative;
     display: block;
