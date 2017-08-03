@@ -210,11 +210,14 @@ function loadRoutes(){
                 	var newArrival1 = arrival1.slice(11);
                 	var stop1 = bus1[i].stopid;
                 	journey_time1 += bus1[i].duration;
-                	$('#ulOutput1').append('<li class="passed"><b>Arrival Time:&nbsp</b>' + newArrival1 + '<br><b>Stop ID:&nbsp</b>' + stop1 + '</li>');        		
+                	$('#ulOutput1').append('<li class="passed"><b>Arrival Time:&nbsp;</b>' 
+                			+ newArrival1 + '&emsp;&emsp;<b>Stop ID:&nbsp</b>' + stop1 +
+                			'&emsp;&emsp;<b>Stop Name:&nbsp;</b> Insert Stop Name' + "<br>" 
+                			+ '<i class="fa fa-bus fa-x8"></i>'+"<br>"+'</li>');        		
                 	no_stops1 +=1;
                 }
                 $('#dueTime1').append("<b>" + Math.floor(diff1/60000) + " minutes" + "<b>" +"<br>")
-                $('#journeyTime1').append("<b>" + Math.floor(journey_time1/ 60) + " minutes" + "</b>" +"<br>")
+                $('#journeyTime1').append("<b>" + Math.floor(journey_time1/ 60) + " minutes" + "</b>")
                 
                   if (no_stops1.length < 4) {
                     $('#journeyPrice1').append("<b>Adult:</b> €2.00" + "<br>");
@@ -233,11 +236,12 @@ function loadRoutes(){
                 	var newArrival2 = arrival2.slice(11);
                 	var stop2 = bus2[i].stopid;
                 	journey_time2 += bus2[i].duration;
-                	$('#ulOutput2').append('<li class="passed"><b>Arrival Time:&nbsp</b>' + newArrival2 + '<br><b>Stop ID:&nbsp</b>' + stop2 + '</li>');        		
+                	$('#ulOutput2').append('<br><li class="passed"><b>Arrival Time:&nbsp</b>' + newArrival2 
+                			+ '<br><b>Stop ID:&nbsp</b>' + stop2 + "<br>" + '<i class="fa fa-bus"></i>'+"<br>"+ '</li>');        		
                 	no_stops2 +=1;
                 }
                 $('#dueTime2').append("<b>" + Math.floor(diff2/60000) + " minutes" + "</b>" +"<br>")
-                $('#journeyTime2').append("<b>" + Math.floor(journey_time2/ 60) + " minutes" + "</b>" +"<br>")
+                $('#journeyTime2').append("<b>" + Math.floor(journey_time2/ 60) + " minutes" + "</b>" + "<br>")
                 
                 if (no_stops2.length < 4) {
                     $('#journeyPrice2').append("<b>Adult:</b> €2.00" + "<br>");
