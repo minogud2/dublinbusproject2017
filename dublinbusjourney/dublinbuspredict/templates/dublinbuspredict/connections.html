@@ -12,12 +12,18 @@
 
         <!-- Link to jQuery libraries -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
         <!-- Needed for Glyphicons: Font Awesome CDN Source: http://fontawesome.io/ -->
         <script src="https://use.fontawesome.com/e8a4c811a1.js"></script>
         {% load staticfiles %}
         <script type="text/javascript" src="{% static 'dublinbuspredict/js/main.js' %}"></script>
         <link rel="stylesheet" href="{% static 'dublinbuspredict/css/style.css' %}">
+                <style type="text/css">@font-face { 
+    				font-family: 'London-Tube'; 
+    				src:local('fontName Regular'),
+        			local('London-Tube'), 
+        			url({% static 'dublinbuspredict/fonts/London-Tube.ttf' %}) format('truetype');
+    				} 
+		</style>
     </head>
     <body>
         <!-- Main container to give website 12-grid shape -->

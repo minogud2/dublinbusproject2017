@@ -18,6 +18,13 @@
         {% load staticfiles %}
         <link rel="stylesheet" type="text/css" href="{% static 'dublinbuspredict/css/style.css' %}" />
         <script type="text/javascript" src="{% static 'dublinbuspredict/js/main.js' %}"></script>
+        <style type="text/css">@font-face { 
+    				font-family: 'London-Tube'; 
+    				src:local('fontName Regular'),
+        			local('London-Tube'), 
+        			url({% static 'dublinbuspredict/fonts/London-Tube.ttf' %}) format('truetype');
+    				} 
+		</style>
 
     </head>
     <body>
