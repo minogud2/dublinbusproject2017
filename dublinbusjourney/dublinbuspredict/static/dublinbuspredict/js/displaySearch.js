@@ -2,12 +2,27 @@
 $(document).ready(function(){
 	$("#RouteMap1").click(function(){
 		$("#toggleRouteMap1").toggle();
+	});
 });
-});
+
 ////Toggle function for route div on map.html
 $(document).ready(function(){
 	$("#RouteMap2").click(function(){
 		$("#toggleRouteMap2").toggle();
+	});
+});
+
+//Toggles plus and minus icon for Show Details
+$(document).ready(function(){
+	$("#RouteMap1").click(function(){
+		$("#RouteMap1").toggleClass('fa-plus-square fa-minus-square');
+	});
+});
+
+//Toggles plus and minus icon for More Information
+$(document).ready(function(){
+	$("#RouteMap2").click(function(){
+		$("#RouteMap2").toggleClass('fa-plus-square fa-minus-square');
 	});
 });
 
