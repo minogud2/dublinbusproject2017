@@ -189,7 +189,8 @@ function tourismMap(){
     }
 
     infoWindow = new google.maps.InfoWindow;
-
+    
+	// Adapted from: https://developers.google.com/maps/documentation/javascript/examples/map-geolocation
     // Try HTML5 geolocation.
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -197,11 +198,24 @@ function tourismMap(){
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
+            marker = new Marker({
+            position: pos,
+            map: map,
+            icon: {
+				path: MAP_PIN,
+				fillColor: '#3594D4',
+				fillOpacity: 1,
+				strokeColor: '',
+				strokeWeight: 0
+			},
+			map_icon_label: '<i class="fa fa-male fa-2x" style="margin-bottom:17px; color:white; margin-left:1px;"></i>'
+        });  
+            
 
-            //infoWindow.setPosition(pos);
-            infoWindow.setContent('Location found.');
-            infoWindow.open(map);
-            //map.setCenter(pos);
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('Location found');
+            infoWindow.open(map, marker);
+            map.setCenter(pos);
         }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
         });
