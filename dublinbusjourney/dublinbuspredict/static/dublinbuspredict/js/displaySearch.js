@@ -254,7 +254,7 @@ function loadRoutes(){
                     $('#journeyPrice2').append("<b>Adult:</b> €3.30" + "<br>");
                     $('#journeyPrice2').append("<b>Leap Card:</b> €2.60" + "<br>");
                 }
-            });
+            });		
         }
     });
 }

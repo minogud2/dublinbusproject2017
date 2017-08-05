@@ -25,19 +25,22 @@ from dateutil import parser
 def model(bus_route, stopid, arrival_time, day, p_holiday, s_holiday):
     # 1 request the lon and lat from a query in sql based on the stop id.
     db = pymysql.connect(user='lucas', db='summerProdb', passwd='hello_world', host='csi6220-3-vm3.ucd.ie')
-    cursor = db.cursor()
-    cursor.execute('SELECT bus_stops.lat, bus_stops.lon '
-                   'FROM bus_stops '
-                   'WHERE bus_stops.stop_id = ' + str(stopid) + ';')
-    rows = cursor.fetchall()
+#     cursor = db.cursor()
+#     cursor.execute('SELECT bus_stops.lat, bus_stops.lon '
+#                    'FROM bus_stops '
+#                    'WHERE bus_stops.stop_id = ' + str(stopid) + ';')
+#     rows = cursor.fetchall()
     cursor = db.cursor()
     cursor.execute('SELECT DISTINCT trip_id FROM bus_timetable WHERE bus_timetable.route_id = "' + str(bus_route) + '" AND bus_timetable.stop_id = "' + str(stopid) + '" AND bus_timetable.arrival_time >= "' + str(arrival_time)[11:] + '" ORDER BY bus_timetable.arrival_time ASC LIMIT 1;')
     rows2 = cursor.fetchall()
-    cursor.execute('SELECT bus_timetable.arrival_time, bus_timetable.stop_sequence, bus_timetable.stop_id, bus_stops.long_name, bus_stops.name, bus_stops.normed_lat, bus_stops.normed_lon, bus_timetable.distance, bus_timetable.accum_dist FROM bus_timetable, bus_stops WHERE bus_timetable.trip_id = "' + str(rows2[0][0]) + '" AND bus_timetable.stop_id = bus_stops.stop_id AND bus_stops.stop_id = "' + str(stopid) + '" ORDER BY bus_timetable.stop_sequence;')
+    cursor.execute('SELECT bus_timetable.arrival_time, bus_timetable.direction, bus_timetable.stop_sequence, bus_timetable.stop_id, bus_timetable.dist_nxt_stop, bus_timetable.next_stop '
+                   'FROM bus_timetable, bus_stops WHERE bus_timetable.trip_id = "'+ str(rows2[0][0]) +\
+                   '" AND bus_timetable.stop_id = "' + str(stopid) + \
+                   '" ORDER BY bus_timetable.stop_sequence;')
     rows3 = cursor.fetchall()
-    normed_lat = rows[0][0]
-    normed_lon = rows[0][1]
-    distance = rows3[0][7]
+    next_stop = rows3[0][5]
+    dist_nxt_stop = rows3[0][4]
+    direction = rows3[0][1]
 
     # 2 convert your arrival time to an integer. Arrival time needs to be replaced with your time variable.
     arrival_time = parser.parse(arrival_time)
@@ -45,23 +48,36 @@ def model(bus_route, stopid, arrival_time, day, p_holiday, s_holiday):
     new_arrival_time = new_arrival_time/86399
 
     # 3 convert your date of the week to business day vs Saturday and Sunday.
-    weekday = False
+    business_days = False
     saturday = False
     sunday = False
     if day < 5:
-        weekday = True
+        business_days = True
     elif day == 5:
         saturday = True
-    elif day == 6:
+    elif (day == 6) or (p_holiday == True):
         sunday = True
 
     # Create the row we want to match up against the model
-    input_data = pd.DataFrame({'normed_lat': [normed_lat],'normed_lon': [normed_lon], 'Distance': [distance], 'weekday': [weekday],
-                               'Saturday': [saturday], 'Sunday': [sunday], 'arrival_time': [new_arrival_time], 'school_holiday': [s_holiday],
-                               'public_holiday': [p_holiday]})
-
+    input_data = pd.DataFrame({'stop_id': [stopid],'next_stop': [next_stop], 'dist_nxt_stop': [dist_nxt_stop], \
+                               'direction': [direction],'arrival_time': [new_arrival_time], 'business_days': [business_days],\
+                               'Saturday': [saturday], 'Sunday': [sunday], 'school_holiday': [s_holiday],})
+    
+    # Ensure input data columns are in correct order, otherwise results will be incorrect.
+    cols = list(input_data)
+    cols.insert(0, cols.pop(cols.index('school_holiday')))
+    cols.insert(0, cols.pop(cols.index('Sunday')))
+    cols.insert(0, cols.pop(cols.index('Saturday')))
+    cols.insert(0, cols.pop(cols.index('business_days')))
+    cols.insert(0, cols.pop(cols.index('arrival_time')))
+    cols.insert(0, cols.pop(cols.index('direction')))
+    cols.insert(0, cols.pop(cols.index('dist_nxt_stop')))
+    cols.insert(0, cols.pop(cols.index('next_stop')))
+    cols.insert(0, cols.pop(cols.index('stop_id')))
+    input_data = input_data.loc[:, cols]
+            
     # 4 load in the model.
-    with open("C:\\Users\\minogud2\\BusLightyear\\cleaning\\trained_modelv7.pkl", "rb") as f:
+    with open("C:\\Users\\minogud2\\BusLightyear\\cleaning\\trained_modelv8.pkl", "rb") as f:
         rtr = joblib.load(f)
 
     # 5 predict the delay based on the input.
