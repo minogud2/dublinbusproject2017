@@ -20,6 +20,27 @@ $(document).ready(function(){
 	});
 });
 
+//Toggles plus and minus icon for Show Details
+$(document).ready(function(){
+	$("#RouteMap0").click(function(){
+		$("#RouteMap0").toggleClass('fa-plus-square fa-minus-square');
+	});
+});
+
+//Toggles plus and minus icon for More Information
+$(document).ready(function(){
+	$("#RouteMap1").click(function(){
+		$("#RouteMap1").toggleClass('fa-plus-square fa-minus-square');
+	});
+});
+
+//Toggles plus and minus icon for More Information
+$(document).ready(function(){
+	$("#RouteMap2").click(function(){
+		$("#RouteMap2").toggleClass('fa-plus-square fa-minus-square');
+	});
+});
+
 //// Map and Marker related functions for map.html
 //$(document).ready(function() {
 //    initMap();

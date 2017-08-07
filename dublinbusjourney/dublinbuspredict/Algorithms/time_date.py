@@ -1,3 +1,4 @@
+from boto.mws.response import Destination
 try:
     import pymysql
     pymysql.install_as_MySQLdb()
@@ -42,12 +43,13 @@ def get_all_stops(time, bus_route, source_stop, destination_stop, date, directio
                 AND bus_timetable.stop_id = '{qsource_stop}'
                 AND bus_timetable.day_of_week = '{qquery_day}'
                 AND bus_timetable.direction = '{qdirection}'
-                ORDER BY bus_timetable.stop_sequence ASC
-                LIMIT 1"""
+                ORDER BY bus_timetable.arrival_time ASC
+                LIMIT 3"""
     cursor = db.cursor()
     cursor.execute(sql1.format(q1time=str(time),qbus_route=str(bus_route),\
                                qsource_stop=str(source_stop), qquery_day=str(query_day), qdirection=str(direction)))
     rows1 = cursor.fetchall()
+    # Create query for the first prediction
     sql2 = """SELECT time_format(bus_timetable.arrival_time,'%T') , bus_timetable.stop_id, bus_timetable.stop_sequence
             FROM bus_timetable WHERE trip_id = '{qtrip_id}'
             AND bus_timetable.arrival_time >= '{q2time}'
@@ -55,16 +57,38 @@ def get_all_stops(time, bus_route, source_stop, destination_stop, date, directio
     cursor = db.cursor()
     cursor.execute(sql2.format(qtrip_id=str(rows1[0][0]),q2time=str(time)))
     rows2 = cursor.fetchall()
+    # create query for the second prediction
+    sql3 = """SELECT time_format(bus_timetable.arrival_time,'%T') , bus_timetable.stop_id, bus_timetable.stop_sequence
+            FROM bus_timetable WHERE trip_id = '{qtrip_id}'
+            AND bus_timetable.arrival_time >= '{q2time}'
+            ORDER BY bus_timetable.stop_sequence"""
+    cursor = db.cursor()
+    cursor.execute(sql3.format(qtrip_id=str(rows1[1][0]),q2time=str(time)))
+    rows3 = cursor.fetchall()
+    # create query for the third prediction
+    sql4 = """SELECT time_format(bus_timetable.arrival_time,'%T') , bus_timetable.stop_id, bus_timetable.stop_sequence
+            FROM bus_timetable WHERE trip_id = '{qtrip_id}'
+            AND bus_timetable.arrival_time >= '{q2time}'
+            ORDER BY bus_timetable.stop_sequence"""
+    cursor = db.cursor()
+    cursor.execute(sql4.format(qtrip_id=str(rows1[2][0]),q2time=str(time)))
+    rows4 = cursor.fetchall()
     db.close()
-    print("here's a row2",rows2[0][0])
-#     print("HERES MY ROWs2", rows2)
+    
+    # get the three predictions for the data model.
+    stops1 = src_dest_list(rows2, destination_stop)
+    stops2 = src_dest_list(rows3, destination_stop)
+    stops3 = src_dest_list(rows4, destination_stop)
+    
+    return [stops1, stops2, stops3]
+
+def src_dest_list(rows, dest):
     stops = []
-    for i in rows2:
+    for i in rows:
         stops.append([i[1], i[0], 'Starting stop'])
-        if str(i[1]) == str(destination_stop):
+        if str(i[1]) == str(dest):
                 print("found destination stop")
-                break           
-    print("THIS IS THE LIST OF STOPS", stops)
+                break
     return stops
 
 def holidays(date):
@@ -107,6 +131,9 @@ def time_to_arrive(datetime, sec):
 
 def time_date(bus_route, source_stop, destination_stop, date, time, direction):
     stops = get_all_stops(time, bus_route, source_stop, destination_stop, date, direction)
+    stops1 = stops[0]
+#     stops2 = stops[1]
+#     stops3 = stops[3]
     holiday = holidays(date)
     p_holiday = holiday[0]
     s_holiday = holiday[1]
@@ -114,10 +141,11 @@ def time_date(bus_route, source_stop, destination_stop, date, time, direction):
     # forecast = weather()
     dict = []
     status = 0
-    for i in stops:
-        if stops.index(i) == 0:
+    # need to alter here to get the three buses and not just stops1
+    for i in stops1:
+        if stops1.index(i) == 0:
             status = 'src'
-        elif stops.index(i) == len(stops) - 1:
+        elif stops1.index(i) == len(stops1) - 1:
             status = 'dest'
         else:
             status = 'normal'
