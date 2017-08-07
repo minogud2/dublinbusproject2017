@@ -1,4 +1,13 @@
 //// Toggle function for route div on map.html
+////Toggle function for route div on map.html
+
+
+$(document).ready(function(){
+	$("#RouteMap0").click(function(){
+		$("#toggleRouteMap0").toggle();
+	});
+});
+
 $(document).ready(function(){
 	$("#RouteMap1").click(function(){
 		$("#toggleRouteMap1").toggle();
@@ -26,8 +35,9 @@ var destination;
 function initMap() {
     console.log('inside map!')
 //	Function to pull in the map
+    var latlng = new google.maps.LatLng(53.3498053, -6.260309699999993);
 	map = new google.maps.Map(document.getElementById('map'), {
-        center: new google.maps.LatLng(53.3498053, -6.260309699999993),
+        center: latlng,
         zoom: 12,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }); //closing map creation	
@@ -112,21 +122,9 @@ function initMap() {
 }
 
 //load in the weather onto map
-    var dWeather;
-$.getJSON("http://api.openweathermap.org/data/2.5/weather?q=Dublin&units=metric&APPID=33e340fbba76a4645e26160abb37f014", null, function(dWeather) {
-    var weatherID = dWeather.weather[0].id;
-    var weatherTemp = dWeather.main.temp;
-    var weatherDesc = dWeather.weather[0].description;
-    weatherDesc = titleCase(weatherDesc);
-    var weatherIcon = changeWeatherIcon(weatherDesc);
+// need to change so that it's only displayed if current mode is selected.No forecasts. 
 
-    $("#wTemp1").addClass("wi wi-thermometer");
-    $('#wTemp2').html("&nbsp" + weatherTemp);
-    $('#wTemp3').html("°C");
-    $('#wIcon').html(weatherIcon);
-    $('#wDesc').html(weatherDesc);
-    });
-
+var dWeather;
 function changeWeatherIcon(weatherType) {
     weatherType = weatherType.toLowerCase();
     $("#wIcon").text("");
@@ -161,6 +159,46 @@ function titleCase(str) {
     return array.join(' ');
 }
 
+// Function for displaying output of predictions in divs.
+var busNum = 0;
+function getPredictedTimes(bus){
+	console.log("busNum is now", busNum)
+    var arrival = new Date(bus[0].predicted_arrival_time);
+    var currentTime = new Date();
+    var diff = Math.abs(arrival - currentTime);
+    var journey_time = 0;
+    var no_stops;    
+    for (var i = 0; i < bus.length; i++) {
+    	var oldArrival = bus[i].predicted_arrival_time;
+    	var newArrival = oldArrival.slice(11);
+    	var stop = bus[i].stopid;
+    	journey_time += bus[i].duration;
+    	$('#ulOutput'+busNum).append('<li class="passed"><b>Arrival Time:&nbsp;</b>' 
+    			+ newArrival + '&emsp;&emsp;<b>Stop ID:&nbsp</b>' + stop +
+    			'&emsp;&emsp;<b>Stop Name:&nbsp;</b> Insert Stop Name' + "<br>" 
+    			+ '<i class="fa fa-bus fa-x8"></i>'+"<br>"+'</li>');        		
+    	no_stops +=1;
+    }
+   $('#dueTime'+busNum).append("<b>" + Math.floor(diff/60000) + " minutes" + "<b>" +"<br>");
+  $('#journeyTime'+busNum).append("<b>" + Math.floor(journey_time/ 60) + " minutes" + "</b>");
+  $('#distance'+busNum).append("<b>" + " KM" + "</b>");
+  
+  	// Calculate the cost section for the trip. 
+    if (no_stops.length < 4) {
+      $('#journeyPrice'+busNum).append("<b>Adult:</b> €2.00" + "<br>");
+      $('#journeyPrice'+busNum).append("<b>Leap Card:</b> €1.50" + "<br>");
+  } else if (no_stops.length > 3 && no_stops.length < 13){
+      $('#journeyPrice'+busNum).append("<b>Adult:</b> €2.70" + "<br>");
+      $('#journeyPrice'+busNum).append("<b>Leap Card:</b> €2.05" + "<br>");
+  }
+  else{
+      $('#journeyPrice'+busNum).append("<b>Adult:</b> €3.30" + "<br>");
+      $('#journeyPrice'+busNum).append("<b>Leap Card:</b> €2.60" + "<br>");
+  }      
+    document.getElementById('resultArray'+busNum).style.display = 'block';
+    busNum += 1;
+  }
+
 function loadRoutes(){
     console.log('HEReeeeeeeeeeeeeee!')
     var counter = 0
@@ -182,77 +220,110 @@ function loadRoutes(){
         date = d['date']
         initMap()
         if (time != "" || date != ""){
+        	document.getElementById('displayWeather').style.display = 'none';
             $.getJSON("http://127.0.0.1:8000/dublinbuspredict/runPlanner", {"route":route, "source":source, "destination":destination, "date":date, "time":time}, function(d) {
-                console.log('here', d)
+              if (d2 === "No buses found!"){
+            	$('#resultArray0').replaceWith("<br>" +"<br>" +"&emsp;&emsp;&emsp;"
+            			+ "No bus journeys departing on selected time. Please select another time and date, and try again.");
+            	document.getElementById('resultArray0').style.display = 'block';
+            }
+            else{
+                var d2 = d.info_buses;
+                console.log("PLAN PREDICTION", d2)
+                var bus = d2;
+                var busNum = 0;
+                var arrival = bus[0].predicted_arrival_time;
+                var journey_time = 0;
+                var no_stops;
+                
+                for (var i = 0; i < bus.length; i++) {
+                	var oldArrival = bus[i].predicted_arrival_time;
+                	var newArrival = oldArrival.slice(11);
+                	var stop = bus[i].stopid;
+                	journey_time += bus[i].duration;
+                	$('#ulOutput'+busNum).append('<li class="passed"><b>Arrival Time:&nbsp;</b>' 
+                			+ newArrival + '&emsp;&emsp;<b>Stop ID:&nbsp</b>' + stop +
+                			'&emsp;&emsp;<b>Stop Name:&nbsp;</b> Insert Stop Name' + "<br>" 
+                			+ '<i class="fa fa-bus fa-x8"></i>'+"<br>"+'</li>');        		
+                	no_stops +=1;
+                }
+		               $('#dueTime'+busNum).append("<b>" + arrival.slice(11)    		   
+		            		   + "<b>" +"<br>");
+		              $('#journeyTime'+busNum).append("<b>" + Math.floor(journey_time/ 60) + " minutes" + "</b>");
+		              $('#distance'+busNum).append("<b>" + " KM" + "</b>");
+		              
+		              	// Calculate the cost section for the trip. 
+		                if (no_stops.length < 4) {
+		                  $('#journeyPrice'+busNum).append("<b>Adult:</b> €2.00" + "<br>");
+		                  $('#journeyPrice'+busNum).append("<b>Leap Card:</b> €1.50" + "<br>");
+		              } else if (no_stops.length > 3 && no_stops.length < 13){
+		                  $('#journeyPrice'+busNum).append("<b>Adult:</b> €2.70" + "<br>");
+		                  $('#journeyPrice'+busNum).append("<b>Leap Card:</b> €2.05" + "<br>");
+		              }
+		              else{
+		                  $('#journeyPrice'+busNum).append("<b>Adult:</b> €3.30" + "<br>");
+		                  $('#journeyPrice'+busNum).append("<b>Leap Card:</b> €2.60" + "<br>");
+		              }      
+		                document.getElementById('resultArray'+busNum).style.display = 'block';
+		                busNum += 1;
+            		}
             });
         }
         else{
             $.getJSON("http://127.0.0.1:8000/dublinbuspredict/runModel", {"route":route, "source":source, "destination":destination}, function(d) {
                 console.log('here', d)
                 var d2 = d.info_buses;
-                var bus1 = d2[1];
-                var bus2 = d2[2];
-                console.log("Due time",bus1[0].predicted_arrival_time)
-                var first_arrival = new Date(bus1[0].predicted_arrival_time);
-                var second_arrival = new Date(bus2[0].predicted_arrival_time);
-                console.log("ArrivalTIME", first_arrival)
-                var currentTime = new Date();
-                console.log(currentTime)
-                var diff1 = Math.abs(first_arrival - currentTime);
-                var diff2 = Math.abs(second_arrival - currentTime);
-                var journey_time1 = 0;
-                var journey_time2 = 0;
-                var no_stops1;
-                var no_stops2;
-                                                
-                for (var i = 0; i < bus1.length; i++) {
-                	var arrival1 = bus1[i].predicted_arrival_time;
-                	var newArrival1 = arrival1.slice(11);
-                	var stop1 = bus1[i].stopid;
-                	journey_time1 += bus1[i].duration;
-                	$('#ulOutput1').append('<li class="passed"><b>Arrival Time:&nbsp;</b>' 
-                			+ newArrival1 + '&emsp;&emsp;<b>Stop ID:&nbsp</b>' + stop1 +
-                			'&emsp;&emsp;<b>Stop Name:&nbsp;</b> Insert Stop Name' + "<br>" 
-                			+ '<i class="fa fa-bus fa-x8"></i>'+"<br>"+'</li>');        		
-                	no_stops1 +=1;
-                }
-                $('#dueTime1').append("<b>" + Math.floor(diff1/60000) + " minutes" + "<b>" +"<br>")
-                $('#journeyTime1').append("<b>" + Math.floor(journey_time1/ 60) + " minutes" + "</b>")
+                var bus0, bus1, bus2;
+                $.getJSON("http://api.openweathermap.org/data/2.5/weather?q=Dublin,Ireland&units=metric&APPID=33e340fbba76a4645e26160abb37f014", null, function(dWeather) {
+                    var weatherID = dWeather.weather[0].id;
+                    var weatherTemp = dWeather.main.temp;
+                    var weatherDesc = dWeather.weather[0].description;
+                    weatherDesc = titleCase(weatherDesc);
+                    var weatherIcon = changeWeatherIcon(weatherDesc);
+
+                    $("#wTemp1").addClass("wi wi-thermometer");
+                    $('#wTemp2').html("&nbsp" + weatherTemp);
+                    $('#wTemp3').html("°C");
+                    $('#wIcon').html(weatherIcon);
+                    $('#wDesc').html(weatherDesc);
+                    });
                 
-                  if (no_stops1.length < 4) {
-                    $('#journeyPrice1').append("<b>Adult:</b> €2.00" + "<br>");
-                    $('#journeyPrice1').append("<b>Leap Card:</b> €1.50" + "<br>");
-                } else if (no_stops1.length > 3 && no_stops.length < 13){
-                    $('#journeyPrice1').append("<b>Adult:</b> €2.70" + "<br>");
-                    $('#journeyPrice1').append("<b>Leap Card:</b> €2.05" + "<br>");
-                }
+                if (d2 != "No buses found!"){
+                	console.log("I'm getting into the else statement")
+                	if (d2.length == 2){
+                		busNum = 0;
+                		console.log("size of array is 2")
+                    	bus0 = d2[0];
+    	                getPredictedTimes(bus0);
+                		bus1 = d2[1];
+    	                getPredictedTimes(bus1);	
+                	} else if (d2.length == 3){
+                		console.log("size of array is 3")
+                		if (d2[0]== 0){
+                			busNum = 0;
+                			console.log("first array is empty in 1/3")
+                        	bus1 = d2[1];
+        	                getPredictedTimes(bus1);
+        	                bus2 = d2[2];
+        	                getPredictedTimes(bus2);
+        	                }
+                		}
+                		else{
+                			console.log("All three arrays are available")
+                			busNum = 0;
+                        	bus0 = d2[0];
+        	                getPredictedTimes(bus0);
+                        	bus1 = d2[1];
+        	                getPredictedTimes(bus1);
+        	                bus2 = d2[2];
+        	                getPredictedTimes(bus2);
+        	                console.log("predicted functions ran")
+                		}
+                	}
                 else{
-                    $('#journeyPrice1').append("<b>Adult:</b> €3.30" + "<br>");
-                    $('#journeyPrice1').append("<b>Leap Card:</b> €2.60" + "<br>");
-                }
-                
-                for (var i = 0; i < bus2.length; i++) {
-                	var arrival2 = bus2[i].predicted_arrival_time;
-                	var newArrival2 = arrival2.slice(11);
-                	var stop2 = bus2[i].stopid;
-                	journey_time2 += bus2[i].duration;
-                	$('#ulOutput2').append('<br><li class="passed"><b>Arrival Time:&nbsp</b>' + newArrival2 
-                			+ '<br><b>Stop ID:&nbsp</b>' + stop2 + "<br>" + '<i class="fa fa-bus"></i>'+"<br>"+ '</li>');        		
-                	no_stops2 +=1;
-                }
-                $('#dueTime2').append("<b>" + Math.floor(diff2/60000) + " minutes" + "</b>" +"<br>")
-                $('#journeyTime2').append("<b>" + Math.floor(journey_time2/ 60) + " minutes" + "</b>" + "<br>")
-                
-                if (no_stops2.length < 4) {
-                    $('#journeyPrice2').append("<b>Adult:</b> €2.00" + "<br>");
-                    $('#journeyPrice2').append("<b>Leap Card:</b> €1.50" + "<br>");
-                } else if (no_stops2.length > 3 && no_stops.length < 13){
-                    $('#journeyPrice2').append("<b>Adult:</b> €2.70" + "<br>");
-                    $('#journeyPrice2').append("<b>Leap Card:</b> €2.05" + "<br>");
-                }
-                else{
-                    $('#journeyPrice2').append("<b>Adult:</b> €3.30" + "<br>");
-                    $('#journeyPrice2').append("<b>Leap Card:</b> €2.60" + "<br>");
+                    $('#resultArray0').replaceWith("<br><br>&emsp;&emsp;&emsp;" +
+        			"No real-time information available. Please select time and date and try again.");
+                    document.getElementById('resultArray0').style.display = 'block';
                 }
             });		
         }

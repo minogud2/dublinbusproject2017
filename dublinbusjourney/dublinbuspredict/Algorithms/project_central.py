@@ -6,7 +6,6 @@ import requests
 from .model_prototype_1 import model
 # from dublinbusjourney.dublinbuspredict.Algorithms.model_prototype_1 import model
 
-
 def holidays(date):
     publicholidays_2017 = ['2017-08-07', '2017-10-30', '2017-12-25', '2017-12-26',
                         '2017-12-27']
@@ -57,11 +56,15 @@ def main(bus_route, source_stop, destination_stop):
     destination_stop = destination_stop
     bus_route = bus_route
     information_from_bus_finder = main_bus_finder(source_stop, destination_stop, bus_route)
-    print("IM ABOUT TO RUN MODEL")
     if type(information_from_bus_finder) == str:
         return information_from_bus_finder
+#     forecast = weather()
+#     rain = forecast[0]
+#     wind = forecast[1]
+#     temp = forecast[2]
     for i in information_from_bus_finder:
         for j in i:
+            # delay = j['delay']
             hour = j['datetime']
             weekday = datetime.weekday(parser.parse(j['datetime']))
             holiday = holidays(j['datetime'])

@@ -8,7 +8,7 @@ try:
     pymysql.install_as_MySQLdb()
 except:
     pass
-from .models import PilotRoutes
+# from .models import PilotRoutes
 from django.db.models import Q
 from .Algorithms import project_central
 import MySQLdb
@@ -91,7 +91,6 @@ def pilot_routes(request):
     #     stops.append(j[0])
     return HttpResponse(json.dumps({"stops":stops}), content_type='application/json')
 
-
 def pilot_dest(request):
     source_id = request.GET.get('source')
     route_id = request.GET.get('route')
@@ -152,8 +151,8 @@ def set_info_next_page(request):
     date = request.GET.get('date')
 
 def get_info_next_page(request):
-    global route_id, source_id, destination_id, time, date
-    return HttpResponse(json.dumps({'source': source_id, 'destination':destination_id, 'route':route_id, 'time':time, 'date':date}), content_type='application/json')
+    global route_id, source_id, destination_id, time, date, direction
+    return HttpResponse(json.dumps({'source': source_id, 'destination':destination_id, 'route':route_id, 'time':time, 'date':date, 'direction':direction}), content_type='application/json')
 
 def load_routes_for_map(request):
     global list_routes
@@ -183,12 +182,15 @@ def run_planner(request):
     global source_id
     global destination_id
     global new_info_buses
+    global date
+    global time
+    global direction
     route_id = request.GET.get('route')
     source_id = request.GET.get('source')
     destination_id = request.GET.get('destination')
     date = request.GET.get('date')
     time = request.GET.get('time')
-    new_info_buses = time_date.time_date(route_id, source_id, destination_id, date, time)
+    new_info_buses = time_date.time_date(route_id, source_id, destination_id, date, time, direction)
     return HttpResponse(json.dumps({'info_buses': new_info_buses}), content_type='application/json')
 
 def map(request):
@@ -218,7 +220,7 @@ def sampleQuery(rows):
     cursor = db.cursor()
     cursor.execute("SELECT bus_routes.stop_id, bus_routes.stop_sequence, bus_stops.name, bus_stops.long_name, bus_stops.lat, bus_stops.lon "
                    "FROM bus_routes, bus_stops "
-                   "WHERE bus_routes.direction = '" + str(direction) + "' AND bus_routes.route_id = '" + str(route_id) + "' AND bus_routes.stop_id = bus_stops.stop_id "
+                   "WHERE bus_routes.direction = '" + str(direction[0][0]) + "' AND bus_routes.route_id = '" + str(route_id) + "' AND bus_routes.stop_id = bus_stops.stop_id "
                    "ORDER BY bus_routes.stop_sequence;")
     rows = cursor.fetchall()
     # for i in rows:

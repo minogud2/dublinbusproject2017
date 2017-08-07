@@ -413,7 +413,6 @@ def info_for_model(stop_list, stops, route):
     print('Joined:', joined)
     return joined
 
-
 # Everything runs from this function. It receives the source and (maybe the destination?) stop id and bus route.
 def main_bus_finder(source_stop, destination_stop, bus_route):
     """This function receives the source(or destination, or both) stop_id and bus route, and will:
@@ -478,10 +477,10 @@ def main_bus_finder(source_stop, destination_stop, bus_route):
 
     # Get list of stops starting at the stop where the bus is at up to the destination stop
     list_of_stops = get_all_stops(bus_position, stop_ids, destination_stop)
-    print('List of stops', list_of_stops)
+#     print('List of stops', list_of_stops)
     # Get the final data necessary to go into the model and return it
     stops_for_model = info_for_model(stop_ids, list_of_stops, bus_route)
-    print('Stops for model:', stops_for_model)
+#     print('Stops for model:', stops_for_model)
     clean = [x for x in stops_for_model if x != []]
     return stops_for_model
 

@@ -234,6 +234,17 @@ iframe {
   filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=.2);
 }
 
+#resultArray0{
+	display: none;
+}
+#resultArray1{
+	display: none;
+}
+#resultArray2{
+	display: none;
+}
+
+
 
 /* Multiple Pages - Footer */
 .my-new-footer{
@@ -327,6 +338,7 @@ iframe {
 
 /* Display result*/
 
+*/
 .output{
   list-style: none;
   padding: 20px;
@@ -596,6 +608,7 @@ h6{
 
 #displayResults{
 	margin: auto;
+	min-height: 300px;
 	width: 800px;
 }
 

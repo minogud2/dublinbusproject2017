@@ -46,7 +46,6 @@ function searchFunctionSRC() {
 
 function getStopsDest(source) {
     document.getElementById("search-box-2").value = source;
-    console.log('Source:', source);
     route = document.getElementById("search-box-1").value;
     $.getJSON("http://127.0.0.1:8000/dublinbuspredict/pilotDest", {"route":route, "source":source}, function(d) {
         console.log(d)
