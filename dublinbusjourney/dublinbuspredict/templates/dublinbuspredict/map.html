@@ -100,11 +100,10 @@
                 <div class="row">
                     <div class="col-xs-12">
                     <br>
-                        <form action="" method="" class="form-inline text-center" role="form">
+                        <form action="" method="" class="form-inline text-center" role="form" >
                             <div class="form-group my-changed-journey">
                                 
                                 {% load static %}
-                                
                                 <div class="form-group">
                                     <!--<input type="text" class="form-control" placeholder="Enter a route">-->
                                     {% load static %}
@@ -150,12 +149,29 @@
                                 <div class="form-group"><button type="button" id="submit-route2" class="form-control btn btn-primary">Find Journey</button></div>
                                 <div class="form-group"><button type="button" id="reset-2" onclick="loadRoutes2()" class="form-control btn btn-primary"><i class="fa fa-refresh" aria-hidden="true"></i></button></div>
                                 <script>
+                                 function setDefault(){
+                                 	var b = $.getJSON("http://127.0.0.1:8000/dublinbuspredict/getInfoNextPage", null,
+                                             function(d) {
+                                             route = d['route'];
+                                             source = d['source'];
+                                             destination = d['destination'];
+                                             var RouteID = document.querySelector("#search-box-4");
+                                             RouteID.value = route;
+                                             var SourceID =document.querySelector("#search-box-5");
+                                             SourceID.value = source;
+                                             var DestinationID =document.querySelector("#search-box-6");
+                                             DestinationID.value = destination;
+                                             })
+                                             }
+                                    setDefault();
+                                
                                     document.getElementById("submit-route2").addEventListener("click", function(){
                                         route = document.getElementById("search-box-4").value;
                                         source = document.getElementById("search-box-5").value;
                                         destination = document.getElementById("search-box-6").value;
                                         date = document.getElementById("example-date-input").value;
                                         time = document.getElementById("example-time-input").value;
+                                        
                                         initMap()
                                         if (time == "" && date == ""){
                                             console.log('now')
@@ -170,7 +186,6 @@
                                             });
                                         }
                                     });
-                                    
                                 </script>
                             </div>
                         </form>

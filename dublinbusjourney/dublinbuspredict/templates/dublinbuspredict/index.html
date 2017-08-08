@@ -110,7 +110,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-xs-12">
-                        <form action="" method="GET" class="form-inline text-center" role="form">
+                        <form action="" method="" class="form-inline text-center" role="form" onsubmit="return false">
                             <div class="form-group">
                                 {% load static %}
                                 
@@ -162,7 +162,8 @@
                                             time = document.getElementById("time-input-index").value;
                                             $.getJSON("http://127.0.0.1:8000/dublinbuspredict/setInfoNextPage", {"route":route, "source":source, "destination":destination, "time":time, "date":date}, function(d) {});
                                         });
-                                                                          
+                                       
+                                
                                     </script>
                                 </div>
                             </form>
