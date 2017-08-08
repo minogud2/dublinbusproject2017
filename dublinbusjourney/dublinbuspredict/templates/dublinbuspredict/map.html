@@ -148,7 +148,7 @@
                                 </div>
                                 <!--<button type="submit" class="form-control btn btn-primary">Find Journey</button>-->
                                 <div class="form-group"><button type="button" id="submit-route2" class="form-control btn btn-primary">Find Journey</button></div>
-                                <div class="form-group"><button type="button" id="reset-2" onclick="loadRoutes2()" class="form-control btn btn-primary">Reset</button></div>
+                                <div class="form-group"><button type="button" id="reset-2" onclick="loadRoutes2()" class="form-control btn btn-primary"><i class="fa fa-refresh" aria-hidden="true"></i></button></div>
                                 <script>
                                     document.getElementById("submit-route2").addEventListener("click", function(){
                                         route = document.getElementById("search-box-4").value;
@@ -156,13 +156,8 @@
                                         destination = document.getElementById("search-box-6").value;
                                         date = document.getElementById("example-date-input").value;
                                         time = document.getElementById("example-time-input").value;
-                                        console.log('Route:', route)
-                                        console.log('Source:', source)
-                                        console.log('Destination:', destination)
-                                        console.log('Time:', time)
-                                        console.log('Date:', date)
                                         initMap()
-                                        if (time == "" || date == ""){
+                                        if (time == "" && date == ""){
                                             console.log('now')
                                             $.getJSON("http://127.0.0.1:8000/dublinbuspredict/runModel", {"route":route, "source":source, "destination":destination}, function(d) {
                                                 console.log('here', d)
@@ -175,6 +170,7 @@
                                             });
                                         }
                                     });
+                                    
                                 </script>
                             </div>
                         </form>

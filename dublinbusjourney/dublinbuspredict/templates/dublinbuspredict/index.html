@@ -110,27 +110,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-xs-12">
-                            <!-- <form action="" method="" class="form-inline text-center" role="form">
-                                <div class="form-group">
-                                    {% load static %}
-                                    <div class="form-group dropdown">
-                                        <input class="form-control" id="search-box-1" oninput="searchFunctionRoute()" type="text" name="search" placeholder="Enter a route">
-                                        <div class="dropdown-content">
-                                            <ul class="dropdown-list" id ="dropdown-list-1">
-                                                {% for route in list_routes %}
-                                                <li style="cursor:pointer"><a onclick='getStops("{{ route }}")'>{{ route }}</a></li>
-                                                {% endfor %}
-                                            </ul>
-                                        </div>  
-                                    </div>
-
-                                    <div class="form-group dropdown">
-                                        <input  class="form-control" id="search-box-2" oninput="searchFunctionSRC()" type="text" name="search2" placeholder="Select a stop">
-                                        <div class="dropdown-content">
-                                            <ul class="dropdown-list" id="dropdown-list-2"></ul>
-                                        </div> -->
-
-                        <form action="" method="" class="form-inline text-center" role="form">
+                        <form action="" method="GET" class="form-inline text-center" role="form">
                             <div class="form-group">
                                 {% load static %}
                                 
@@ -165,15 +145,15 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <input class="form-control" type="date" id="date-input-index" placeholder="Today">
+                                        <input class="form-control" type="text" id="date-input-index" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Today">
                                     </div>      
 
                                     <div class="form-group">
-                                        <input class="form-control" type="time" id="time-input-index" placeholder="Now">
+                                        <input class="form-control" type="text" id="time-input-index" onfocus="(this.type='time')" onblur="(this.type='text')" placeholder="Now">
                                     </div>
                                     <div class="form-group"><button type="button" id="submit-route" onclick="window.location='http://127.0.0.1:8000/dublinbuspredict/map';" class="form-control btn btn-primary">Find Journey</button></div>
-                                    <div class="form-group"><button type="button" id="reset-1" onclick="loadRoutes()" class="form-control btn btn-primary">Reset</button></div>
-                                    <script>                                    
+                                    <div class="form-group"><button type="button" id="reset-1" onclick="loadRoutes()" class="form-control btn btn-primary"><i class="fa fa-refresh" aria-hidden="true"></i></button></div>
+                                    <script>           
                                         document.getElementById("submit-route").addEventListener("click", function(){
                                             route = document.getElementById("search-box-1").value;
                                             source = document.getElementById("search-box-2").value;
@@ -182,7 +162,7 @@
                                             time = document.getElementById("time-input-index").value;
                                             $.getJSON("http://127.0.0.1:8000/dublinbuspredict/setInfoNextPage", {"route":route, "source":source, "destination":destination, "time":time, "date":date}, function(d) {});
                                         });
-                                                                                
+                                                                          
                                     </script>
                                 </div>
                             </form>

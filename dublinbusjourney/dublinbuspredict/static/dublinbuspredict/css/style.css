@@ -394,7 +394,9 @@ li.passed::before {
 	margin-top: 30px;
 	margin-bottom: 30px;
 }
-
+#time-input-index{
+	width: 100px;
+}
 /*#form-holder{
     position: absolute;
     background-color: rgba(0,0,0,0.6);

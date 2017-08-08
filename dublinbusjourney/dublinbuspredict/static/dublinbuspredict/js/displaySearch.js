@@ -146,6 +146,20 @@ function initMap() {
 // need to change so that it's only displayed if current mode is selected.No forecasts. 
 
 var dWeather;
+$.getJSON("http://api.openweathermap.org/data/2.5/weather?q=Dublin,Ireland&units=metric&APPID=33e340fbba76a4645e26160abb37f014", null, function(dWeather) {
+    var weatherID = dWeather.weather[0].id;
+    var weatherTemp = dWeather.main.temp;
+    var weatherDesc = dWeather.weather[0].description;
+    weatherDesc = titleCase(weatherDesc);
+    var weatherIcon = changeWeatherIcon(weatherDesc);
+
+    $("#wTemp1").addClass("wi wi-thermometer");
+    $('#wTemp2').html("&nbsp" + weatherTemp);
+    $('#wTemp3').html("°C");
+    $('#wIcon').html(weatherIcon);
+    $('#wDesc').html(weatherDesc);
+    });
+
 function changeWeatherIcon(weatherType) {
     weatherType = weatherType.toLowerCase();
     $("#wIcon").text("");
@@ -239,8 +253,10 @@ function loadRoutes(){
         destination = d['destination'];
         time = d['time']
         date = d['date']
+        console.log("TIME IS: ", time)
+        console.log("DATE IS: ", date)
         initMap()
-        if (time != "" || date != ""){
+        if (time != "" && date != ""){
         	document.getElementById('displayWeather').style.display = 'none';
             $.getJSON("http://127.0.0.1:8000/dublinbuspredict/runPlanner", {"route":route, "source":source, "destination":destination, "date":date, "time":time}, function(d) {
               if (d2 === "No buses found!"){
@@ -295,20 +311,7 @@ function loadRoutes(){
                 console.log('here', d)
                 var d2 = d.info_buses;
                 var bus0, bus1, bus2;
-                $.getJSON("http://api.openweathermap.org/data/2.5/weather?q=Dublin,Ireland&units=metric&APPID=33e340fbba76a4645e26160abb37f014", null, function(dWeather) {
-                    var weatherID = dWeather.weather[0].id;
-                    var weatherTemp = dWeather.main.temp;
-                    var weatherDesc = dWeather.weather[0].description;
-                    weatherDesc = titleCase(weatherDesc);
-                    var weatherIcon = changeWeatherIcon(weatherDesc);
-
-                    $("#wTemp1").addClass("wi wi-thermometer");
-                    $('#wTemp2').html("&nbsp" + weatherTemp);
-                    $('#wTemp3').html("°C");
-                    $('#wIcon').html(weatherIcon);
-                    $('#wDesc').html(weatherDesc);
-                    });
-                
+                document.getElementById('displayWeather').style.display = 'inline';
                 if (d2 != "No buses found!"){
                 	console.log("I'm getting into the else statement")
                 	if (d2.length == 2){
