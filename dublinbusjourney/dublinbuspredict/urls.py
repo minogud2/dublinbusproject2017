@@ -1,7 +1,6 @@
 from django.conf.urls import url
 from . import views
 
-
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^map$', views.map, name='map'),
@@ -19,4 +18,9 @@ urlpatterns = [
     url(r'^getInfoNextPage$', views.get_info_next_page, name='get_info_next_page'),
     url(r'^getStopsStartingFromSource$', views.get_stops_starting_from_source, name='get_stops_starting_from_source'),
     url(r'^getStopsDestExtraRoute$', views.get_stops_dest_extra_route, name='get_stops_dest_extra_route'),
+    url(r'^getTourist$', views.get_tourist, name='get_tourist'),
+    url(r'^getTouristRoutes$', views.get_tourist_routes, name='get_tourist_routes'),
+    url(r'^getTwitterText$',views.get_TwitterAPIAARoadwatch, name='get_TwitterAPIAARoadwatch'),
+    url(r'^getNumberBuses$', views.get_number_buses, name='get_number_buses'),
+    url(r'^runQueries$', views.run_queries, name='run_queries'),
     ]
