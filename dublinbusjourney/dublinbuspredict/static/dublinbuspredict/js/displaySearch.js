@@ -1,6 +1,4 @@
 //// Toggle function for route div on map.html
-////Toggle function for route div on map.html
-
 
 $(document).ready(function(){
 	$("#RouteMap0").click(function(){
@@ -52,6 +50,7 @@ var directionsDisplay;
 var service;
 var source;
 var destination;
+var list_origin_dropdown = [];
 
 function initMap() {
     console.log('inside map!')
@@ -59,7 +58,7 @@ function initMap() {
     var latlng = new google.maps.LatLng(53.3498053, -6.260309699999993);
 	map = new google.maps.Map(document.getElementById('map'), {
         center: latlng,
-        zoom: 12,
+        zoom: 14,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }); //closing map creation	
 
@@ -73,93 +72,121 @@ function initMap() {
 
 //	Function to pull in the json from the url.
     $.getJSON("http://127.0.0.1:8000/dublinbuspredict/sampleQuery", null, function(d) {
+    console.log('Info for map', d)
         var data = d.data;
         var points = new Array; 
         
-        var marker, i;
+        var marker, i, newMarker, intSrc, intDst, midPoint;
         var infowindow = new google.maps.InfoWindow();
         for (i = 0; i < data.length; i++) {
-                var newMarker;
-                var intSrc = parseInt(source);
-                var intDst = parseInt(destination);               
+                intSrc = parseInt(source);
+                intDst = parseInt(destination);
                 if (data[i][0] == intSrc){
                	 newMarker = stopsIconSrc;
                 } else if (data[i][0] == intDst){
                	 newMarker = stopsIconDst;
+               	 midPoint = Math.round(Math.abs(i/2));
                 } else {
                	 newMarker = stopsIcon;
                 }     
                 marker = new google.maps.Marker({
-                position: new google.maps.LatLng(data[i][4], data[i][5]),
+                position: new google.maps.LatLng(data[i][1], data[i][2]),
                 map: map,
                 icon: newMarker
             });
-         points.push(marker.getPosition());
-       
-
+        points.push(marker.getPosition().toUrlValue());
+                 
         google.maps.event.addListener(marker, 'click', (function(marker, i){
         	return function() {
         		if (data[i][0] == intSrc){
         			infowindow.setContent("<b>Selected Source<br>Stop ID:&nbsp</b>" + data[i][0] + "<br>" + 	
-            				"<b>Location:&nbsp</b>" + data[i][2] + "<br>" + "<b>Street:&nbsp</b>" + data[i][3]);
+            				"<b>Location:&nbsp</b>" + data[i][3] + "<br>" + "<b>Street:&nbsp</b>" + data[i][4]);
         			infowindow.open(map,marker);
         		} else if(data[i][0] == intDst){
         			infowindow.setContent("<b>Selected Destination<br>Stop ID:&nbsp</b>" + data[i][0] + "<br>" + 	
-        				"<b>Location:&nbsp</b>" + data[i][2] + "<br>" + "<b>Street:&nbsp</b>" + data[i][3]);
+        				"<b>Location:&nbsp</b>" + data[i][3] + "<br>" + "<b>Street:&nbsp</b>" + data[i][4]);
         		infowindow.open(map,marker);
         		}
         		else {
         			infowindow.setContent("<b>	Stop ID:&nbsp</b>" + data[i][0] + "<br>" + 	
-            				"<b>Location:&nbsp</b>" + data[i][2] + "<br>" + "<b>Street:&nbsp</b>" + data[i][3]);
+            				"<b>Location:&nbsp</b>" + data[i][3] + "<br>" + "<b>Street:&nbsp</b>" + data[i][4]);
             		infowindow.open(map,marker);}
         	}
         })(marker, i));
+        if (data[i][0] == intDst){
+      	  i = data.length-1;
         }
+        }
+        console.log("Should be center",data[midPoint][1])
+        
+        map.setCenter({
+     		lat : parseFloat(data[midPoint][1]),
+     		lng : parseFloat(data[midPoint][2])
+     	});
 
       //Initialize the Path Array
       var path = new google.maps.MVCArray();
-
+      
       //Initialize the Direction Service
       service = new google.maps.DirectionsService();
 
       //Set the Path Stroke Color
-      var poly = new google.maps.Polyline({ map: map, strokeColor: '#3594D4' });
+      $.get('https://roads.googleapis.com/v1/snapToRoads', {
+    	    interpolate: true,
+    	    key: "AIzaSyAMIv5pNbn7yJWpjSYOr2BMuFuhGFJLcPk",
+    	    path: points.join('|')
+    	  }, function(data) {
+    	    console.log(data);
+    	    processSnapToRoadResponse(data);
+    	         // drawSnappedPolyline();
+    	    var poly = new google.maps.Polyline({ 
+		    	  map: map,
+		    	  strokeColor: '#232943',
+		    	  icons:[{
+		    		  icon: {
+				          path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+				          strokeColor:'#232943',
+				          fillColor:'#232943',
+				          fillOpacity:1 
+				          },
+				          repeat:'100px',
+		                  path:[]
+		    	  		}]  
+		      });
 
-      //Loop and Draw Path Route between the Points on MAP
-      for (var i = 0; i < points.length; i++) {
-          if ((i + 1) < points.length) {
-              var src = points[i];
-              var des = points[i + 1];
-              path.push(src);
-              poly.setPath(path);
-              service.route({
-                  origin: src,
-                  destination: des,
-                  travelMode: google.maps.DirectionsTravelMode.TRANSIT
-              })
-          }
-      }
-    });
-}
+    	      //Loop and Draw Path Route between the Points on MAP
+    	      for (var i = 0; i < snappedCoordinates.length; i++) {
+    	          if ((i + 1) < snappedCoordinates.length) {
+    	              var src = snappedCoordinates[i];
+    	              var des = snappedCoordinates[i + 1];
+    	              path.push(src);
+    	              poly.setPath(path);
+    	              service.route({
+    	                  origin: src,
+    	                  destination: des,
+    	                  travelMode: google.maps.DirectionsTravelMode.TRANSIT
+    	              })
+    	          }
+    	      }
+    	  });
+    	function processSnapToRoadResponse(data) {
+    	  snappedCoordinates = [];
+    	  placeIdArray = [];
+    	  for (var i = 0; i < data.snappedPoints.length; i++) {
+    	    var latlng = new google.maps.LatLng(
+    	        data.snappedPoints[i].location.latitude,
+    	        data.snappedPoints[i].location.longitude);
+    	    snappedCoordinates.push(latlng);
+    	    placeIdArray.push(data.snappedPoints[i].placeId);
+    	  }
+    	}  
+    	    });
+    	}
 
 //load in the weather onto map
 // need to change so that it's only displayed if current mode is selected.No forecasts. 
 
 var dWeather;
-$.getJSON("http://api.openweathermap.org/data/2.5/weather?q=Dublin,Ireland&units=metric&APPID=33e340fbba76a4645e26160abb37f014", null, function(dWeather) {
-    var weatherID = dWeather.weather[0].id;
-    var weatherTemp = dWeather.main.temp;
-    var weatherDesc = dWeather.weather[0].description;
-    weatherDesc = titleCase(weatherDesc);
-    var weatherIcon = changeWeatherIcon(weatherDesc);
-
-    $("#wTemp1").addClass("wi wi-thermometer");
-    $('#wTemp2').html("&nbsp" + weatherTemp);
-    $('#wTemp3').html("°C");
-    $('#wIcon').html(weatherIcon);
-    $('#wDesc').html(weatherDesc);
-    });
-
 function changeWeatherIcon(weatherType) {
     weatherType = weatherType.toLowerCase();
     $("#wIcon").text("");
@@ -196,27 +223,42 @@ function titleCase(str) {
 
 // Function for displaying output of predictions in divs.
 var busNum = 0;
-function getPredictedTimes(bus){
+function getPredictedTimes(bus, stops){
 	console.log("busNum is now", busNum)
-    var arrival = new Date(bus[0].predicted_arrival_time);
+	console.log('BUS:', bus)
+	console.log('These are the stops:', stops)
+	first_stop_distance = 	stops[0][5]
+	last_stop_distance = stops[stops.length - 1][5]
+	console.log('Starting at:', first_stop_distance)
+    console.log(bus[0][0].arrival.substring(6, 10), parseInt(bus[0][0].arrival.substring(3, 5)) - 1, bus[0][0].arrival.substring(0, 2), bus[0][0].arrival.substring(11, 13), bus[0][0].arrival.substring(14, 16), bus[0][0].arrival.substring(17, 19), 00)
+    var arrival = new Date(bus[0][0].arrival.substring(6, 10), parseInt(bus[0][0].arrival.substring(3, 5)) - 1, bus[0][0].arrival.substring(0, 2), bus[0][0].arrival.substring(11, 13), bus[0][0].arrival.substring(14, 16), bus[0][0].arrival.substring(17, 19), 00);
+    console.log(arrival)
     var currentTime = new Date();
     var diff = Math.abs(arrival - currentTime);
+    console.log('This is the diff:', diff)
+    console.log('This is the arrival:', arrival)
+    console.log('This is the current time:', currentTime)
     var journey_time = 0;
     var no_stops;    
     for (var i = 0; i < bus.length; i++) {
-    	var oldArrival = bus[i].predicted_arrival_time;
+    	var oldArrival = bus[i][0].arrival;
     	var newArrival = oldArrival.slice(11);
-    	var stop = bus[i].stopid;
-    	journey_time += bus[i].duration;
-    	$('#ulOutput'+busNum).append('<li class="passed"><b>Arrival Time:&nbsp;</b>' 
+    	console.log('inside the bus display loop', bus[i][0])
+    	var stop = bus[i][0].stopid;
+    	journey_time += bus[i][0]['duration'];
+    	console.log('Journey time:', journey_time)
+    	$('#ulOutput'+busNum).append('<li class="passed"><b>Arrival Time:&nbsp;</b>'
     			+ newArrival + '&emsp;&emsp;<b>Stop ID:&nbsp</b>' + stop +
-    			'&emsp;&emsp;<b>Stop Name:&nbsp;</b> Insert Stop Name' + "<br>" 
-    			+ '<i class="fa fa-bus fa-x8"></i>'+"<br>"+'</li>');        		
+    			'&emsp;&emsp;<b>Stop Name:&nbsp;</b> ' + stops[i][3] + "<br>"
+    			+ '<i class="fa fa-bus fa-x8"></i>'+"<br>"+'</li>');
     	no_stops +=1;
+    	if (i == bus.length - 1){
+            last_stop_distance = stops[i][5]
+        }
     }
-   $('#dueTime'+busNum).append("<b>" + Math.floor(diff/60000) + " minutes" + "<b>" +"<br>");
+   $('#dueTime'+busNum).append("<b>" + Math.floor((last_stop_distance - first_stop_distance).toFixed(2)) + " minutes" + "<b>" +"<br>");
   $('#journeyTime'+busNum).append("<b>" + Math.floor(journey_time/ 60) + " minutes" + "</b>");
-  $('#distance'+busNum).append("<b>" + " KM" + "</b>");
+  $('#distance'+busNum).append("<b>" + (Math.round((last_stop_distance - first_stop_distance) * 100) / 100) + "Km</b>");
   
   	// Calculate the cost section for the trip. 
     if (no_stops.length < 4) {
@@ -242,7 +284,8 @@ function loadRoutes(){
             $('#dropdown-list-4').append($('<li></li>').val(p).html('<a onclick=getStops2("' + p + '")>' + p + '</a>'));
         })
         $.each(d['list_stops'], function(i, p) {
-            $('#dropdown-list-5').append($('<li></li>').val(p).html('<a onclick=getStopsStartingFromSource2("' + p + '")>' + p + '</a>'));
+//            $('#dropdown-list-5').append($('<li></li>').val(p).html('<a onclick=getStopsStartingFromSource2("' + p + '")>' + p + '</a>'));
+            list_origin_dropdown.push(p);
         })
     });
     var b = $.getJSON("http://127.0.0.1:8000/dublinbuspredict/getInfoNextPage", null, function(d) {
@@ -253,103 +296,26 @@ function loadRoutes(){
         destination = d['destination'];
         time = d['time']
         date = d['date']
-        console.log("TIME IS: ", time)
-        console.log("DATE IS: ", date)
         initMap()
-        if (time != "" && date != ""){
+        $.getJSON("http://api.openweathermap.org/data/2.5/weather?q=Dublin,Ireland&units=metric&APPID=33e340fbba76a4645e26160abb37f014", null, function(dWeather) {
+            var weatherID = dWeather.weather[0].id;
+            var weatherTemp = dWeather.main.temp;
+            var weatherDesc = dWeather.weather[0].description;
+            weatherDesc = titleCase(weatherDesc);
+            var weatherIcon = changeWeatherIcon(weatherDesc);
+
+            $("#wTemp1").addClass("wi wi-thermometer");
+            $('#wTemp2').html("&nbsp" + weatherTemp);
+            $('#wTemp3').html("°C");
+            $('#wIcon').html(weatherIcon);
+            $('#wDesc').html(weatherDesc);
+        });
+        if (time != "" || date != ""){
         	document.getElementById('displayWeather').style.display = 'none';
-            $.getJSON("http://127.0.0.1:8000/dublinbuspredict/runPlanner", {"route":route, "source":source, "destination":destination, "date":date, "time":time}, function(d) {
-              if (d2 === "No buses found!"){
-            	$('#resultArray0').replaceWith("<br>" +"<br>" +"&emsp;&emsp;&emsp;"
-            			+ "No bus journeys departing on selected time. Please select another time and date, and try again.");
-            	document.getElementById('resultArray0').style.display = 'block';
-            }
-            else{
-                var d2 = d.info_buses;
-                console.log("PLAN PREDICTION", d2)
-                var bus = d2;
-                var busNum = 0;
-                var arrival = bus[0].predicted_arrival_time;
-                var journey_time = 0;
-                var no_stops;
-                
-                for (var i = 0; i < bus.length; i++) {
-                	var oldArrival = bus[i].predicted_arrival_time;
-                	var newArrival = oldArrival.slice(11);
-                	var stop = bus[i].stopid;
-                	journey_time += bus[i].duration;
-                	$('#ulOutput'+busNum).append('<li class="passed"><b>Arrival Time:&nbsp;</b>' 
-                			+ newArrival + '&emsp;&emsp;<b>Stop ID:&nbsp</b>' + stop +
-                			'&emsp;&emsp;<b>Stop Name:&nbsp;</b> Insert Stop Name' + "<br>" 
-                			+ '<i class="fa fa-bus fa-x8"></i>'+"<br>"+'</li>');        		
-                	no_stops +=1;
-                }
-		               $('#dueTime'+busNum).append("<b>" + arrival.slice(11)    		   
-		            		   + "<b>" +"<br>");
-		              $('#journeyTime'+busNum).append("<b>" + Math.floor(journey_time/ 60) + " minutes" + "</b>");
-		              $('#distance'+busNum).append("<b>" + " KM" + "</b>");
-		              
-		              	// Calculate the cost section for the trip. 
-		                if (no_stops.length < 4) {
-		                  $('#journeyPrice'+busNum).append("<b>Adult:</b> €2.00" + "<br>");
-		                  $('#journeyPrice'+busNum).append("<b>Leap Card:</b> €1.50" + "<br>");
-		              } else if (no_stops.length > 3 && no_stops.length < 13){
-		                  $('#journeyPrice'+busNum).append("<b>Adult:</b> €2.70" + "<br>");
-		                  $('#journeyPrice'+busNum).append("<b>Leap Card:</b> €2.05" + "<br>");
-		              }
-		              else{
-		                  $('#journeyPrice'+busNum).append("<b>Adult:</b> €3.30" + "<br>");
-		                  $('#journeyPrice'+busNum).append("<b>Leap Card:</b> €2.60" + "<br>");
-		              }      
-		                document.getElementById('resultArray'+busNum).style.display = 'block';
-		                busNum += 1;
-            		}
-            });
+            getPredictionSchedule(route, source, destination, date, time)
         }
         else{
-            $.getJSON("http://127.0.0.1:8000/dublinbuspredict/runModel", {"route":route, "source":source, "destination":destination}, function(d) {
-                console.log('here', d)
-                var d2 = d.info_buses;
-                var bus0, bus1, bus2;
-                document.getElementById('displayWeather').style.display = 'inline';
-                if (d2 != "No buses found!"){
-                	console.log("I'm getting into the else statement")
-                	if (d2.length == 2){
-                		busNum = 0;
-                		console.log("size of array is 2")
-                    	bus0 = d2[0];
-    	                getPredictedTimes(bus0);
-                		bus1 = d2[1];
-    	                getPredictedTimes(bus1);	
-                	} else if (d2.length == 3){
-                		console.log("size of array is 3")
-                		if (d2[0]== 0){
-                			busNum = 0;
-                			console.log("first array is empty in 1/3")
-                        	bus1 = d2[1];
-        	                getPredictedTimes(bus1);
-        	                bus2 = d2[2];
-        	                getPredictedTimes(bus2);
-        	                }
-                		}
-                		else{
-                			console.log("All three arrays are available")
-                			busNum = 0;
-                        	bus0 = d2[0];
-        	                getPredictedTimes(bus0);
-                        	bus1 = d2[1];
-        	                getPredictedTimes(bus1);
-        	                bus2 = d2[2];
-        	                getPredictedTimes(bus2);
-        	                console.log("predicted functions ran")
-                		}
-                	}
-                else{
-                    $('#resultArray0').replaceWith("<br><br>&emsp;&emsp;&emsp;" +
-        			"No real-time information available. Please select time and date and try again.");
-                    document.getElementById('resultArray0').style.display = 'block';
-                }
-            });		
+            getPredictions(route, source, destination)
         }
     });
 }
@@ -373,14 +339,18 @@ function searchFunctionRoute2() {
 function getStops2(route) {
     document.getElementById("search-box-4").value = route;
     console.log(route);
+    document.getElementById('spinner5').style.display = 'block';
+    document.getElementById('search-box-5').onkeyup = function(e){searchFunctionSRC2()};
+    console.log(document.getElementById('search-box-5').onkeyup)
     $.getJSON("http://127.0.0.1:8000/dublinbuspredict/pilotRoutes", {"route":route}, function(d) {
         console.log(d)
         document.getElementById("dropdown-list-5").innerHTML = "";
         document.getElementById("search-box-5").value = "";
         document.getElementById("search-box-6").value = "";
-    $.each(d['stops'], function(i, p) {
-        $('#dropdown-list-5').append($('<li></li>').val(p).html('<a onclick=getStopsDest2(' + p + ')>' + route + ' - ' + p + '</a>'));
-    });
+        $.each(d['stops'], function(i, p) {
+            $('#dropdown-list-5').append($('<li></li>').val(p[0]).html('<a onclick=getStopsDest2(' + p[0] + ')>' + route + ' - ' + p[0] + '</a>'));
+        });
+        document.getElementById('spinner5').style.display = 'none';
     });
 }
 
@@ -405,13 +375,15 @@ function getStopsDest2(source) {
     console.log('Source:', source);
     route = document.getElementById("search-box-4").value;
     console.log ('Route:', route)
+    document.getElementById('spinner6').style.display = 'block';
     $.getJSON("http://127.0.0.1:8000/dublinbuspredict/pilotDest", {"route":route, "source":source}, function(d) {
         console.log(d)
         document.getElementById("dropdown-list-6").innerHTML = "";
         document.getElementById("search-box-6").value = "";
-    $.each(d['stops'], function(i, p) {
-        $('#dropdown-list-6').append($('<li></li>').val(p).html('<a onclick=getStopsDestExtra2(' + p + ')>' + route + ' - ' + p + '</a>'));
-    });
+        $.each(d['stops'], function(i, p) {
+            $('#dropdown-list-6').append($('<li></li>').val(p[0]).html('<a onclick=getStopsDestExtra2(' + p[0] + ')>' + route + ' - ' + p[0] + '</a>'));
+        });
+        document.getElementById('spinner6').style.display = 'none';
     });
 }
 
@@ -438,29 +410,34 @@ function searchFunctionDest2() {
 function getStopsStartingFromSource2(stop){
     console.log('Stop is', stop)
     document.getElementById("search-box-5").value = stop
+    document.getElementById('spinner6').style.display = 'block';
     $.getJSON("http://127.0.0.1:8000/dublinbuspredict/getStopsStartingFromSource", {"source":stop}, function(d) {
         console.log(d)
         document.getElementById("dropdown-list-4").innerHTML = "";
         document.getElementById("search-box-4").value = "";
         document.getElementById("dropdown-list-6").innerHTML = "";
         document.getElementById("search-box-6").value = "";
-    $.each(d['stops'], function(i, p) {
-        console.log(p)
-        $('#dropdown-list-6').append($('<li></li>').val(p).html('<a onclick=getStopsDestExtraRoute2(' + p + ')>'+ p + '</a>'));
-    });
+        $.each(d['stops'], function(i, p) {
+            console.log(p)
+            $('#dropdown-list-6').append($('<li></li>').val(p).html('<a onclick=getStopsDestExtraRoute2(' + p + ')>'+ p + '</a>'));
+        });
+        document.getElementById('spinner6').style.display = 'none';
     });
 }
 
 function getStopsDestExtraRoute2(route){
     document.getElementById("search-box-6").value = route;
+    document.getElementById("dropdown-list-4").innerHTML = "";
     source = document.getElementById("search-box-5").value;
     dest = document.getElementById("search-box-6").value;
+    document.getElementById('spinner4').style.display = 'block';
     $.getJSON("http://127.0.0.1:8000/dublinbuspredict/getStopsDestExtraRoute", {"source":source, "dest":dest}, function(d) {
         console.log(d)
-    $.each(d['routes'], function(i, p) {
-        console.log(p)
-        $('#dropdown-list-4').append($('<li></li>').val(p).html('<a onclick=getExtraRoute2(' + p + ')>'+ p + '</a>'));
-    });
+        $.each(d['routes'], function(i, p) {
+            console.log(p)
+            $('#dropdown-list-4').append($('<li></li>').val(p).html('<a onclick=getExtraRoute2("' + p + '")>'+ p + '</a>'));
+        });
+        document.getElementById('spinner4').style.display = 'none';
     });
 }
 
@@ -481,8 +458,198 @@ function loadRoutes2(){
         $.each(d['list_routes'], function(i, p) {
             $('#dropdown-list-4').append($('<li></li>').val(p).html('<a onclick=getStops2("' + p + '")>' + p + '</a>'));
         })
-        $.each(d['list_stops'], function(i, p) {
-            $('#dropdown-list-5').append($('<li></li>').val(p).html('<a onclick=getStopsStartingFromSource2("' + p + '")>' + p + '</a>'));
-        })
+//        $.each(d['list_stops'], function(i, p) {
+//            $('#dropdown-list-5').append($('<li></li>').val(p).html('<a onclick=getStopsStartingFromSource2("' + p + '")>' + p + '</a>'));
+//        })
     });
+}
+
+function loadOrigin2(){
+    console.log('hereee!')
+    document.getElementById('search-box-2').onkeyup = function(e){newSearch2()};
+    $.getJSON("http://127.0.0.1:8000/dublinbuspredict/loadRoutesForMap", null, function(d) {
+             $.each(d['list_stops'], function(i, p) {
+                list_origin_dropdown.push(p);
+             });
+    });
+}
+
+function newSearch2(){
+    stop = document.getElementById('search-box-5').value;
+    console.log(stop);
+    var node;
+    var textnode;
+    text = '';
+    document.getElementById("dropdown-list-5").innerHTML = "";
+    var i;
+    document.getElementById('spinner5').style.display = 'block';
+    for(i = 0; i < list_origin_dropdown.length; i++){
+        if (list_origin_dropdown[i].toString().indexOf(stop.toString()) != -1){
+            if (stop.length > 0){
+                var same = true;
+                for (var j = 0; j < stop.length; j++){
+                    if (stop[j] != list_origin_dropdown[i].toString()[j]){
+                        same = false
+                    }
+                }
+                if (same == true){
+                    text += '<li><a onclick="getStopsStartingFromSource2('+ list_origin_dropdown[i] +')">' + list_origin_dropdown[i] + '</a></li>'
+                }
+            }
+        }
+    }
+    document.getElementById("dropdown-list-5").innerHTML = text;
+    document.getElementById('spinner5').style.display = 'none';
+}
+
+function getPredictions(route, source, destination){
+    busNum = 0
+    var buses = 0
+    var direction = 0
+    console.log('before the buses')
+    $.getJSON("http://127.0.0.1:8000/dublinbuspredict/getNumberBuses", {"route":route, "source":source}, function(d) {
+        console.log(d)
+        buses = d['buses']
+        direction = d['direction']
+        if (buses == 1){
+            document.getElementById('spinner-result-0').style.display = 'block';
+        }
+        else if (buses == 2){
+            document.getElementById('spinner-result-0').style.display = 'block';
+            document.getElementById('spinner-result-1').style.display = 'block';
+        }
+        else if (buses == 3){
+            document.getElementById('spinner-result-0').style.display = 'block';
+            document.getElementById('spinner-result-1').style.display = 'block';
+            document.getElementById('spinner-result-2').style.display = 'block';
+        }
+        console.log('Before loop:', buses, direction)
+        if (buses != 'No buses found!'){
+            console.log('In loop!')
+            $.getJSON("http://127.0.0.1:8000/dublinbuspredict/runModel", {"route":route, "source":source, "destination":destination, "direction":direction, "position":0}, function(d) {
+                console.log('here', d)
+                var d2 = d.info_buses;
+                console.log(d2.length)
+                getPredictedTimes(d.info_buses[0], d.info_stops);
+                document.getElementById('spinner-result-0').style.display = 'none';
+                var bus0, bus1, bus2;
+                if (buses > 1){
+                    $.getJSON("http://127.0.0.1:8000/dublinbuspredict/runModel", {"route":route, "source":source, "destination":destination, "direction":direction, "position":1}, function(d) {
+                        console.log('here', d)
+                        var d2 = d.info_buses;
+                        console.log(d2.length)
+                        getPredictedTimes(d.info_buses[0], d.info_stops);
+                        document.getElementById('spinner-result-1').style.display = 'none';
+                        var bus0, bus1, bus2;
+                        if (buses > 2){
+                            $.getJSON("http://127.0.0.1:8000/dublinbuspredict/runModel", {"route":route, "source":source, "destination":destination, "direction":direction, "position":2}, function(d) {
+                                console.log('here', d)
+                                var d2 = d.info_buses;
+                                console.log(d2.length)
+                                getPredictedTimes(d.info_buses[0], d.info_stops);
+                                document.getElementById('spinner-result-2').style.display = 'none';
+                                var bus0, bus1, bus2;
+                            });
+                        }
+                    });
+                }
+            });
+        }else{
+            document.getElementById('fail2').style.display = 'block';
+        }
+    });
+}
+
+function getPredictionSchedule(route, source, destination, date, time){
+    var busNum = 0;
+    $.getJSON("http://127.0.0.1:8000/dublinbuspredict/runQueries", {"route":route, "source":source, "destination":destination, "date":date, "time":time}, function(d) {
+        var bus1 = [d.list_stops[0][0]]
+        var bus2 = [d.list_stops[0][1]]
+        var bus3 = [d.list_stops[0][2]]
+        var stops1 = [d.list_stops[1]]
+        var stops2 = [d.list_stops[2]]
+        var stops3 = [d.list_stops[3]]
+        console.log(bus1, bus2, bus3)
+        console.log(stops1, stops2, stops3)
+        console.log('THE D:', d)
+        console.log('Moving on?2123123')
+        var stops = d.stops
+        document.getElementById('spinner-result-0').style.display = 'block';
+        document.getElementById('spinner-result-1').style.display = 'block';
+        document.getElementById('spinner-result-2').style.display = 'block';
+        $.getJSON("http://127.0.0.1:8000/dublinbuspredict/runPlanner", {"route":route, "source":source, "destination":destination, "date":date, "time":time, 'bus':bus1, 'stops': stops1}, function(d1) {
+            console.log('Moving on?')
+            if (d1 === "No buses found1!"){
+                document.getElementById('fail').style.display = 'block';
+            }
+            else{
+                console.log("PLAN PREDICTION1", d1.info_buses)
+                displayPredictionSchedule(d1.info_buses, busNum, d1.stops)
+                busNum += 1;
+                document.getElementById('spinner-result-0').style.display = 'none';
+                $.getJSON("http://127.0.0.1:8000/dublinbuspredict/runPlanner", {"route":route, "source":source, "destination":destination, "date":date, "time":time, 'bus':bus2, 'stops': stops2}, function(d2) {
+                    if (d2 === "No buses found2!"){
+                        document.getElementById('fail').style.display = 'block';
+                    }
+                    else{
+                        console.log("PLAN PREDICTION2", d2.info_buses)
+                        displayPredictionSchedule(d2.info_buses, busNum, d2.stops )
+                        busNum += 1;
+                        document.getElementById('spinner-result-1').style.display = 'none';
+                    }
+                    $.getJSON("http://127.0.0.1:8000/dublinbuspredict/runPlanner", {"route":route, "source":source, "destination":destination, "date":date, "time":time, 'bus':bus3, 'stops': stops3}, function(d3) {
+                        if (d3 === "No buses found3!"){
+                            document.getElementById('fail').style.display = 'block';
+                        }
+                        else{
+                            console.log("PLAN PREDICTION3", d3.info_buses)
+                            displayPredictionSchedule(d3.info_buses, busNum, d3.stops)
+                            document.getElementById('spinner-result-2').style.display = 'none';
+                        }
+                    });
+                });
+            }
+        });
+    });
+}
+
+function displayPredictionSchedule(bus, busNum, stops){
+    var arrival = bus[0].predicted_arrival_time;
+    var journey_time = 0;
+    var no_stops;
+    first_stop_distance = stops[0][3]
+	last_stop_distance = stops[stops.length - 1][3]
+	console.log('Gimmy2:', first_stop_distance, last_stop_distance)
+    console.log('These are the stops:', stops)
+    for (var i = 1; i < bus.length; i++) {
+        var oldArrival = bus[i].predicted_arrival_time;
+        console.log('ollll', oldArrival)
+        var newArrival = oldArrival.slice(11);
+        var stop = bus[i].stopid;
+        journey_time += bus[i].duration;
+        $('#ulOutput'+busNum).append('<li class="passed"><b>Arrival Time:&nbsp;</b>'
+                + newArrival + '&emsp;&emsp;<b>Stop ID:&nbsp</b>' + stop +
+                '&emsp;&emsp;<b>Stop Name:&nbsp;</b>' + stops[i][2] + "<br>"
+                + '<i class="fa fa-bus fa-x8"></i>'+"<br>"+'</li>');
+        no_stops +=1;
+    }
+    $('#dueTime'+busNum).append("<b>" + arrival.slice(11)
+           + "<b>" +"<br>");
+    $('#journeyTime'+busNum).append("<b>" + Math.floor(journey_time/ 60) + " minutes" + "</b>");
+    $('#distance'+busNum).append("<b>" + (Math.round((last_stop_distance - first_stop_distance) * 100) / 100) + "Km</b>");
+
+    // Calculate the cost section for the trip.
+    if (no_stops.length < 4) {
+      $('#journeyPrice'+busNum).append("<b>Adult:</b> €2.00" + "<br>");
+      $('#journeyPrice'+busNum).append("<b>Leap Card:</b> €1.50" + "<br>");
+    } else if (no_stops.length > 3 && no_stops.length < 13){
+      $('#journeyPrice'+busNum).append("<b>Adult:</b> €2.70" + "<br>");
+      $('#journeyPrice'+busNum).append("<b>Leap Card:</b> €2.05" + "<br>");
+    }
+    else{
+      $('#journeyPrice'+busNum).append("<b>Adult:</b> €3.30" + "<br>");
+      $('#journeyPrice'+busNum).append("<b>Leap Card:</b> €2.60" + "<br>");
+    }
+    document.getElementById('resultArray'+busNum).style.display = 'block';
+    busNum += 1;
 }

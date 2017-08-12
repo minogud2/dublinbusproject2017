@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8"/>
 
-        <title>Home - BusLightyear</title>
+        <title>Tourism - BusLightyear</title>
 
         <!-- If IE use the latest rendering engine -->
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,25 +20,33 @@
         <!-- Font for side navbar Awesome CDN Source: http://fontawesome.io/ -->
         <script src="https://use.fontawesome.com/e8a4c811a1.js"></script>
         
-        <!-- Needed for Icon Background and Shape for Tourism.html -->
-        <script src="http://map-icons.com/dist/js/map-icons.js"></script>
-        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
         {% load staticfiles %}
         <link rel="stylesheet" type="text/css" href="{% static 'dublinbuspredict/css/style.css' %}" />
         <script type="text/javascript" src="{% static 'dublinbuspredict/js/jsIndex.js' %}"></script>
         <script type="text/javascript" src="{% static 'dublinbuspredict/js/main.js' %}"></script>
-        <script type="text/javascript" src="{% static 'dublinbuspredict/js/tourism.js' %}"></script>
-                <style type="text/css">@font-face { 
+        <script type="text/javascript" src="{% static 'dublinbuspredict/js/tourism.js' %}"></script>        
+        <style type="text/css">@font-face { 
     				font-family: 'London-Tube'; 
     				src:local('fontName Regular'),
         			local('London-Tube'), 
         			url({% static 'dublinbuspredict/fonts/London-Tube.ttf' %}) format('truetype');
     				} 
 		</style>
-
+		<script>
+			var stopIcon2 = "{% static "dublinbuspredict/images/icon.png" %}";
+    		var sportIcon = "{% static "dublinbuspredict/images/sport.png" %}";
+    		var museumIcon = "{% static "dublinbuspredict/images/museum.png" %}";
+    		var musicIcon = "{% static "dublinbuspredict/images/music.png" %}";
+    		var beerIcon = "{% static "dublinbuspredict/images/beer.png" %}";
+    		var parkIcon = "{% static "dublinbuspredict/images/park.png" %}";
+    		var shoppingIcon = "{% static "dublinbuspredict/images/shopping.png" %}";
+    		var sightsIcon = "{% static "dublinbuspredict/images/sights.png" %}";
+    		var myLocationIcon = "{% static "dublinbuspredict/images/myLocation.png" %}";
+    	</script>
     </head>
-    {% load static %}
-    <body onload="tourismMap()">
+    <body>
         <!-- Main container to give website 12-grid shape -->
         <div class="container-fluid">
             <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -59,7 +67,7 @@
                 <div id="w3-buttons">
                     <a href="/dublinbuspredict/" class="w3-bar-item w3-button"><i class="fa fa-home fa-fw"></i>&nbsp;Home</a>
                     <a href="/dublinbuspredict/tickets_fares" class="w3-bar-item w3-button"><i class="fa fa-eur fa-fw"></i>&nbsp;Tickets & Fares</a>
-                    <a href="/dublinbuspredict/tourism" class="w3-bar-item w3-button"><i class="fa fa-map fa-fw"></i></i>&nbsp;Tourism</a>
+                    <a href="/dublinbuspredict/tourism" class="w3-bar-item w3-button"><i class="fa fa-map fa-fw"></i>&nbsp;Tourism</a>
                     <a href="/dublinbuspredict/connections" class="w3-bar-item w3-button"><i class="fa fa-train fa-fw"></i>&nbsp;Connections</a>
                     <a href="/dublinbuspredict/contact" class="w3-bar-item w3-button"><i class="fa fa-phone fa-fw"></i>&nbsp;Contact Us</a>
                 </div>
@@ -73,45 +81,98 @@
             </div>
         </div>
 
-        <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC035PwcDeGjTnReRow47QObcOOoGxw3Ko&callback=tourismMap"></script>-->
-        {% load staticfiles %}
-        <div class="container-fluid my-index-form" id="pushed-content" onload="tourismMap()">
+        <div class="container-fluid my-index-form" id="pushed-content">
             <div class="row">
-                <div id="map_tourism"></div>
+                <div class="col-lg-8" id="map_tourism"></div>
+                <div class="col-lg-4" onclick="closeNav()">
+                <div id="floating-panel" class="hidden-xs">
+                <button id="buttonLocation" class="button"><i class="fa fa-crosshairs" aria-hidden="true"></i></button>
             </div>
-            <h3>Dublin <small>Points of Interest</small></h3>
-        </div>
-
-        <div class="container-fluid">
-			<div class="row">
-            <footer class="fixed-bottom my-new-footer">
-                <div class="row">
-                	{% load static %}
-                    <div class="col-sm-3 text-center hidden-xs"><img src="{% static 'dublinbuspredict/css/images/TFI%20(2).png' %}">
+            <div class="row" id="tourism_buttons">
+                        <button type="button" class="btn btn-lg col-lg-6 col-xs-12 col-sm-12" id="TourismButton">Points of Interest</button>
+                        <button type="button" class="btn btn-lg col-lg-6 col-xs-12 col-sm-12" id="VenuesButton">Venues</button>
                     </div>
-                    <div class="col-sm-3 text-center"><h4>Information</h4>
-                        <li><a href="/dublinbuspredict/">Home</a></li>
-                        <li><a href="/dublinbuspredict/tickets_fares">Tickets & Fares</a></li>
-                        <li><a href="/dublinbuspredict/tourism">Tourism</a></li>
-                        <li><a href="/dublinbuspredict/connections">Connections</a></li>
-                        <li><a href="/dublinbuspredict/contact">Contact Us</a></li>
-                    </div>
-                    <div class="col-sm-3 text-center"><h4>External Links</h4>
-                        <li><a target="_blank" href="https://www.luas.ie/">Luas</a></li>
-                        <li><a target="_blank" href="http://www.buseireann.ie/">Bus Eireann</a></li>
-                        <li><a target="_blank" href="http://www.irishrail.ie/">Irish Rail</a></li>
-                    </div>
-                    <div class="col-sm-3 text-center hidden-xs"><img id="bly_img" src="{% static 'dublinbuspredict/css/images/logonobg.png' %}">
-                    </div>
+            <div class="row events_interests_contents" id="toggleTourismTable">
+                        <div class="list_styling text-left"><br>
+                            &nbsp;<i class="fa fa-university fa-fw"></i>&nbsp;<b>Museums</b>
+                            <a href="#" id="1">Trinity College Dublin</a>
+                            <a href="#" id="2">National Gallery of Ireland</a>
+                            <a href="#" id="3">The Little Museum of Dublin</a>
+                            <a href="#" id="4">The G.P.O</a>
+                            <a href="#" id="5">Collins Barracks</a>
+                            <a href="#" id="6">Dublin Castle</a>
+                            <a href="#" id="7">Irish Museum of Modern Art (IMMA)</a>
+                            <br>
+                            &nbsp;<i class="fa fa-binoculars fa-fw"></i>&nbsp;<b>Sights</b>
+                            <a href="#" id="8">St. Patrick's Cathedral</a>
+                            <a href="#" id="11">Dublin Zoo</a>
+                            <a href="#" id="12">Farmleigh House</a>
+                            <br>
+                            &nbsp;<i class="fa fa-beer fa-fw"></i>&nbsp;<b>Tours</b>
+                            <a href="#" id="9">Guinness Storehouse</a>
+                            <a href="#" id="10">Old Jameson Distellery</a>
+                            <br>
+                            &nbsp;<i class="fa fa-shopping-bag fa-fw"></i>&nbsp;<b>Shopping</b>
+                            <a href="#" id="13">Grafton Street</a>
+                            <br>
+                            &nbsp;<i class="fa fa-tree fa-fw"></i>&nbsp;<b>Park</b>
+                            <a href="#" id="14">St. Stephen's Green</a>
+                            <a href="#" id="15">National Botanic Gardens</a>
+                        </div>
+                        </div>
+                 <div class="row events_interests_contents" id="toggleVenuesTable">
+                        <div class="list_styling text-left"><br>
+                            <i class="fa fa-futbol-o fa-fw"></i>&nbsp;<b>Sports</b>
+                            <a href="#" id="6v">Aviva Stadium</a>
+                            <a href="#" id="2v">Croke Park</a>
+                            <br>
+                            <i class="fa fa-music fa-fw"></i>&nbsp;<b>Music and Arts</b>
+                            <a href="#" id="1v">The Point</a>
+                            <a href="#" id="3v">The National Concert Hall</a>
+                            <a href="#" id="4v">Vicar Street</a>
+                            <a href="#" id="5v">The Olympia Theatre</a>
+                            <a href="#" id="7v">RDS Arena</a>
+                            <a href="#" id="10v">The Convention Centre</a>
+                            <a href="#" id="11v">Iveagh Gardens</a>
+                            <a href="#" id="12v">Bord Gais Energy Theatre</a>
+                            <a href="#" id="13v">Marlay Park</a>
+                        </div>
+                        </div>
+        		</div>
                 </div>
+                        </div>
+                
+        
+        <!-- Footer -->
+        <div class="container-fluid" onclick="closeNav()">
+            <div class="row">
+                <footer class="fixed-bottom my-new-footer">
+                    <div class="row">
+                        {% load static %}
+                        <div class="col-sm-3 text-center hidden-xs"><img src="{% static 'dublinbuspredict/css/images/TFI%20(2).png' %}">
+                        </div>
+                        <div class="col-sm-3 text-center"><h4>Information</h4>
+                            <li><a href="/dublinbuspredict/">Home</a></li>
+                            <li><a href="/dublinbuspredict/tickets_fares">Tickets & Fares</a></li>
+                            <li><a href="/dublinbuspredict/tourism">Tourism</a></li>
+                            <li><a href="/dublinbuspredict/connections">Connections</a></li>
+                            <li><a href="/dublinbuspredict/contact">Contact Us</a></li>
+                        </div>
+                        <div class="col-sm-3 text-center"><h4>External Links</h4>
+                            <li><a target="_blank" href="https://www.luas.ie/">Luas</a></li>
+                            <li><a target="_blank" href="http://www.buseireann.ie/">Bus Eireann</a></li>
+                            <li><a target="_blank" href="http://www.irishrail.ie/">Irish Rail</a></li>
+                        </div>
+                        <div class="col-sm-3 text-center hidden-xs"><img id="bly_img" src="{% static 'dublinbuspredict/css/images/logonobg.png' %}">
+                        </div>
+                    </div>
 
-                <!-- Footer: Copyright Section -->
-                <p class="text-center" style="padding:10px;">&copy; Copyright 2017</p>
-            </footer>
+                    <!-- Footer: Copyright Section -->
+                    <p class="text-center" style="padding:10px;">&copy; Copyright 2017</p>
+                </footer>
             </div>
         </div>
 
-        <!-- Darragh: why are we importing it twice?-->
         <!-- jQuery file: Needs to be pasted above Bootstrap file to avoid errors -->    
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 

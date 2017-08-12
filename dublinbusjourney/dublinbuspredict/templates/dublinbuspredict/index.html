@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+	<!-- THIS IS MERGED VERSION -->
     <head>
         <meta charset="utf-8"/>
 
@@ -17,6 +18,9 @@
         <!-- Font for side navbar Awesome CDN Source: http://fontawesome.io/ -->
         <script src="https://use.fontawesome.com/e8a4c811a1.js"></script>
 
+        <!-- Font awesome loading/spinner icon-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
         {% load staticfiles %}
         <link rel="stylesheet" type="text/css" href="{% static 'dublinbuspredict/css/style.css' %}" />
         <script type="text/javascript" src="{% static 'dublinbuspredict/js/jsIndex.js' %}"></script>
@@ -30,7 +34,8 @@
 		</style>
     </head>
 
-    <body>
+	<body onload="loadTwitter()">
+    <!--  <body onload="loadOrigin()">  -->
         <!-- Main container to give website 12-grid shape -->
         {% load staticfiles %}
         <div class="container-fluid">
@@ -52,7 +57,7 @@
                 <div id="w3-buttons">
                     <a href="/dublinbuspredict/" class="w3-bar-item w3-button"><i class="fa fa-home fa-fw"></i>&nbsp;Home</a>
                     <a href="/dublinbuspredict/tickets_fares" class="w3-bar-item w3-button"><i class="fa fa-eur fa-fw"></i>&nbsp;Tickets & Fares</a>
-                    <a href="/dublinbuspredict/tourism" class="w3-bar-item w3-button"><i class="fa fa-map fa-fw"></i></i>&nbsp;Tourism</a>
+                    <a href="/dublinbuspredict/tourism" class="w3-bar-item w3-button"><i class="fa fa-map fa-fw"></i>&nbsp;Tourism</a>
                     <a href="/dublinbuspredict/connections" class="w3-bar-item w3-button"><i class="fa fa-train fa-fw"></i>&nbsp;Connections</a>
                     <a href="/dublinbuspredict/contact" class="w3-bar-item w3-button"><i class="fa fa-phone fa-fw"></i>&nbsp;Contact Us</a>
                 </div>
@@ -70,7 +75,7 @@
             <div class="hidden-xs">
                 <div id="my-carousel" class="carousel slide" data-ride="carousel">
                     <!-- Wrapper for slides -->
-                    <div class="carou	sel-inner">
+                    <div class="carousel-inner">
                         <div class="item active">
                             {% load static %}
                             <img src="{% static 'dublinbuspredict/css/images/carousel1.jpg' %}" alt="City" >
@@ -110,12 +115,13 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-xs-12">
-                        <form action="" method="" class="form-inline text-center" role="form" onsubmit="return false">
+                        <form action="" method="" class="form-inline text-center" role="form">
                             <div class="form-group">
                                 {% load static %}
                                 
-                                <div class="form-group dropdown">
+                                <div class="form-group dropdown has-feedback">
                                     <input class="form-control" id="search-box-1" oninput="searchFunctionRoute()" type="text" name="search" placeholder="Enter a route">
+                                    <span id ='spinner1' style="display:none"><i class="fa fa-refresh fa-spin form-control-feedback" style="line-height: 35px;"></i></span>
                                     <div class="dropdown-content">
                                         <ul class="dropdown-list" id ="dropdown-list-1">
                                             {% for route in list_routes %}
@@ -125,46 +131,44 @@
                                     </div>  
                                 </div>
 
-                                <div class="form-group dropdown">
-                                    <input  class="form-control" id="search-box-2" oninput="searchFunctionSRC()" type="text" name="search2" placeholder="Select a stop">
+                                <div class="form-group dropdown has-feedback">
+                                    <input  class="form-control" id="search-box-2" onkeyup="newSearch()" type="text" name="search2" placeholder="Select a stop">
+                                    <!--<span class="glyphicon glyphicon-refresh fa-spin form-control-feedback text-align" style="display:block; font-size: 1.2em;"></span>-->
+                                    <span id ='spinner2' style="display:none"><i class="fa fa-refresh fa-spin form-control-feedback" style="line-height: 35px;"></i></span>
                                     <div class="dropdown-content">
                                         <ul class="dropdown-list" id="dropdown-list-2">
-                                        {% for stop in list_stops %}
-                                            <li style="cursor:pointer"><a onclick='getStopsStartingFromSource("{{ stop }}")'>{{ stop }}</a></li>
-                                        {% endfor %}
                                         </ul>
-
                                     </div>
                               	</div>
 
-                                    <div class="form-group dropdown">
-                                        <input class="form-control" id="search-box-3" oninput="searchFunctionDest()" type="text" name="search2" placeholder="Select a destination">
-                                        <div class="dropdown-content">
-                                            <ul class="dropdown-list" id="dropdown-list-3"></ul>
-                                        </div>
+                                <div class="form-group dropdown has-feedback">
+                                    <input class="form-control" id="search-box-3" oninput="searchFunctionDest()" type="text" name="search2" placeholder="Select a destination">
+                                    <span id ='spinner3' style="display:none"><i class="fa fa-refresh fa-spin form-control-feedback" style="line-height: 35px;"></i></span>
+                                    <div class="dropdown-content">
+                                        <ul class="dropdown-list" id="dropdown-list-3"></ul>
                                     </div>
+                                </div>
 
-                                    <div class="form-group">
-                                        <input class="form-control" type="text" id="date-input-index" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Today">
-                                    </div>      
+                                <div class="form-group">
+                                    <input class="form-control" type="text" id="date-input-index" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Today">
+                                </div>
 
-                                    <div class="form-group">
-                                        <input class="form-control" type="text" id="time-input-index" onfocus="(this.type='time')" onblur="(this.type='text')" placeholder="Now">
-                                    </div>
-                                    <div class="form-group"><button type="button" id="submit-route" onclick="window.location='http://127.0.0.1:8000/dublinbuspredict/map';" class="form-control btn btn-primary">Find Journey</button></div>
-                                    <div class="form-group"><button type="button" id="reset-1" onclick="loadRoutes()" class="form-control btn btn-primary"><i class="fa fa-refresh" aria-hidden="true"></i></button></div>
-                                    <script>           
-                                        document.getElementById("submit-route").addEventListener("click", function(){
-                                            route = document.getElementById("search-box-1").value;
-                                            source = document.getElementById("search-box-2").value;
-                                            destination = document.getElementById("search-box-3").value;
-                                            date = document.getElementById("date-input-index").value;
-                                            time = document.getElementById("time-input-index").value;
-                                            $.getJSON("http://127.0.0.1:8000/dublinbuspredict/setInfoNextPage", {"route":route, "source":source, "destination":destination, "time":time, "date":date}, function(d) {});
-                                        });
-                                       
-                                
-                                    </script>
+                                <div class="form-group">
+                                    <input class="form-control" type="text" id="time-input-index" onfocus="(this.type='time')" onblur="(this.type='text')" placeholder="Now">
+                                </div>
+                                <div class="form-group"><button type="button" id="submit-route" onclick="window.location='http://127.0.0.1:8000/dublinbuspredict/map';" class="form-control btn btn-primary">Find Journey</button></div>
+                                <div class="form-group"><button type="button" id="reset-1" onclick="loadRoutes()" class="form-control btn btn-primary"><i class="fa fa-refresh" aria-hidden="true"></i></button></div>
+                                <script>
+                                    document.getElementById("submit-route").addEventListener("click", function(){
+                                        route = document.getElementById("search-box-1").value;
+                                        source = document.getElementById("search-box-2").value;
+                                        destination = document.getElementById("search-box-3").value;
+                                        date = document.getElementById("date-input-index").value;
+                                        time = document.getElementById("time-input-index").value;
+                                        $.getJSON("http://127.0.0.1:8000/dublinbuspredict/setInfoNextPage", {"route":route, "source":source, "destination":destination, "time":time, "date":date}, function(d) {});
+                                    });
+
+                                </script>
                                 </div>
                             </form>
                         </div>
@@ -187,21 +191,37 @@
 				}
 		</script>
 		<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-		        
-        <div class="container-fluid" id=primary>
+	
+		
+        <div class="container-fluid" id="primary" onclick="closeNav()"> 
+		 	<!-- Twitter Information: Heading -->
+            <div class="container my-twitter-heading" id="traffic-div">
+                <div class="row">
+                    <h3>&emsp;Live Traffic Feed</h3>
+                </div>
+            </div>
         <div class="container-fluid my-twitter-feed">
-            <aside class="col-md-4 my-sidebar-left">
-                <div class="col-md-12 my-twitter-content">Left 1</div>
-                <div class="col-md-12 my-twitter-content">Left 2</div>
+            <aside class="col-md-3 my-sidebar-left">
+                <div class="col-md-12 my-twitter-content" id="tweet1"></div>
+                <div class="col-md-12 my-twitter-content" id="tweet4"></div>
+                <div class="col-md-12 my-twitter-content" id="tweet7"></div>
             </aside>
-            <aside class="col-md-4 my-sidebar-center">
-                <div class="col-md-12 my-twitter-content">Right Left 1</div>
-                <div class="col-md-12 my-twitter-content">Right Left 2</div>
+            <aside class="col-md-3 my-sidebar-center">
+                <div class="col-md-12 my-twitter-content" id="tweet2"></div>
+                <div class="col-md-12 my-twitter-content" id="tweet5"></div>
+                <div class="col-md-12 my-twitter-content" id="tweet8"></div>
             </aside>
+            <aside class="col-md-3 my-sidebar-center">
+                <div class="col-md-12 my-twitter-content" id="tweet3"></div>
+                <div class="col-md-12 my-twitter-content" id="tweet6"></div>
+                <div class="col-md-12 my-twitter-content" id="tweet9"></div>
+            </aside>
+            
             <aside class="col-md-3 my-sidebar-right">
-                <a class="twitter-timeline" href="https://twitter.com/aaroadwatch" data-tweet-limit="5" data-chrome="nofooter noborders">Traffic Updates</a>
+                <a class="twitter-timeline" href="https://twitter.com/dublinbusnews" data-chrome="nofooter transparent" data-height="400">data-tweet-limit="5" data-chrome="nofooter noborders"></a>
                 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
             </aside>
+            <p><br>&emsp;&emsp;<small>For more information, visit:&nbsp;<a href='https://www.theaa.ie/roadwatch/newsroom/'>AA Roadwatch</a></small></p>
         </div>
         </div>
 		

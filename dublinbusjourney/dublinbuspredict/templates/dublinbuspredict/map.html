@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<!-- MERGED FILE -->
     <head>
         <meta charset="utf-8"/>
         <title>Map - My Journey</title>
@@ -15,8 +16,10 @@
 
         <!-- Needed for Glyphicons: Font Awesome CDN Source: http://fontawesome.io/ -->
         <script src="https://use.fontawesome.com/e8a4c811a1.js"></script>
+        
         <!-- Font Awesome CDN Source: http://fontawesome.io/ -->
         <script src="https://use.fontawesome.com/e8a4c811a1.js"></script>
+        
         <!-- CSS: Link to weather icons-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.5/css/weather-icons.min.css">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -37,7 +40,6 @@
     		var stopsIcon = "{% static "dublinbuspredict/images/icon.png" %}";
     		var stopsIconSrc = "{% static "dublinbuspredict/images/src_icon.png" %}";
     		var stopsIconDst = "{% static "dublinbuspredict/images/dst_icon.png" %}";
-    		console.log(stopsIconSrc)
     	</script>
     </head>
     <body onload="loadRoutes()">
@@ -60,7 +62,7 @@
                 <div id="w3-buttons">
                     <a href="/dublinbuspredict/" class="w3-bar-item w3-button"><i class="fa fa-home fa-fw"></i>&nbsp;Home</a>
                     <a href="/dublinbuspredict/tickets_fares" class="w3-bar-item w3-button"><i class="fa fa-eur fa-fw"></i>&nbsp;Tickets & Fares</a>
-                    <a href="/dublinbuspredict/tourism" class="w3-bar-item w3-button"><i class="fa fa-map fa-fw"></i></i>&nbsp;Tourism</a>
+                    <a href="/dublinbuspredict/tourism" class="w3-bar-item w3-button"><i class="fa fa-map fa-fw"></i>&nbsp;Tourism</a>
                     <a href="/dublinbuspredict/connections" class="w3-bar-item w3-button"><i class="fa fa-train fa-fw"></i>&nbsp;Connections</a>
                     <a href="/dublinbuspredict/contact" class="w3-bar-item w3-button"><i class="fa fa-phone fa-fw"></i>&nbsp;Contact Us</a>
                 </div>
@@ -105,9 +107,8 @@
                                 
                                 {% load static %}
                                 <div class="form-group">
-                                    <!--<input type="text" class="form-control" placeholder="Enter a route">-->
                                     {% load static %}
-                                    <div class="dropdown">
+                                    <div class="dropdown has-feedback">
                                         <input class="form-control" id="search-box-4" oninput="searchFunctionRoute2()" type="text" name="search" placeholder="Enter a route">
                                         <div class="dropdown-content">
                                             <ul class="dropdown-list" id ="dropdown-list-4">
@@ -127,10 +128,11 @@
                                     </div>
                                 </div>
                                 
-                                <div class="form-group">
+                                <div class="form-group has-feedback">
                                     <!--<input type="text" class="form-control" placeholder="Select a destination">-->
                                     <div class="dropdown">
                                         <input class="form-control" id="search-box-6" oninput="searchFunctionDest2()" type="text" name="search2" placeholder="Select a destination">
+                                        <span id ='spinner6' style="display:none"><i class="fa fa-refresh fa-spin form-control-feedback" style="line-height: 35px;"></i></span>
                                         <div class="dropdown-content">
                                             <ul class="dropdown-list" id="dropdown-list-6">
                                             </ul>
@@ -147,7 +149,8 @@
                                 </div>
                                 <!--<button type="submit" class="form-control btn btn-primary">Find Journey</button>-->
                                 <div class="form-group"><button type="button" id="submit-route2" class="form-control btn btn-primary">Find Journey</button></div>
-                                <div class="form-group"><button type="button" id="reset-2" onclick="loadRoutes2()" class="form-control btn btn-primary"><i class="fa fa-refresh" aria-hidden="true"></i></button></div>
+                                <div class="form-group"><button type="button" id="reset-2" onclick="loadRoutes2()" class="form-control btn btn-primary"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                                </div>
                                 <script>
                                  function setDefault(){
                                  	var b = $.getJSON("http://127.0.0.1:8000/dublinbuspredict/getInfoNextPage", null,
@@ -171,21 +174,31 @@
                                         destination = document.getElementById("search-box-6").value;
                                         date = document.getElementById("example-date-input").value;
                                         time = document.getElementById("example-time-input").value;
-                                        
-                                        initMap()
-                                        if (time == "" && date == ""){
-                                            console.log('now')
-                                            $.getJSON("http://127.0.0.1:8000/dublinbuspredict/runModel", {"route":route, "source":source, "destination":destination}, function(d) {
-                                                console.log('here', d)
-                                            });
-                                        }
-                                        else{
-                                            console.log('date and time')
-                                            $.getJSON("http://127.0.0.1:8000/dublinbuspredict/runPlanner", {"route":route, "source":source, "destination":destination, "date":date, "time":time}, function(d) {
-                                                console.log('here', d)
-                                            });
-                                        }
-                                    });
+                                        document.getElementById("fail").style.display = 'none';
+                                        document.getElementById("fail2").style.display = 'none';
+                                        document.getElementById("resultArray0").style.display = 'none';
+                                        document.getElementById("ulOutput0").innerHTML = "";
+                                        document.getElementById("dueTime0").innerHTML = "";
+                                        document.getElementById("journeyTime0").innerHTML = "";
+                                        document.getElementById("journeyPrice0").innerHTML = "";
+                                        document.getElementById("distance0").innerHTML = "";
+                                        document.getElementById("resultArray1").style.display = 'none';
+                                        document.getElementById("ulOutput1").innerHTML = "";
+                                        document.getElementById("dueTime1").innerHTML = "";
+                                        document.getElementById("journeyTime1").innerHTML = "";
+                                        document.getElementById("journeyPrice1").innerHTML = "";
+                                        document.getElementById("distance1").innerHTML = "";
+                                        document.getElementById("resultArray2").style.display = 'none';
+                                        document.getElementById("ulOutput2").innerHTML = "";
+                                        document.getElementById("dueTime2").innerHTML = "";
+                                        document.getElementById("journeyTime2").innerHTML = "";
+                                        document.getElementById("journeyPrice2").innerHTML = "";
+                                        document.getElementById("distance2").innerHTML = "";
+                                        $.getJSON("http://127.0.0.1:8000/dublinbuspredict/setInfoNextPage", {"route":route, "source":source, "destination":destination, "time":time, "date":date}, function() {
+                                            initMap()
+                                            loadRoutes()
+                                        });
+                                         });
                                 </script>
                             </div>
                         </form>
@@ -206,8 +219,15 @@
                             <div class="col-sm-2 text-left"><h6>Cost</h6></div>
                           <div class="col-sm-2 text-center"><h6>Distance</h6></div>
                         </div>
-                        <br>
+                         <br>
+                        <div class="text-center" id="fail" style="display:none;">
+                            <p><br><br>No bus journeys departing on selected time. Please select another time and date, and try again.</p>
+                        </div>
+                        <div class="text-center" id="fail2" style="display:none;">
+                            <p><br><br>No real-time information available. Please select time and date and try again.</p>
+                        </div>
                         <!-- Array 0"-->
+                        <div class="col-sm-12 text-center row my-individual-result rounded-top" id ='spinner-result-0' style="display:none"><span><i class="fa fa-refresh fa-spin form-control-feedback" style="line-height: 35px;"></i></span></div>
                         <div id="resultArray0" style="display:none;"> 
                         <div class="row my-individual-result rounded-top" id="toggleDetailsRes0">
                             <div class="col-sm-2 text-center" id = "dueTime0"></div>
@@ -230,6 +250,7 @@
 						</div>
                         <br>
                         <!-- Array 1"-->
+                        <div class="col-sm-12 text-center row my-individual-result rounded-top" id ='spinner-result-1' style="display:none"><span><i class="fa fa-refresh fa-spin form-control-feedback" style="line-height: 35px;"></i></span></div>
                         <div id="resultArray1" style="display:none;"> 
                         <div class="row my-individual-result rounded-top" id="toggleDetailsRes1">
                             <div class="col-sm-2 text-center" id = "dueTime1"></div>
@@ -252,7 +273,8 @@
                             </div>
                              <!-- Array 2: Hidden by Default: Shows OnClick "Show Details"-->
                              <br>
-						<div id="resultArray2" style="display:none;"> 
+                         <div class="col-sm-12 text-center row my-individual-result rounded-top" id ='spinner-result-2' style="display:none"><span><i class="fa fa-refresh fa-spin form-control-feedback" style="line-height: 35px;"></i></span></div>
+                         <div id="resultArray2" style="display:none;"> 
                         <div class="row my-individual-result rounded-top" id="toggleDetailsRes2">
                             <div class="col-sm-2 text-center" id = "dueTime2"></div>
                             <div class="col-sm-2 text-center" id="journeyTime2"></div>
@@ -265,6 +287,7 @@
                         <div class="row" style="display:none">
                             <i class="fa fa-spinner fa-spin my-spinner" style="font-size:24px"></i>
                         </div>
+                        <div class="col-sm-3 text-center" id ='spinner-result-3' style="display:none"><span><i class="fa fa-refresh fa-spin form-control-feedback" style="line-height: 35px;"></i></span></div>                        
                         <!-- Array 2: Hidden by Default: Shows Delayed OnClick "More Information" after Loading Spinner -->
                         <div class="row show-details-result" id="toggleRouteMap2" style="display:none">
                             <div class="col-sm-11 text-left"><ul id="ulOutput2" class="output">

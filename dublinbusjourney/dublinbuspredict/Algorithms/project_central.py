@@ -1,10 +1,20 @@
-# from dublinbusjourney.dublinbuspredict.Algorithms.bus_location_finder import main_bus_finder
-from .bus_location_finder import main_bus_finder
+# from dublinbusjourney.dublinbuspredict.Algorithms.locate_bus import central, get_buses
+from .locate_bus import central, get_buses
 from datetime import datetime, timedelta
 from dateutil import parser
 import requests
 from .model_prototype_1 import model
 # from dublinbusjourney.dublinbuspredict.Algorithms.model_prototype_1 import model
+
+import pandas as pd
+pd.options.mode.chained_assignment = None
+from sklearn.externals import joblib
+from dateutil import parser
+try:
+    import pymysql
+    pymysql.install_as_MySQLdb()
+except:
+    pass
 
 def holidays(date):
     publicholidays_2017 = ['2017-08-07', '2017-10-30', '2017-12-25', '2017-12-26',
@@ -51,37 +61,75 @@ def time_to_arrive(datetime, sec):
     return new_time
 
 
-def main(bus_route, source_stop, destination_stop):
-    source_stop = source_stop
-    destination_stop = destination_stop
-    bus_route = bus_route
-    information_from_bus_finder = main_bus_finder(source_stop, destination_stop, bus_route)
-    if type(information_from_bus_finder) == str:
-        return information_from_bus_finder
-#     forecast = weather()
-#     rain = forecast[0]
-#     wind = forecast[1]
-#     temp = forecast[2]
-    for i in information_from_bus_finder:
-        for j in i:
-            # delay = j['delay']
-            hour = j['datetime']
-            weekday = datetime.weekday(parser.parse(j['datetime']))
-            holiday = holidays(j['datetime'])
-            p_holiday = holiday[0]
-            s_holiday = holiday[1]
-            j['duration'] = model(bus_route, j['stopid'], hour, weekday, p_holiday, s_holiday)[0]
-            j['predicted_arrival_time'] = (time_to_arrive(parser.parse(j['datetime']), j['duration']))
-            if str(j['stopid']) == source_stop:
-                j['status'] = 'src'
-            elif str(j['stopid']) == destination_stop:
-                j['status'] = 'dest'
-            else:
-                j['status'] = 'normal'
-    return information_from_bus_finder
+def get_trip_id(bus_route, stop_id, arrival_time, day):
+    db = pymysql.connect(user='lucas', db='summerProdb', passwd='hello_world', host='csi6220-3-vm3.ucd.ie')
+    cursor = db.cursor()
+    if day < 5:
+        d = 'business_day'
+    elif day == 5:
+        d = 'saturday'
+    elif (day == 6) or (p_holiday == True):
+        d = 'sunday'
+    print('All things:', bus_route, stop_id, arrival_time[11:], d)
+    rows2 = ()
+    while rows2 == ():
+        cursor.execute('SELECT DISTINCT trip_id FROM bus_timetable WHERE bus_timetable.route_id = "' + str(bus_route) + '" AND bus_timetable.stop_id = "' + str(stop_id) + '" AND bus_timetable.arrival_time >= "' + str(arrival_time)[11:] + '" AND bus_timetable.day_of_week = "' + d + '" ORDER BY bus_timetable.arrival_time ASC LIMIT 1;')
+        rows2 = cursor.fetchall()
+        print(rows2)
+        if rows2 == ():
+            arrival_time = str(parser.parse(arrival_time) - datetime.timedelta(minutes=2))
+    return rows2[0]
+
+def main(bus_route, source_stop, destination_stop, direction, position):
+    info = central(bus_route, source_stop, destination_stop, direction, position)
+    trip_id = get_trip_id(bus_route, source_stop, info[len(info)-1][0]['arrival'], datetime.weekday(parser.parse(info[len(info)-1][0]['arrival'])))
+    with open("C:\\Users\\minogud2\\BusLightyear\\cleaning\\trained_modelv9.pkl", "rb") as f:
+        rtr = joblib.load(f)
+    if type(info) == str:
+        return info
+    print(info)
+    for j in range(len(info) - 1, -1, -1):
+        hour = 0
+        if j == len(info) - 1:
+            hour = info[j][0]['arrival']
+            weekday = datetime.weekday(parser.parse(info[j][0]['arrival']))
+            holiday = holidays(info[j][0]['arrival'])
+        else:
+            hour = info[j + 1][0]['arrival']
+            weekday = datetime.weekday(parser.parse(info[j + 1][0]['arrival']))
+            holiday = holidays(info[j + 1][0]['arrival'])
+        p_holiday = holiday[0]
+        s_holiday = holiday[1]
+        print("Somewhere here is the error")
+        print(info[j][0]['stopid'])
+        info[j][0]['duration'] = model(bus_route, info[j][0]['stopid'], hour, weekday, p_holiday, s_holiday, rtr, trip_id)[0]
+        if j == len(info) - 1: 
+            info[j][0]['arrival'] = (time_to_arrive(parser.parse(info[j][0]['arrival']), info[j][0]['duration']))
+        else:
+            info[j][0]['arrival'] = (time_to_arrive(parser.parse(info[j + 1][0]['arrival']), info[j][0]['duration']))
+        if str(info[j][0]['stopid']) == source_stop:
+            info[j][0]['status'] = 'src'
+        elif str(info[j][0]['stopid']) == destination_stop:
+            info[j][0]['status'] = 'dest'
+        else:
+            info[j][0]['status'] = 'normal'
+    found = False
+    clean = []
+    for i in range(len(info) - 1, -1, -1):
+        if str(info[i][0]['stopid']) == str(source_stop):
+            found = True
+        if found:
+            print(info[i])
+            clean.append(info[i])
+    return clean
 
 if __name__ == '__main__':
-    bus_route = '76'
-    source_stop = '2112'
-    destination_stop = '2123'
-    main(bus_route, source_stop, destination_stop)
+    bus_route = '33'
+    source_stop = '7292'
+    destination_stop = '3835'
+    buses = get_buses(bus_route, source_stop)
+    print(buses)
+    direction = buses[0]['direction']
+    for i in range(len(buses)):
+        print(main(bus_route, source_stop, destination_stop, direction, i))
+        print('\n\n\n\n\n<<<<<<<<<<<------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')

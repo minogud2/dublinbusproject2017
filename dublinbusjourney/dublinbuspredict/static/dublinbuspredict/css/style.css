@@ -12,6 +12,7 @@ body{
   #form-input{
     margin-left: 0px;
   }
+ 
 }
 
 @font-face {
@@ -22,6 +23,10 @@ body{
 
 h2{
     font-size: 18px;
+}
+h3{
+	font-weight: bold;
+    font-size: 20px;
 }
 
 /* Multiple Pages - FontPalace, 2016  */
@@ -90,17 +95,11 @@ h2{
     height: 40px;
 }
 
-
-
-
 /* Multiple Pages - Logo for Hamburger Menu Icon*/
 #menu_hb{
     width: 35px;
     height: 35px;
 }
-
-
-
 
 /* Multiple Pages - Side Navigation Bar */
 .sidenav {
@@ -169,7 +168,36 @@ h2{
 }
 
 
+/*Button for my location*/
+#floating-panel {
+        right: 429px;
+        background: rgba(255, 255, 255, 0.9);
+        height: 29px;
+        width:30px;
+        position: absolute;
+        top: 425px;
+        border: none;
+        z-index: 5;
+        -moz-box-shadow: 0 0 3px #ccc;
+        -webkit-box-shadow: 0 0 3px #ccc;
+        box-shadow: 0 0 3px #ccc;
+        text-align: center;
+      }
 
+#buttonLocation{
+    height: 28px;
+    width: 30px; 
+    padding: 0;
+    font: 11px Arial,Helvetica,Sans-serif;
+    background: rgba(255, 255, 255, 1);
+    color: #595959;
+    border: none;
+    margin-bottom: 50px;
+}
+
+#buttonLocation:hover {
+  box-shadow: inset 0 0 0 60px rgba(0, 0, 0, 0.1);
+}
 
 /* Multiple Pages (Index/Map Forms) - Drop down Menus*/
 .dropdown-list {
@@ -219,7 +247,7 @@ ul {
 
 /* Language Bar */
 
-iframe {
+/* iframe {
   margin-top: 20px;
   margin-bottom: 30px;
 
@@ -232,7 +260,7 @@ iframe {
   box-shadow: 4px 4px 14px #000;
 
   filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=.2);
-}
+} */
 
 #resultArray0{
 	display: none;
@@ -282,7 +310,7 @@ iframe {
 #primary{
     position: relative;
     display: block;
-    height: 550px;
+    height: 500px;
     overflow: hidden;
     margin-top: 10px;
     margin: 0;
@@ -446,21 +474,33 @@ li.passed::before {
 
 /* tickets_fares.html */
 .my-tickets{
-    margin-top: 65px;
+    margin-top: 40px;
 }
 
 .my-ticket-choices{
     margin-left: 40px; 
     margin-right: 40px;
     margin-bottom: 20px;
+    font-size: 16px;
 }
 
 .my-ticket-choices-heading{
     margin-left: 40px;   
 }
+.lead{
+	font-size: 17px;
+}
+
+#pushed-content{
+	margin-bottom: 60px;
+}
+.table-responsive{
+	font-size: 12px;
+}
 
 /* pointsOfInterest.html */
 .my-twitter-feed{
+	text-align: left;
     margin: 10px;
     max-height: 500px;
     overflow-x: hidden;  
@@ -468,24 +508,27 @@ li.passed::before {
 }
 
 .my-twitter-content{
-    padding-bottom: 200px;
+	text-align: left;
+	font-size: 13px;
+    padding-bottom: 10px;
     overflow: hidden;
-    border: solid black 1px;
-    text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 .my-sidebar-left{
-    margin-top: 20px;    
+    margin-top: 20px;
+    border-right: solid 1px gray;
 }
 
 .my-sidebar-center{
     margin-top: 20px;
+    border-right: solid 1px gray;
 }
 
 .my-sidebar-right{
     margin-top: 20px;
     float: right;
+    overflow: hidden;
 }
 
 
@@ -507,10 +550,76 @@ li.passed::before {
 
 /* Tourism page */
 #map_tourism{
-	margin-top: 35px;
-    height: 460px;
-    width: 100%;
+	top:35px;
+    height: 555px;
+    margin-bottom:5px   
 }
+#tourism_main_container{
+	top:35px;
+    margin-top: 65px;
+}
+#toggleTourismTable{
+	display: block;
+	margin-left: 3px;
+	font-size: 11px;
+}
+#toggleVenuesTable{
+		margin-left: 3px;
+	font-size: 11px;
+}
+#tourism_buttons{
+    margin-top: 35px;
+}
+.events_interests_contents{
+    display: none;
+}
+.list_styling{
+    background-color: white;        
+}
+.list_styling a{
+    padding-top: 5px;
+    text-decoration: none;
+    padding-left: 35px;
+    padding-right: 0px;
+    color: black;
+    display: block;
+    height: 22px;
+    
+}
+.list_styling li{
+    padding-top: 5px;
+    text-decoration: none;
+    padding-left: 15px;
+    padding-right: 0px;
+    color: black;
+    display: block;
+    height: 22px;
+}
+.list_styling a:hover{
+    background-color: rgba(0,0,0,0.1); 
+}
+
+#TourismButton{
+	background-color:#0c2864;
+	color:white; 
+	border-radius: 0 !important;
+}
+#TourismButton:hover {
+	background-color: rgba(255, 255, 255, 0.2);
+	color:#0c2864;
+}
+
+#VenuesButton{
+	background-color:#0c2864;
+	color:white; 
+	border-radius: 0 !important;
+}
+
+#VenuesButton:hover {
+	background-color: rgba(255, 255, 255, 0.2);
+	color:#0c2864;
+}
+
 
 /* map.html */
 #map{

@@ -4,6 +4,9 @@
         <meta charset="utf-8"/>
         <title>About Us</title>
 
+        <!-- Set the page to the width of the device and set the zoom level -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
         <!-- Bootstrap: Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -19,16 +22,17 @@
         <link rel="stylesheet" type="text/css" href="{% static 'dublinbuspredict/css/style.css' %}" />
         <script type="text/javascript" src="{% static 'dublinbuspredict/js/main.js' %}"></script>
         <style type="text/css">@font-face { 
-    				font-family: 'London-Tube'; 
-    				src:local('fontName Regular'),
-        			local('London-Tube'), 
-        			url({% static 'dublinbuspredict/fonts/London-Tube.ttf' %}) format('truetype');
-    				} 
-		</style>
+            font-family: 'London-Tube'; 
+            src:local('fontName Regular'),
+                local('London-Tube'), 
+                url({% static 'dublinbuspredict/fonts/London-Tube.ttf' %}) format('truetype');
+            } 
+        </style>
 
     </head>
+
     <body>
-        <!-- Main container to give website 12-grid shape -->
+        <!-- Container for both Navbar and Side-Navbar -->
         <div class="container-fluid">
             <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
                 <div class="navbar-collapse">
@@ -47,7 +51,7 @@
                 <div id="w3-buttons">
                     <a href="/dublinbuspredict/" class="w3-bar-item w3-button"><i class="fa fa-home fa-fw"></i>&nbsp;Home</a>
                     <a href="/dublinbuspredict/tickets_fares" class="w3-bar-item w3-button"><i class="fa fa-eur fa-fw"></i>&nbsp;Tickets & Fares</a>
-                    <a href="/dublinbuspredict/tourism" class="w3-bar-item w3-button"><i class="fa fa-map fa-fw"></i></i>&nbsp;Tourism</a>
+                    <a href="/dublinbuspredict/tourism" class="w3-bar-item w3-button"><i class="fa fa-map fa-fw"></i>&nbsp;Tourism</a>
                     <a href="/dublinbuspredict/connections" class="w3-bar-item w3-button"><i class="fa fa-train fa-fw"></i>&nbsp;Connections</a>
                     <a href="/dublinbuspredict/contact" class="w3-bar-item w3-button"><i class="fa fa-phone fa-fw"></i>&nbsp;Contact Us</a>
                 </div>
@@ -60,23 +64,21 @@
                 </div> 
             </div>    
         </div>
-        <!-- Cover Photo -->
-        <!-- Image Container: Do not add BS container or row as limits size -->
-        <div>
+
+        <!-- Image Container: Hides on small and extra-small screens (Note: Do not add BS container or row as limits size) -->
+        <div onclick="closeNav()">
             {% load static %}
-            <img src="{% static 'dublinbuspredict/css/images/ucd.jpg' %}" alt="cities" class="my-contact img-responsive hidden-xs" id="map">
+            <img src="{% static 'dublinbuspredict/css/images/ucd.jpg' %}" alt="cities" class="my-contact-photo img-responsive hidden-xs hidden-sm" id="map">
         </div>
 
-        <!-- Content within "pushed-content" moves when Sidebar opens -->
-        <!-- Sourced: https://bootsnipp.com/snippets/featured/contact-us-page -->
-        <!-- Start of 12 bar BS grid Structure for body -->
-        <div class="container-fluid my-contact-information" id="pushed-content">
+        <!-- Profile Container: Holder for both Profiles and Address  -->
+        <div class="container-fluid my-contact-information" onclick="closeNav()">
             <div class="row">
-                <!-- Section for the Bio information. Takes up 8/12 spaces from Grid structure -->
+                <!-- Profile Bio Information: Takes up 8/12 spaces from Grid structure -->
                 <div class="col-md-8">
                     <div class="col-md-3">
                         {% load static %}
-                        <img src="{% static 'dublinbuspredict/css/images/profile.jpg' %}" class="col-lg-12 img-responsive img-circle hidden-xs">
+                        <img src="{% static 'dublinbuspredict/css/images/profile1.jpg' %}" class="col-lg-12 img-responsive img-circle hidden-xs hidden-sm">
                         <div class="row my-profile">
                             <h4 class="text-center">Lucas Onderwater</h4>
                             <h5 class="text-center">
@@ -86,7 +88,7 @@
                     </div>
                     <div class="col-md-3">
                         {% load static %}
-                        <img src="{% static 'dublinbuspredict/css/images/profile.jpg' %}" class="col-lg-12 img-responsive img-circle hidden-xs">
+                        <img src="{% static 'dublinbuspredict/css/images/profile2.jpg' %}" class="col-lg-12 img-responsive img-circle hidden-xs hidden-sm">
                         <div class="row my-profile">
                             <h4 class="text-center">Darragh Minogue</h4>
                             <h5 class="text-center">
@@ -96,7 +98,7 @@
                     </div>
                     <div class="col-md-3">
                         {% load static %}
-                        <img src="{% static 'dublinbuspredict/css/images/profile.jpg' %}" class="col-lg-12 img-responsive img-circle hidden-xs">
+                        <img src="{% static 'dublinbuspredict/css/images/profile4.jpg' %}" class="col-lg-12 img-responsive img-circle hidden-xs hidden-sm">
                         <div class="row my-profile">
                             <h4 class="text-center">Stephen Moles</h4>
                             <h5 class="text-center">
@@ -106,7 +108,7 @@
                     </div>
                     <div class="col-md-3">
                         {% load static %}
-                        <img src="{% static 'dublinbuspredict/css/images/profile.jpg' %}" class="col-lg-12 img-responsive img-circle hidden-xs">
+                        <img src="{% static 'dublinbuspredict/css/images/profile3.jpg' %}" class="col-lg-12 img-responsive img-circle hidden-xs hidden-sm">
                         <div class="row my-profile">
                             <h4 class="text-center">Peng Xu</h4>
                             <h5 class="text-center">
@@ -116,7 +118,7 @@
                     </div>
                 </div>
 
-                <!-- Section for the Address information. Takes up 4/12 spaces from Grid structure -->
+                <!-- Address Container: Takes up 4/12 spaces from Grid structure -->
                 <div class="col-md-4">
                     <form>
                         <legend><span class="glyphicon glyphicon-globe"></span> Address</legend>
@@ -141,8 +143,8 @@
             </div>
         </div>
 
-        <!-- Footer Row -->
-        <div class="container-fluid">
+        <!-- Footer -->
+        <div class="container-fluid" onclick="closeNav()">
             <div class="row">
                 <footer class="fixed-bottom my-new-footer">
                     <div class="row">
