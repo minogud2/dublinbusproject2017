@@ -621,7 +621,8 @@ function displayPredictionSchedule(bus, busNum, stops){
 	last_stop_distance = stops[stops.length - 1][3]
 	console.log('Gimmy2:', first_stop_distance, last_stop_distance)
     console.log('These are the stops:', stops)
-    for (var i = 1; i < bus.length; i++) {
+    console.log("THIS IS BUS LENGTH", bus.length)
+    for (var i = 0; i < bus.length; i++) {
         var oldArrival = bus[i].predicted_arrival_time;
         console.log('ollll', oldArrival)
         var newArrival = oldArrival.slice(11);
@@ -631,13 +632,15 @@ function displayPredictionSchedule(bus, busNum, stops){
                 + newArrival + '&emsp;&emsp;<b>Stop ID:&nbsp</b>' + stop +
                 '&emsp;&emsp;<b>Stop Name:&nbsp;</b>' + stops[i][2] + "<br>"
                 + '<i class="fa fa-bus fa-x8"></i>'+"<br>"+'</li>');
-        no_stops +=1;
+        no_stops ++;
     }
     $('#dueTime'+busNum).append("<b>" + arrival.slice(11)
            + "<b>" +"<br>");
     $('#journeyTime'+busNum).append("<b>" + Math.floor(journey_time/ 60) + " minutes" + "</b>");
     $('#distance'+busNum).append("<b>" + (Math.round((last_stop_distance - first_stop_distance) * 100) / 100) + "Km</b>");
-
+    
+    console.log("this is number of stops",no_stops)
+    console.log("this is stops", stops.length)
     // Calculate the cost section for the trip.
     if (no_stops.length < 4) {
       $('#journeyPrice'+busNum).append("<b>Adult:</b> €2.00" + "<br>");
