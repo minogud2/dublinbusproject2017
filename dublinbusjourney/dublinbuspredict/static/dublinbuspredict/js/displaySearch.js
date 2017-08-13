@@ -642,10 +642,10 @@ function displayPredictionSchedule(bus, busNum, stops){
     console.log("this is number of stops",no_stops)
     console.log("this is stops", stops.length)
     // Calculate the cost section for the trip.
-    if (no_stops.length < 4) {
+    if (stops.length < 4) {
       $('#journeyPrice'+busNum).append("<b>Adult:</b> €2.00" + "<br>");
       $('#journeyPrice'+busNum).append("<b>Leap Card:</b> €1.50" + "<br>");
-    } else if (no_stops.length > 3 && no_stops.length < 13){
+    } else if (stops.length > 3 && stops.length < 13){
       $('#journeyPrice'+busNum).append("<b>Adult:</b> €2.70" + "<br>");
       $('#journeyPrice'+busNum).append("<b>Leap Card:</b> €2.05" + "<br>");
     }
