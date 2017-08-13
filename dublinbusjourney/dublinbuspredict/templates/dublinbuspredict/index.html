@@ -37,7 +37,6 @@
 	<body onload="loadTwitter()">
     <!--  <body onload="loadOrigin()">  -->
         <!-- Main container to give website 12-grid shape -->
-        {% load staticfiles %}
         <div class="container-fluid">
             <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
                 <div class="navbar-collapse">
@@ -78,27 +77,27 @@
                     <div class="carousel-inner">
                         <div class="item active">
                             {% load static %}
-                            <img src="{% static 'dublinbuspredict/css/images/carousel1.jpg' %}" alt="City" >
+                            <img src="{% static 'dublinbuspredict/css/images/carousel1a.jpg' %}" alt="City" >
                             <div class="carousel-caption">
                             </div>
                         </div>
                         <div class="item">
                             {% load static %}
-                            <img src="{% static 'dublinbuspredict/css/images/carousel2.jpg' %}" alt="City">
-                            <div class="carousel-caption">
-                                <h1> </h1>
-                            </div>
-                        </div>
-                        <div class="item">
-                            {% load static %}
-                            <img src="{% static 'dublinbuspredict/css/images/carousel3.jpg' %}" alt="City">
+                            <img src="{% static 'dublinbuspredict/css/images/carousel2a.jpg' %}" alt="City">
                             <div class="carousel-caption">
                                 <h1> </h1>
                             </div>
                         </div>
                         <div class="item">
                             {% load static %}
-                            <img src="{% static 'dublinbuspredict/css/images/carousel4.jpg' %}" alt="City">
+                            <img src="{% static 'dublinbuspredict/css/images/carousel3a.jpg' %}" alt="City">
+                            <div class="carousel-caption">
+                                <h1> </h1>
+                            </div>
+                        </div>
+                        <div class="item">
+                            {% load static %}
+                            <img src="{% static 'dublinbuspredict/css/images/carousel4a.jpg' %}" alt="City">
                             <div class="carousel-caption">
                             </div>
                         </div>
@@ -118,7 +117,6 @@
                         <form action="" method="" class="form-inline text-center" role="form">
                             <div class="form-group">
                                 {% load static %}
-                                
                                 <div class="form-group dropdown has-feedback">
                                     <input class="form-control" id="search-box-1" oninput="searchFunctionRoute()" type="text" name="search" placeholder="Enter a route">
                                     <span id ='spinner1' style="display:none"><i class="fa fa-refresh fa-spin form-control-feedback" style="line-height: 35px;"></i></span>
