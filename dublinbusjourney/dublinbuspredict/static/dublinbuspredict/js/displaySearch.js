@@ -9,8 +9,9 @@ $(document).ready(function(){
 $(document).ready(function(){
 	$("#RouteMap1").click(function(){
 		$("#toggleRouteMap1").toggle();
+	});
 });
-});
+
 ////Toggle function for route div on map.html
 $(document).ready(function(){
 	$("#RouteMap2").click(function(){

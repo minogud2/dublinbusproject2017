@@ -22,6 +22,7 @@
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+
         {% load staticfiles %}
         <link rel="stylesheet" type="text/css" href="{% static 'dublinbuspredict/css/style.css' %}" />
         <script type="text/javascript" src="{% static 'dublinbuspredict/js/jsIndex.js' %}"></script>
@@ -47,7 +48,7 @@
     	</script>
     </head>
     <body>
-        <!-- Main container to give website 12-grid shape -->
+        <!-- Container for both Navbar and Side-Navbar -->
         <div class="container-fluid">
             <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
                 <div class="navbar-collapse">
@@ -81,18 +82,18 @@
             </div>
         </div>
 
-        <div class="container-fluid my-index-form" id="pushed-content">
+        <div class="container-fluid my-index-form" id="tourism_main_container">
             <div class="row">
                 <div class="col-lg-8" id="map_tourism"></div>
                 <div class="col-lg-4" onclick="closeNav()">
-                <div id="floating-panel" class="hidden-xs">
-                <button id="buttonLocation" class="button"><i class="fa fa-crosshairs" aria-hidden="true"></i></button>
-            </div>
-            <div class="row" id="tourism_buttons">
+                	<div id="floating-panel" class="hidden-xs">
+                		<button id="buttonLocation" class="button"><i class="fa fa-crosshairs" aria-hidden="true"></i></button>
+            		</div>
+            		<div class="row" id="tourism_buttons">
                         <button type="button" class="btn btn-lg col-lg-6 col-xs-12 col-sm-12" id="TourismButton">Points of Interest</button>
                         <button type="button" class="btn btn-lg col-lg-6 col-xs-12 col-sm-12" id="VenuesButton">Venues</button>
                     </div>
-            <div class="row events_interests_contents" id="toggleTourismTable">
+            		<div class="row events_interests_contents" id="toggleTourismTable">
                         <div class="list_styling text-left"><br>
                             &nbsp;<i class="fa fa-university fa-fw"></i>&nbsp;<b>Museums</b>
                             <a href="#" id="1">Trinity College Dublin</a>
@@ -119,8 +120,8 @@
                             <a href="#" id="14">St. Stephen's Green</a>
                             <a href="#" id="15">National Botanic Gardens</a>
                         </div>
-                        </div>
-                 <div class="row events_interests_contents" id="toggleVenuesTable">
+                  	</div>
+                 	<div class="row events_interests_contents" id="toggleVenuesTable">
                         <div class="list_styling text-left"><br>
                             <i class="fa fa-futbol-o fa-fw"></i>&nbsp;<b>Sports</b>
                             <a href="#" id="6v">Aviva Stadium</a>
@@ -137,10 +138,10 @@
                             <a href="#" id="12v">Bord Gais Energy Theatre</a>
                             <a href="#" id="13v">Marlay Park</a>
                         </div>
-                        </div>
+                  	</div>
         		</div>
-                </div>
-                        </div>
+        	</div>
+      	</div>
                 
         
         <!-- Footer -->

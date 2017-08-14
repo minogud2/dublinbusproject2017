@@ -2,6 +2,9 @@ import json
 import requests
 from django.http import HttpResponse
 from django.shortcuts import render
+from calendar import weekday
+from dateutil import parser
+from datetime import datetime, timedelta
 
 try:
     import pymysql
@@ -20,6 +23,7 @@ from dateutil import parser
 
 route_id, source_id, destination_id, direction = '17', 1, 1, 1
 time, date = 0, 0
+day_of_week = ''
 new_info_buses = ['1']
 old_info_buses = []
 stops_origin_1, stops_destination_1, list_stops = [], [], []
@@ -135,7 +139,6 @@ def pilot_dest(request):
     print('Bus stops for maps!', stops)
     return HttpResponse(json.dumps({"stops":stops}), content_type='application/json')
 
-
 def run_model(request):
     global route_id
     global source_id
@@ -177,14 +180,19 @@ def get_number_buses(request):
 
 
 def set_info_next_page(request):
-    global route_id, source_id, destination_id, time, date
+    global route_id, source_id, destination_id, time, date, day_of_week
     route_id = request.GET.get('route')
     source_id = request.GET.get('source')
     destination_id = request.GET.get('destination')
     time = request.GET.get('time')
     date = request.GET.get('date')
+<<<<<<< HEAD
     print('Info was set:', route_id, source_id, destination_id, time,date)
     return HttpResponse(json.dumps({'ok':'ok'}), content_type='application/json')
+=======
+    day_of_week = time_date.day(date)
+    print('Day of the week', day_of_week)
+>>>>>>> 2268d8e47d44eedf2c8249e524156489e978de70
 
 def get_info_next_page(request):
     global route_id, source_id, destination_id, time, date, direction
@@ -195,6 +203,9 @@ def load_routes_for_map(request):
     global source_id
     global route_id
     global destination_id
+    global time, date
+    global day_of_week
+    print(day_of_week)
     db = MySQLdb.connect(user='lucas', db='summerProdb', passwd='hello_world', host='csi6220-3-vm3.ucd.ie')
     cursor = db.cursor()
     cursor.execute("SELECT distinct(bus_timetable.route_id) "
@@ -268,6 +279,7 @@ def tickets_fares(request):
 
 def sampleQuery(rows):
     # Connect to database using these credentials.
+<<<<<<< HEAD
     global route_id, source_id, destination_id, stops_destination_1
     global direction
     print('Route:', route_id)
@@ -291,6 +303,34 @@ def sampleQuery(rows):
     # db.close()
     # print(rows)
     return HttpResponse(json.dumps({'data': stops_destination_1}), content_type="application/json")
+=======
+    global route_id, source_id, destination_id, direction, date, time, day_of_week
+    if day_of_week == "":
+        d = datetime.now().date()
+        d = d.strftime('%m/%d/%y')
+        day_of_week = time_date.day(d)
+    if time == 0:
+        time = datetime.now().time().strftime('%H:%M:%S')
+    print("HELLO THIS IS MY ", day_of_week)
+    print("HELLO THIS IS MY " , time)
+    print('Route:', route_id)
+    print('direction:', direction)
+    
+    db = MySQLdb.connect(user='lucas', db='summerProdb', passwd='hello_world', host='csi6220-3-vm3.ucd.ie')
+    cursor = db.cursor()
+    cursor.execute("SELECT DISTINCT bus_timetable.stop_id, bus_timetable.stop_sequence, bus_stops.name, bus_stops.long_name, bus_stops.lat, bus_stops.lon "
+                   "FROM bus_timetable, bus_stops "
+                   "WHERE bus_timetable.stop_id = bus_stops.stop_id AND bus_timetable.direction = '" + str(direction) + "' AND bus_timetable.route_id = '"+ str(route_id) +\
+                   "' AND bus_timetable.arrival_time >= '" + str(time) + "'AND bus_timetable.day_of_week = '" + str(day_of_week)+ "'"
+                   "ORDER BY bus_timetable.stop_sequence;")
+    rows = cursor.fetchall()
+    # for i in rows:
+    #     print(i)
+    #     break
+    db.close()
+    print(rows)
+    return HttpResponse(json.dumps({'data': rows}), content_type="application/json")
+>>>>>>> 2268d8e47d44eedf2c8249e524156489e978de70
 
 def get_stops_starting_from_source(request):
     source_id = request.GET.get('source')

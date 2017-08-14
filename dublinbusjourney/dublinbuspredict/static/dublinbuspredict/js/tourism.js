@@ -101,6 +101,7 @@ function tourismMap(){
           handleLocationError(false, infoWindow, map.getCenter());
       }
 
+<<<<<<< HEAD
       function handleLocationError(browserHasGeolocation, infoWindow, pos) {
           infoWindow.setPosition(pos);
           infoWindow.setContent(browserHasGeolocation ?
@@ -110,8 +111,28 @@ function tourismMap(){
       }
     });
 }
+=======
+    }
+    
+    // Looping through the next element by coordinates to place Shopping marker
+    for (i = 12; i < 13; i++) {
+        marker = new Marker({
+            position: new google.maps.LatLng(points_of_interest[i][2], points_of_interest[i][3]),
+            map: map,
+            icon: {
+				path: MAP_PIN,
+				fillColor: '#0c2864',
+				fillOpacity: 1,
+				strokeColor: '',
+				strokeWeight: 0
+			},
+			map_icon_label: '<i class="fa fa-shopping-bag fa-2x" style="margin-bottom:17px; color:white;"></i>'
+            //icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+        });
+>>>>>>> 2268d8e47d44eedf2c8249e524156489e978de70
 
 
+<<<<<<< HEAD
 
 function getStopData(){
 $.getJSON("http://127.0.0.1:8000/dublinbuspredict/getTouristRoutes", null, function(d2) {
@@ -143,6 +164,50 @@ $.getJSON("http://127.0.0.1:8000/dublinbuspredict/getTouristRoutes", null, funct
 //}
 });
 }
+=======
+    }
+    
+    // Looping through the next 2 by coordinates to place Outdoors marker
+    for (i = 13; i < 15; i++) {
+        marker = new Marker({
+            position: new google.maps.LatLng(points_of_interest[i][2], points_of_interest[i][3]),
+            map: map,
+            icon: {
+				path: MAP_PIN,
+				fillColor: '#0c2864',
+				fillOpacity: 1,
+				strokeColor: '',
+				strokeWeight: 0
+			},
+			map_icon_label: '<i class="fa fa-tree fa-2x" style="margin-bottom:17px; color:white;"></i>'
+            //icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+        });
+
+        google.maps.event.addListener(marker, 'click', (function(marker, i) {
+            return function() {
+                infowindow.setContent(points_of_interest[i][1]);
+                infowindow.open(map, marker);
+            }
+        })(marker, i));
+
+    }
+	
+	// Looping through final 13 by coordinates to place Venue marker
+    for (i = 15; i < points_of_interest.length; i++) {
+        marker = new Marker({
+            position: new google.maps.LatLng(points_of_interest[i][2], points_of_interest[i][3]),
+            map: map,
+            icon: {
+				path: MAP_PIN,
+				fillColor: '#FFD527',
+				fillOpacity: 1,
+				strokeColor: '',
+				strokeWeight: 0
+			},
+			map_icon_label: '<i class="fa fa-music fa-2x" style="margin-bottom:17px; color:white;"></i>'
+            //icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+        });
+>>>>>>> 2268d8e47d44eedf2c8249e524156489e978de70
 
 function geoLocation(){
 	map.setZoom(12);
@@ -158,6 +223,7 @@ $(document).ready(function (){
 	});
 });
 
+<<<<<<< HEAD
 google.maps.event.addDomListener(window, 'load', tourismMap);
 
 function newLocation(newLat,newLng){
@@ -401,6 +467,45 @@ $(document).ready(function(){
 		$("#toggleTourismTable").show();
 	});
 });
+=======
+    }
+    
+	// Adapted from: https://developers.google.com/maps/documentation/javascript/examples/map-geolocation
+    infoWindow = new google.maps.InfoWindow;
+    
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+            marker = new Marker({
+            	position: pos,
+            	map: map,
+            	icon: {
+					path: MAP_PIN,
+					fillColor: '#3594D4',
+					fillOpacity: 1,
+					strokeColor: '',
+					strokeWeight: 0
+			},
+			map_icon_label: '<i class="fa fa-male fa-2x" style="margin-bottom:17px; color:white; margin-left:1px;"></i>'
+        });  
+            
+
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('Location found');
+            infoWindow.open(map, marker);
+            map.setCenter(pos);
+        }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+        });
+    } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+    }
+>>>>>>> 2268d8e47d44eedf2c8249e524156489e978de70
 
 // Toggle function for Venues Table on tourism.html
 $(document).ready(function(){
@@ -410,3 +515,61 @@ $(document).ready(function(){
 	});
 });
 
+<<<<<<< HEAD
+=======
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+                              'Error: The Geolocation service failed.' :
+                              'Error: Your browser doesn\'t support geolocation.');
+        infoWindow.open(map);
+    }
+}
+
+// Toggle function for Tourist Table on tourism.html
+$(document).ready(function(){
+	$("#TourismButton").click(function(){
+		$("#toggleTourismTable").toggle();
+	});
+});
+
+// Toggle function for Venues Table on tourism.html
+$(document).ready(function(){
+	$("#VenuesButton").click(function(){
+		$("#toggleVenuesTable").toggle();
+	});
+});
+
+// Stephen: Testing functions for linking information tables to map with on-click functionality
+//var test = document.getElementById('test');
+//test.onclick = function(){
+//	for (i = 0; i < points_of_interest.length; i++){
+//		var lat = points_of_interest[i][2];
+//		var long = points_of_interest[i][3];
+//		var mapOptions = {
+//			center: new.google.maps.LatLng(lat,long),
+//			zoom: 17
+//		};
+//		var map = new google.maps.Map(document.getElementById("map_tourism"), mapOptions);
+//			}
+//		});
+//	}
+//}
+
+//$(document).ready(function() {
+//    $(document).on("click", ".button", function(e) {
+//        var latLng = $(this).attr("data-latLng");			
+//        findLocation(latLng);
+//    });
+//    
+//    function findLocation(latLng) {
+//    	tourismMap()
+//        latLng = latLng.split(",")
+//        var mapOptions = {
+//            center: new google.maps.LatLng(latLng[0],latLng[1]),
+//            zoom: 17
+//        };
+//        var map = new google.maps.Map(document.getElementById("map_tourism"), mapOptions);
+//    }
+//});
+>>>>>>> 2268d8e47d44eedf2c8249e524156489e978de70

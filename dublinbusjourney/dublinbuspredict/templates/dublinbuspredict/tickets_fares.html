@@ -4,6 +4,9 @@
         <meta charset="utf-8"/>
         <title>Tickets & Fares</title>
 
+		<!-- Set the page to the width of the device and set the zoom level -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
         <!-- Bootstrap: Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -27,7 +30,7 @@
 		</style>
     </head>
     <body>
-        <!-- Main container to give website 12-grid shape -->
+        <!-- Container for both Navbar and Side-Navbar -->
         <div class="container-fluid">
             <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
                 <div class="navbar-collapse">
@@ -60,32 +63,29 @@
             </div>    
         </div>
 
-        <!-- Cover Photo -->
-        <!-- Image Container: Do not add BS container or row as limits size -->
+        <!-- Image Container: Hides on small and extra-small screens (Note: Do not add BS container or row as limits size) -->
         <div>
             {% load static%}
-            <img src="{% static 'dublinbuspredict/css/images/price.jpg' %}" alt="cities" class="my-tickets img-responsive hidden-xs" id="map">
+            <img src="{% static 'dublinbuspredict/css/images/price.jpg' %}" alt="cities" class="my-tickets-photo img-responsive hidden-xs hidden-sm" id="map">
         </div>
 
-        <!-- Content within "pushed-content" moves when Sidebar opens -->
-        <!-- Start of 12 bar BS grid Structure for body -->
-        <div id="pushed-content">
-            <!-- Collapse Ticket Information -->
-            <div class="container my-index-form">
-                <div class="row col-xs-12 my-ticket-choices-heading">
+        <!-- Tickets and Fares Information: Heading -->
+        <div id="my-ticket-body">
+            <div class="container my-ticket-heading-container">
+                <div class="row col-xs-12 my-ticket-statement">
                     <h3>Ticket & Fare Information</h3>
                     <p class="lead"><small>We provide accurate fare information for every type of Dublin Bus Customer. Check out the most up to date pricing below before setting out on your journey.</small></p>
                 </div>
             </div>
 
-            <!-- Container for Ticket Information -->
-            <!-- 1st Row: 2 Per Row: Only take up 5 instead of 6/12 of BS Grid as "my-ticket-choices" contains custom CSS for layout styling -->
-            <!-- Takes up full space 12/12 when using xs/responsive sizing -->
+            <!-- Tickets and Fares: Content - Containers for Ticket Information -->
+            <!-- 1st Row: Adult & Student: Each take up 5 instead of 6/12 of BS Grid as "my-ticket-choices" contains custom CSS for layout styling -->
+            <!-- Full 12/12 when using XS/responsive sizing -->
             <div class="container">
                 <div class="row col-lg-5 col-xs-12 my-ticket-choices">
                     <h3><u>Adult Tickets</u><span class="dropdown-toggle caret" data-toggle="collapse" data-target="#contentAdult" role="button" aria-haspopup="true" aria-expanded="false"></span><br><small>Our Adult tickets are suitable for everyday commuters, with prices separated by the number of stages that the user desires.</small></h3>
 
-                    <!-- Pass ID name to jQuery - jQuery reference requires a hash for ID -->
+                    <!-- jQuery - ID and Data Target must match for functionality -->
                     <div class="col-xs-12 container collapse" id="contentAdult">
                         <div class="row">
                             <div class="table-responsive">
@@ -133,7 +133,7 @@
                 <div class="row col-lg-5 col-xs-12 my-ticket-choices">
                     <h3><u>Student Tickets</u><span class="dropdown-toggle caret" data-toggle="collapse" data-target="#contentStudent" role="button" aria-haspopup="true" aria-expanded="false"></span><br><small>Students can enjoy some of our more favourable rates with the use of a valid Student ID.</small></h3>
 
-                    <!-- Pass ID name to jQuery - jQuery reference requires a hash for ID -->
+                    <!-- jQuery - ID and Data Target must match for functionality -->
                     <div class="col-xs-12 container collapse" id="contentStudent">
                         <div class="row">
                             <div class="table-responsive">
@@ -179,13 +179,13 @@
                     </div>
                 </div>
             </div>
-            <!-- 2nd Row: 2 Per Row: Only take up 5 instead of 6/12 of BS Grid as "my-ticket-choices" contains custom CSS for layout styling -->
-            <!-- Takes up full space 12/12 when using xs/responsive sizing -->
+            <!-- 2nd Row: Child & Tourist: Each take up 5 instead of 6/12 of BS Grid as "my-ticket-choices" contains custom CSS for layout styling -->
+            <!-- Full 12/12 when using XS/responsive sizing -->
             <div class="container">
                 <div class="row col-lg-5 col-xs-12 my-ticket-choices">
                     <h3><u>Child Tickets</u><span class="dropdown-toggle caret" data-toggle="collapse" data-target="#contentChild" role="button" aria-haspopup="true" aria-expanded="false"></span><br><small>Children under the age of 4 can travel free on Dublin Bus, while those between 4-18 can take advantage of lower Child or School cash fares, with further savings by using a valid Child Leap Card.</small></h3>
 
-                    <!-- Pass ID name to jQuery - jQuery reference requires a hash for ID -->
+                    <!-- jQuery - ID and Data Target must match for functionality -->
                     <div class="col-xs-12 container collapse" id="contentChild">
                         <div class="row">
                             <div class="table-responsive">
@@ -236,7 +236,7 @@
             </div>
         </div>
 
-        <!-- Footer Row -->
+        <!-- Footer -->
         <div class="container-fluid">
             <div class="row">
                 <footer class="fixed-bottom my-new-footer">
