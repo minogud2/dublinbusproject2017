@@ -95,13 +95,10 @@ def model(bus_route, stopid, arrival_time, day, p_holiday, s_holiday, rtr, trip_
     input_data = input_data.loc[:, cols]
     
     # 4 load in the model.
-<<<<<<< HEAD
+
 #      with open("C:\\Users\\minogud2\\BusLightyear\\cleaning\\trained_modelv9.pkl", "rb") as f:
 #     rtr = joblib.load(f)
-=======
-    with open("C:\\Users\\steph\\OneDrive\\Documents\\trained_modelv7.pkl", "rb") as f:
-        rtr = joblib.load(f)
->>>>>>> 2268d8e47d44eedf2c8249e524156489e978de70
+
 
     # 5 predict the delay based on the input.
     predict_duration = rtr.predict(input_data)
