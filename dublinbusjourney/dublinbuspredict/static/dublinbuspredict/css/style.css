@@ -1,6 +1,5 @@
 /* Section: Multiple Pages */
 body{
-   min-width:480px;
    min-height:300px;
        font-family: London-Tube;
 }
@@ -24,16 +23,19 @@ body{
 h2{
     font-size: 18px;
 }
+
 h3{
 	font-weight: bold;
     font-size: 20px;
 }
+
 
 /* Multiple Pages - FontPalace, 2016  */
 @font-face {
     font-family: VolvoBroad;
     src: url(VolvoBroad.ttf);
 }
+
 
 /* Multiple Pages - Navigation bar. */
 .navbar-fixed-top{
@@ -75,6 +77,7 @@ h3{
     color: rgba(0,0,0,0.4);
 }
 
+
 /* Multiple Pages - Navigation Bar - Changes the colour when you hover over in Responsive mode */
 .navbar-toggle {
     float: left;
@@ -88,6 +91,7 @@ h3{
     background-color: white;
 }
 
+
 /* Multiple Pages - Logo for Dublin Bus*/
 #db_logo{
     margin-top: 10px;
@@ -95,11 +99,13 @@ h3{
     height: 40px;
 }
 
+
 /* Multiple Pages - Logo for Hamburger Menu Icon*/
 #menu_hb{
     width: 35px;
     height: 35px;
 }
+
 
 /* Multiple Pages - Side Navigation Bar */
 .sidenav {
@@ -138,7 +144,6 @@ h3{
     font-size: 16px;
     color: white;
     display: block;
-
     height: 50px;
 }
 
@@ -167,37 +172,6 @@ h3{
     }
 }
 
-
-/*Button for my location*/
-#floating-panel {
-        right: 429px;
-        background: rgba(255, 255, 255, 0.9);
-        height: 29px;
-        width:30px;
-        position: absolute;
-        top: 425px;
-        border: none;
-        z-index: 5;
-        -moz-box-shadow: 0 0 3px #ccc;
-        -webkit-box-shadow: 0 0 3px #ccc;
-        box-shadow: 0 0 3px #ccc;
-        text-align: center;
-      }
-
-#buttonLocation{
-    height: 28px;
-    width: 30px; 
-    padding: 0;
-    font: 11px Arial,Helvetica,Sans-serif;
-    background: rgba(255, 255, 255, 1);
-    color: #595959;
-    border: none;
-    margin-bottom: 50px;
-}
-
-#buttonLocation:hover {
-  box-shadow: inset 0 0 0 60px rgba(0, 0, 0, 0.1);
-}
 
 /* Multiple Pages (Index/Map Forms) - Drop down Menus*/
 .dropdown-list {
@@ -265,13 +239,14 @@ ul {
 #resultArray0{
 	display: none;
 }
+
 #resultArray1{
 	display: none;
 }
+
 #resultArray2{
 	display: none;
 }
-
 
 
 /* Multiple Pages - Footer */
@@ -295,11 +270,6 @@ ul {
 }
 
 /* index.html */
-/*#google_translate_element{
-	background-color: #FFD527;
-	text-align: center;
-	
-}*/
 #google_translate_element {
 	right: 0;
 	position: absolute;
@@ -321,6 +291,7 @@ ul {
     height:400px;
     max-height:400px;
     overflow: hidden;
+    margin-bottom: -60px;
 }
 
 #scrollpage{
@@ -338,167 +309,6 @@ ul {
     font-weight: bold;
 }
 
-/*#secondary{
-    margin-left: 120px;
-    width: 1000px;
-    margin-top: -40px;
-    height: 800px;
-}
-
-#traffic-div{
-    margin-top: 50px;
-    height: 300px;
-    display: block;
-    margin-bottom: 10px;
-}
-
-#roadwatch-div{
-    height: 300px;
-    display: block;
-    margin-bottom: 10px;
-}*/
-
-.my-index-information{
-	margin-top: 50px;
-	margin-left: 20px;
-	margin-bottom: -20px;
-}
-
-/* Display result*/
-
-*/
-.output{
-  list-style: none;
-  padding: 20px;
-  font: normal 16px/22px;
-  font-family: London-Tube;
-  color: #999;
-  text-align: left;
-  float: left;
-}
-
-li.passed {
-  margin-left: 20px;
-  overflow: hidden;
-  position: relative;
-  padding: 0 0 10px 35px;
-  }
-
-li.passed::before {
-    content: '';
-    position: absolute;
-    left: 10px;
-    top: 10px;
-    width: 20px;
-    height: 999px;
-    border: 2px solid #3594D4;
-    border-width: 2px 0 0 2px;
-    }
-    li.passed:last-child::before {
-      border-width: 2px 0 0;
-      }
-  li.passed::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 20px;
-    height: 20px;
-    background: #fff;
-    border: 2px solid #3594D4;
-    border-radius: 50%;
-    }
-  li.passed {
-    color: #000;
-    }
-    li.passed::before,
-    li.passed::after {
-      border-color: #3594D4;
-      }
-
-
-/* index.html - Form */
-.my-index-form{
-	margin-top: 30px;
-	margin-bottom: 30px;
-}
-#time-input-index{
-	width: 100px;
-}
-/*#form-holder{
-    position: absolute;
-    background-color: rgba(0,0,0,0.6);
-    margin-bottom: 10px;
-    height: 130px;
-    width: 100%;
-    bottom: 0;
-}*/
-
-/*#form-input{
-    margin-left: 50px;
-    margin-top: 40px;
-}*/
-
-.form-control{
-    height: 45px;
-}
-
-/*#find-Journey{
-    color: white;
-    font-size: 14px;
-    height: 45px;
-    width: 250px;
-    background-color: #0c2864;
-    font-weight: bold;
-}*/
-
-/*#find-Journey:hover {
-    background-color: #0c2850; /* Green */
-    color: white;
-}*/
-
-/* map.html */
-.my-timetable{
-    margin-top: 100px;
-}
-
-/* connections.html */
-.my-connections{
-    margin-top: 65px;
-}
-
-.my-connection-information{
-    margin-left: 40px;    
-}
-
-
-/* tickets_fares.html */
-.my-tickets{
-    margin-top: 40px;
-}
-
-.my-ticket-choices{
-    margin-left: 40px; 
-    margin-right: 40px;
-    margin-bottom: 20px;
-    font-size: 16px;
-}
-
-.my-ticket-choices-heading{
-    margin-left: 40px;   
-}
-.lead{
-	font-size: 17px;
-}
-
-#pushed-content{
-	margin-bottom: 60px;
-}
-.table-responsive{
-	font-size: 12px;
-}
-
-/* pointsOfInterest.html */
 .my-twitter-feed{
 	text-align: left;
     margin: 10px;
@@ -531,16 +341,354 @@ li.passed::before {
     overflow: hidden;
 }
 
+/*#secondary{
+    margin-left: 120px;
+    width: 1000px;
+    margin-top: -40px;
+    height: 800px;
+}
+
+#traffic-div{
+    margin-top: 50px;
+    height: 300px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+#roadwatch-div{
+    height: 300px;
+    display: block;
+    margin-bottom: 10px;
+}*/
+
+.my-index-information{
+	margin-top: 50px;
+	margin-left: 20px;
+	margin-bottom: -20px;
+}
+
+/* Display result*/
+.output{
+  list-style: none;
+  padding: 20px;
+  font: normal 16px/22px;
+  font-family: London-Tube;
+  color: #999;
+  text-align: left;
+  float: left;
+}
+
+li.passed {
+  margin-left: 20px;
+  overflow: hidden;
+  position: relative;
+  padding: 0 0 10px 35px;
+  }
+
+li.passed::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    width: 20px;
+    height: 999px;
+    border: 2px solid #3594D4;
+    border-width: 2px 0 0 2px;
+}
+
+li.passed:last-child::before {
+  	border-width: 2px 0 0;
+}
+
+li.passed::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border: 2px solid #3594D4;
+    border-radius: 50%;
+}
+
+li.passed {
+ 	color: #000;
+}
+
+li.passed::before,
+li.passed::after {
+  	border-color: #3594D4;
+}
+
+
+
+
+/* index.html - Form */
+.my-index-form{
+	margin-top: 90px;
+	margin-bottom: 30px;
+}
+#time-input-index{
+	width: 100px;
+}
+
+.form-control{
+    height: 45px;
+}
+
+/*#form-holder{
+    position: absolute;
+    background-color: rgba(0,0,0,0.6);
+    margin-bottom: 10px;
+    height: 130px;
+    width: 100%;
+    bottom: 0;
+}*/
+
+/*#form-input{
+    margin-left: 50px;
+    margin-top: 40px;
+}*/
+
+
+/*#find-Journey{
+    color: white;
+    font-size: 14px;
+    height: 45px;
+    width: 250px;
+    background-color: #0c2864;
+    font-weight: bold;
+}*/
+
+/*#find-Journey:hover {
+    background-color: #0c2850; /* Green */
+    /*color: white;
+}*/
+
+
+
+/* map.html */
+.my-timetable{
+    margin-top: 100px;
+}
+
+.my-map-form{
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+#map{
+	margin-top: 35px;
+    height: 400px;
+    width: 100%;
+}
+
+.my-map-div{
+    margin-top: 50px;
+}
+
+/* map.html: Weather Styling */ 
+#wrapper{
+	position: relative;
+	width: 100%;
+}
+
+#displayWeather{
+	position: absolute;
+	top: 0;
+	right:0;
+	float: right;
+	width : 120px;
+	height : 150px;
+	text-align: center;
+	background: rgba(255, 255, 255, 0.9);
+	color: slategrey;
+	border-top: 5px;
+	z-index: 99;
+}
+
+#wTemp1 {
+  	font-size: 20px !important;
+    text-align: center;
+    display : inline-block;
+    margin-top: 0;
+}
+
+#wTemp2 {
+  	font-size: 20px;
+    display : inline;
+    font-weight: bold;
+    margin-top: 0;
+}
+
+#wTemp3 {
+  font-size: 20px;
+  display : inline-block; 
+  font-weight: bold;
+  margin-top: 0;
+}
+
+#wIcon {
+    font-size: 30px;
+    display : block;   
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+#wDesc {
+  	font-size: 15px;
+  	display : inline-block;   
+    overflow: hidden;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.my-result{
+    margin-bottom: 50px;
+    margin-top: 10px;
+}
+
+h6{
+	letter-spacing:1px;
+	font-size:14px;
+	font-family: London-Tube;
+	color: #232943;
+	font-weight: bold;
+}
+
+.resultHeadings{
+	border-bottom: solid 1px gray;
+	/*text-align: left;*/
+}
+
+h5{
+	font-size:12px;
+	font-weight: bold;
+	font-family: 'London-Tube';
+}
+
+.my-changed-journey{
+    padding: 10px;
+    width: 100%;
+}
+/*
+.show-details-result{
+	display: inline;
+}
+
+#journeyPrice1{
+	text-align: left;
+}
+
+#journeyPrice2{
+	text-align: left;
+}
+*/
+
+/*
+#showDetails1, #showDetails2{
+	text-align: right;
+}
+
+#displayResults{
+	margin: auto;
+	min-height: 300px;
+	width: 800px;
+}
+*/
+/*
+.my-individual-result{
+	text-align: left;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    height: 20px;
+}
+
+.show-details-result{
+	margin-top: 10px;
+	text-align: left;
+}*/
+
+
+
+
+/* connections.html */
+.my-connections-photo{
+    margin-top: 40px;
+}
+
+#my-connections-body{
+	margin-bottom: 60px;
+}
+
+.my-connections-heading-container{
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+.my-connection-statement{
+    margin-left: 0px; 
+    margin-top: 40px;   
+}
+
+.my-connection-information{
+    margin-left: 0px; 
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+
+
+
+/* tickets_fares.html */
+.my-tickets-photo{
+    margin-top: 40px;
+}
+
+#my-ticket-body{
+	margin-bottom: 60px;
+}
+
+
+.my-ticket-heading-container{
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+.my-ticket-statement{
+    margin-left: 0px; 
+    margin-top: 40px;    
+}
+
+.my-ticket-choices{
+    margin-left: 0px; 
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.lead{
+	font-size: 17px;
+}
+
+.table-responsive{
+	font-size: 12px;
+}
+
 
 
 
 /* contact.html */
-.my-contact{
+.my-contact-photo {
     margin-top: 65px;
 }
 
 .my-contact-information{ 
-	margin-top: 100px;
+	margin-top: 65px;
+}
+
+.my-profile-photo{
 	margin-bottom: 20px;
 }
 
@@ -548,34 +696,71 @@ li.passed::before {
     padding: 15px;
 }
 
-/* Tourism page */
+/* tourism.html */
+#tourism_main_container{
+	margin-bottom: 60px;
+}
+
 #map_tourism{
 	top:35px;
     height: 555px;
     margin-bottom:5px   
 }
-#tourism_main_container{
-	top:35px;
-    margin-top: 65px;
+
+/* tourism.html: Geo-location button: Google Map*/
+#floating-panel {
+  	right: 459px;
+   	background: rgba(255, 255, 255, 0.9);
+    height: 29px;
+    width:30px;
+    position: absolute;
+    top: 435px;
+    border: none;
+    z-index: 5;
+    -moz-box-shadow: 0 0 3px #ccc;
+    -webkit-box-shadow: 0 0 3px #ccc;
+    box-shadow: 0 0 3px #ccc;
+    text-align: center;
 }
+
+#buttonLocation{
+    height: 29px;
+    width: 30px; 
+    padding: 0;
+    font: 11px Arial,Helvetica,Sans-serif;
+    background: rgba(255, 255, 255, 1);
+    color: #595959;
+    border: none;
+    margin-bottom: 50px;
+}
+
+#buttonLocation:hover {
+  box-shadow: inset 0 0 0 60px rgba(0, 0, 0, 0.1);
+}
+
 #toggleTourismTable{
 	display: block;
 	margin-left: 3px;
 	font-size: 11px;
 }
+
 #toggleVenuesTable{
-		margin-left: 3px;
+	margin-left: 3px;
 	font-size: 11px;
 }
+
 #tourism_buttons{
     margin-top: 35px;
 }
+
 .events_interests_contents{
     display: none;
 }
+
 .list_styling{
     background-color: white;        
 }
+
 .list_styling a{
     padding-top: 5px;
     text-decoration: none;
@@ -583,9 +768,9 @@ li.passed::before {
     padding-right: 0px;
     color: black;
     display: block;
-    height: 22px;
-    
+    height: 22px;  
 }
+
 .list_styling li{
     padding-top: 5px;
     text-decoration: none;
@@ -595,6 +780,7 @@ li.passed::before {
     display: block;
     height: 22px;
 }
+
 .list_styling a:hover{
     background-color: rgba(0,0,0,0.1); 
 }
@@ -604,6 +790,7 @@ li.passed::before {
 	color:white; 
 	border-radius: 0 !important;
 }
+
 #TourismButton:hover {
 	background-color: rgba(255, 255, 255, 0.2);
 	color:#0c2864;
@@ -619,135 +806,3 @@ li.passed::before {
 	background-color: rgba(255, 255, 255, 0.2);
 	color:#0c2864;
 }
-
-
-/* map.html */
-#map{
-	margin-top: 35px;
-    height: 400px;
-    width: 100%;
-   }
-
-.my-map-div{
-    margin-top: 50px;
-}
-
-/* Styling for the weather */ 
-
-#wrapper{
-	position: relative;
-	width: 100%;
-}
-
-#displayWeather{
-position: absolute;
-top: 0;
-right:0;
-float: right;
-width : 120px;
-height : 150px;
-text-align: center;
-background: rgba(255, 255, 255, 0.9);
-color: slategrey;
-border-top: 5px;
-z-index: 99;
-}
-
-#wTemp1 {
-  font-size: 20px !important;
-    text-align: center;
-    display : inline-block;
-    margin-top: 0;
-}
-
-#wTemp2 {
-  font-size: 20px;
-    display : inline;
-    font-weight: bold;
-    margin-top: 0;
-}
-
-#wTemp3 {
-  font-size: 20px;
-  display : inline-block; 
-  font-weight: bold;
-  margin-top: 0;
-
-}
-#wIcon {
-    font-size: 30px;
-    display : block;   
-    margin-top: 0;
-    margin-bottom: 0;
-}
-#wDesc {
-  font-size: 15px;
-  display : inline-block;   
-    overflow: hidden;
-    font-weight: bold;
-    margin-top: 0;
-    margin-bottom: 0;
-   }
-
-.my-result{
-    margin-bottom: 50px;
-    margin-top: 10px;
-}
-
-.show-details-result{
-	display: inline;
-}
-
-#journeyPrice1{
-	text-align: left;
-}
-#journeyPrice2{
-	text-align: left;
-}
-
-h6{
-	letter-spacing:1px;
-	font-size:14px;
-	font-family: London-Tube;
-	color: #232943;
-	font-weight: bold;
-}
-
-#showDetails1, #showDetails2{
-	text-align: right;
-}
-
-#displayResults{
-	margin: auto;
-	min-height: 300px;
-	width: 800px;
-}
-
-.resultHeadings{
-	border-bottom: solid 1px gray;
-	text-align: left;
-}
-
-h5{
-	font-size:12px;
-	font-weight: bold;
-	font-family: 'London-Tube';
-}
-
-.my-individual-result{
-	text-align: left;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    height: 20px;
-}
-.show-details-result{
-	margin-top: 10px;
-	text-align: left;
-	}
-
-
-.my-changed-journey{
-    padding: 10px;
-    width: 100%;
-}
-

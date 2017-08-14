@@ -3,6 +3,9 @@
     <head>
         <meta charset="utf-8"/>
         <title>Connections</title>
+        
+        <!-- Set the page to the width of the device and set the zoom level -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <!-- Bootstrap: Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -26,7 +29,7 @@
 		</style>
     </head>
     <body>
-        <!-- Main container to give website 12-grid shape -->
+        <!-- Container for both Navbar and Side-Navbar -->
         <div class="container-fluid">
             <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
                 <div class="navbar-collapse">
@@ -59,18 +62,17 @@
             </div>    
         </div>
 
-        <!-- Cover Photo -->
-        <!-- Image Container: Do not add BS container or row as limits size -->
+        <!-- Image Container: Hides on small and extra-small screens (Note: Do not add BS container or row as limits size) -->
         <div>
             {% load static %}
-            <img src="{% static 'dublinbuspredict/css/images/NightLuas.jpg' %}" alt="cities" class="my-connections img-responsive hidden-xs" id="map">
+            <img src="{% static 'dublinbuspredict/css/images/NightLuas.jpg' %}" alt="cities" class="my-connections-photo img-responsive hidden-xs hidden-sm" id="map">
         </div>
 
         <!-- Content within "pushed-content" moves when Sidebar opens -->
-        <div id="pushed-content">
+        <div id="my-connections-body">
             <!-- Transport Information -->
-            <div class="container my-index-form">
-                <div class="row my-connection-information">
+            <div class="container my-connections-heading-container">
+                <div class="row col-xs-12 my-connection-statement">
                     <h3>Connection Information</h3>
                     <p class="lead"><small>Dublin is well-connected by numerous operators, serving both the City Centre and suburban areas.</small></p>
                 </div>
@@ -87,7 +89,7 @@
                 <div class="row col-lg-12 col-xs-12 my-connection-information">
                     <h3><u>Luas</u><span class="dropdown-toggle caret" data-toggle="collapse" data-target="#contentLuas" role="button" aria-haspopup="true" aria-expanded="false"></span><br><small>Luas is a light-weight Tram serving Dublin City Centre and Suburbs. With two tram lines currently, Luas expand with the opening of Luas Cross-city at the end of 2017. <i>34.2 million passengers</i> were carried in 2016. On average, <i>90,000 passengers</i> are carried daily.<p><br>For timetable information, click the above tab</p></small></h3>
 
-                    <!-- Pass ID name to jQuery - jQuery reference requires a hash for ID -->
+                    <!-- jQuery - ID and Data Target must match for functionality -->
                     <div class="col-xs-12 container collapse" id="contentLuas">
                         <div class="row">
                             <div class="table-responsive">
@@ -149,7 +151,7 @@
             </div>
         </div>
 
-        <!-- Footer Row -->
+        <!-- Footer -->
         <div class="container-fluid">
             <div class="row">
                 <footer class="fixed-bottom my-new-footer">
