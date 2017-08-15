@@ -159,7 +159,7 @@ def time_date(bus_route, source_stop, destination_stop, date, time, direction, s
 #     stops2 = stops[1]
 #     stops3 = stops[3]
     print(stops)
-    with open("C:\\Users\\minogud2\\BusLightyear\\cleaning\\trained_modelv9.pkl", "rb") as f:
+    with open("C:\\Users\\minogud2\\BusLightyear\\cleaning\\trained_modelv10.pkl", "rb") as f:
         rtr = joblib.load(f)
     holiday = holidays(date)
     p_holiday = holiday[0]
