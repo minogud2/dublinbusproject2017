@@ -3,6 +3,8 @@ window.onload = function(){
     closeNav();
     loadTwitter;
 };
+
+// functions for opening and closing navbar
 function openNav() {
         if (document.getElementById("mySidenav").style.width === '0px') {
             document.getElementById("mySidenav").style.width = "250px";
@@ -15,6 +17,8 @@ function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
 }
 
+// function for loading in twitter data from python script for AA roadwatch. 
+// The last 9 tweets displayed from the account.
 function loadTwitter(){
     var text = $.getJSON("http://127.0.0.1:8000/dublinbuspredict/getTwitterText", null, function(d) {
     console.log(d)

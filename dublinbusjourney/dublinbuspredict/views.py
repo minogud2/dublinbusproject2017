@@ -380,7 +380,7 @@ def get_tourist(request):
     touristData = cursor.fetchall()
     return HttpResponse(json.dumps({'data': touristData}), content_type="application/json")
 
-# Function for loading basic tourist page info
+# Function for loading routes that go to stops surrounding tourist attractions
 def get_tourist_routes(request):
     db = pymysql.connect(user='lucas', db='summerProdb', passwd='hello_world', host='csi6220-3-vm3.ucd.ie')
     cursor = db.cursor()

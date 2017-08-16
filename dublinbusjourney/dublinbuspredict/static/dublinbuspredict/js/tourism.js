@@ -1,3 +1,5 @@
+// declare global variables
+
 var map;
 var pos;
 var infowindow;
@@ -5,9 +7,13 @@ var marker;
 var stopMarker;
 var routesData;
 
+// load stop data for tourism site from mysql database once page is loaded. 
 $(document).ready(function(){
 	getStopData();
+	tourismMap();
 })
+
+// Google map tourism function
 
 function tourismMap(){
     $.getJSON("http://127.0.0.1:8000/dublinbuspredict/getTourist", null, function(d) {
@@ -28,16 +34,17 @@ function tourismMap(){
   	  transitLayer.setMap(map);
   	  
         infowindow = new google.maps.InfoWindow();
-        var i;
+        var i, marker, contentString, newMarker;
         
+        // create infowindow for tourist attractions and venues. 
         for (i = 0; i < points_of_interest.length; i++){        	
-        	var contentString = "<b><u>"+ points_of_interest[i][0]+ "</u></b><br><br>" +
+        	contentString = "<b><u>"+ points_of_interest[i][0]+ "</u></b><br><br>" +
             					"<b>Name: </b>" + points_of_interest[i][1] +"<br>" +
             					"<b>Type: </b>" + points_of_interest[i][2] +"<br>" +
             					"<b>Address: </b>"+ points_of_interest[i][3]+ "<br>" +
             					"<b>Routes:</b><br><br>" +
             					"<a target='_blank' href='"+ points_of_interest[i][4] + "'>For more information click here</a>";
-        	var newMarker;        	
+        	// Display different markers depending on type of attraction or venue
         	if (points_of_interest[i][8] === "sport"){
         		newMarker = sportIcon}
         	else if(points_of_interest[i][8] === "museum"){
@@ -58,7 +65,7 @@ function tourismMap(){
         	else if(points_of_interest[i][8] === "beer"){
         		newMarker = beerIcon
         	}
-               var marker = new google.maps.Marker({
+               marker = new google.maps.Marker({
                     position: new google.maps.LatLng(points_of_interest[i][6], points_of_interest[i][7]),
                     map: map,
                     info: contentString,
@@ -77,16 +84,17 @@ function tourismMap(){
            })(marker, i));
         }
         
-    	// Adapted from: https://developers.google.com/maps/documentation/javascript/examples/map-geolocation
-      infoWindow = new google.maps.InfoWindow;
+        infoWindow = new google.maps.InfoWindow;
+    	// Find geolocation of user. 
+        // Function adapted from: https://developers.google.com/maps/documentation/javascript/examples/map-geolocation
       
-   // Try HTML5 geolocation.
       if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
               pos = {
                   lat: position.coords.latitude,
                   lng: position.coords.longitude
               };
+              // create marker for new location
               marker = new google.maps.Marker({
               	position: pos,
               	map: map,
@@ -111,37 +119,13 @@ function tourismMap(){
     });
 }
 
+// function to get tourism data from mysql database
 function getStopData(){
 $.getJSON("http://127.0.0.1:8000/dublinbuspredict/getTouristRoutes", null, function(d2) {
 	routesData = d2.data;
-	console.log("this is routes data",routesData)
-//	var j,stopList, newStopList, stopString;
-//	for (j = 0; j < routesData.length; j++){  
-//		stopList = routesData[j][1];
-//		newStopList = stopList.replace(/[\[\]']+/g, '');
-//  
-//		stopString = "<b>Stop ID: </b>"+ routesData[j][0]+ "<br><br>" +
-//    					"<b>Name: </b>" + routesData[j][2]+"<br>" +
-//    					"<b>Routes: </b>" + newStopList +"<br>";
-//	
-//	stopMarker = new google.maps.Marker({
-//        position: new google.maps.LatLng(routesData[j][3], routesData[j][4]),
-//        map: map,
-//        info: stopString,
-//        icon: stopIcon2
-//    })
-//		stopMarker.setVisible(false)
-//	 google.maps.event.addListener(stopMarker, 'click', (function(marker, i){
-//      	return function() {
-//      	 infoWindow.setContent(this.info);
-//           infoWindow.open(map, this);
-//      	}
-//  })(stopMarker, j));
-//	
-//}
 });
 }
-
+// function to center based on geolocation button. 
 function geoLocation(){
 	map.setZoom(12);
 	map.setCenter(pos);
@@ -149,6 +133,7 @@ function geoLocation(){
     infoWindow.setContent('Location found');
     infoWindow.open(map, marker);
 }
+// add click event to geolocation button
 $(document).ready(function (){
   $("#buttonLocation").on('click', function ()
   {
@@ -156,15 +141,15 @@ $(document).ready(function (){
 	});
 });
 
-google.maps.event.addDomListener(window, 'load', tourismMap);
-
+// Create a new function to center location on map based on attraction or venue selected.
 function newLocation(newLat,newLng){
 	map.setZoom(16);
 	map.setCenter({
 		lat : newLat,
 		lng : newLng
 	});
-	
+
+	// create infowindow for stops selected.
 	var j,stopList, newStopList, stopString;
 	for (j = 0; j < routesData.length; j++){
 		stopList = routesData[j][1];
@@ -180,6 +165,7 @@ function newLocation(newLat,newLng){
         info: stopString,
         icon: stopIcon2
     })
+	// hide the markers until a stop is selected, then display all. 
 		stopMarker.setVisible(true)
 	 google.maps.event.addListener(stopMarker, 'click', (function(marker, i){
       	return function() {
@@ -192,7 +178,6 @@ function newLocation(newLat,newLng){
 	}
 
 //Here you set the function so when you click, the div id test will display new location.
-// So you can create one for each of the attractions or create a loop and number your divs. 
 $(document).ready(function (){
     $("#1").on('click', function ()
     {
