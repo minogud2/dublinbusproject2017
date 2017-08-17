@@ -74,7 +74,7 @@ function tourismMap(){
                      
            google.maps.event.addListener(marker, 'click', (function(marker, i){
                	return function() {
-               		infowindow.close();
+               		infoWindow.close();
                		if(infoWindow){
                			infowindow.close();
                		}
@@ -110,6 +110,7 @@ function tourismMap(){
       }
 
       function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+   		  infoWindow.close();
           infoWindow.setPosition(pos);
           infoWindow.setContent(browserHasGeolocation ?
                                 'Error: The Geolocation service failed.' :
@@ -127,6 +128,7 @@ $.getJSON("http://127.0.0.1:8000/dublinbuspredict/getTouristRoutes", null, funct
 }
 // function to center based on geolocation button. 
 function geoLocation(){
+	infoWindow.close();
 	map.setZoom(12);
 	map.setCenter(pos);
     infoWindow.setPosition(pos);
@@ -169,6 +171,7 @@ function newLocation(newLat,newLng){
 		stopMarker.setVisible(true)
 	 google.maps.event.addListener(stopMarker, 'click', (function(marker, i){
       	return function() {
+     		infoWindow.close();
       	 infoWindow.setContent(this.info);
            infoWindow.open(map, this);
       	}

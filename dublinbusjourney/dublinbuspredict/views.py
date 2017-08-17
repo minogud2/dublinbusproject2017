@@ -390,6 +390,7 @@ def get_tourist_routes(request):
     stop_data = cursor.fetchall()
     return HttpResponse(json.dumps({'data': stop_data}), content_type="application/json")
 
+# Scrapes AA roadwatch twitter for dublin traffic data. Sends to urls for display in 9 divs using JS. 
 def get_TwitterAPIAARoadwatch(request):
     base_url = 'https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=aaroadwatch&count=100'
     CONSUMER_KEY = 'wJx7TMGnDB5glAeRVZeMeqBCi'
