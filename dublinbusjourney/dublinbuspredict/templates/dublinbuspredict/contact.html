@@ -32,6 +32,27 @@
     </head>
 
     <body>
+        <script type="text/javascript">
+    		function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'en,es,fr,it,ja,ko,pt,ru',layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+        
+}
+		</script>
+		<script type="text/javascript" src="http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+        
+    
+        <div id="google_translate_element" style="float:left; position: fixed;z-index: 1000; "></div>
+
+
+		<style>
+		div#google_translate_element div.goog-te-gadget-simple{background-color:#FFD527;}
+    		div#google_translate_element div.goog-te-gadget-simple a.goog-te-menu-value span{color:darkorange}
+    
+   			 div#google_translate_element div.goog-te-gadget-simple a.goog-te-menu-value span:hover{color:#ffffff}
+
+            .goog-te-gadget-icon{display:none !important;}
+
+		</style>
         <!-- Container for both Navbar and Side-Navbar -->
         <div class="container-fluid">
             <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -46,6 +67,7 @@
                     </ul> 
                 </div>
             </nav>
+
             <div id="mySidenav" class="sidenav">
                 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                 <div id="w3-buttons">
