@@ -1,7 +1,8 @@
 window.onload = function(){
     openNav();
     closeNav();
-    loadTwitter;
+    loadTwitter();
+    googleTranslateElementInit();
 };
 
 // functions for opening and closing navbar
@@ -16,6 +17,14 @@ function openNav() {
 function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
 }
+
+//functions to load in google language bar
+function googleTranslateElementInit() {
+    new google.translate.TranslateElement({pageLanguage: 'en', 
+    includedLanguages: 'en,es,fr,it,ja,ko,pt,ru',
+    layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 
+    'google_translate_element');
+			}
 
 // function for loading in twitter data from python script for AA roadwatch. 
 // The last 9 tweets displayed from the account.
