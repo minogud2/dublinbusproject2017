@@ -380,7 +380,7 @@ def get_tourist(request):
     touristData = cursor.fetchall()
     return HttpResponse(json.dumps({'data': touristData}), content_type="application/json")
 
-# Function for loading basic tourist page info
+# Function for loading routes that go to stops surrounding tourist attractions
 def get_tourist_routes(request):
     db = pymysql.connect(user='lucas', db='summerProdb', passwd='hello_world', host='csi6220-3-vm3.ucd.ie')
     cursor = db.cursor()
@@ -390,6 +390,7 @@ def get_tourist_routes(request):
     stop_data = cursor.fetchall()
     return HttpResponse(json.dumps({'data': stop_data}), content_type="application/json")
 
+# Scrapes AA roadwatch twitter for dublin traffic data. Sends to urls for display in 9 divs using JS. 
 def get_TwitterAPIAARoadwatch(request):
     base_url = 'https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=aaroadwatch&count=100'
     CONSUMER_KEY = 'wJx7TMGnDB5glAeRVZeMeqBCi'

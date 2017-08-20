@@ -14,9 +14,6 @@
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-        <!-- Google Maps -->
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHxpqeoG1jNA4VHBlFeopWuRmFoYTh-ME&callback=tourismMap"></script>
-
         <!-- Font for side navbar Awesome CDN Source: http://fontawesome.io/ -->
         <script src="https://use.fontawesome.com/e8a4c811a1.js"></script>
         
@@ -27,7 +24,9 @@
         <link rel="stylesheet" type="text/css" href="{% static 'dublinbuspredict/css/style.css' %}" />
         <script type="text/javascript" src="{% static 'dublinbuspredict/js/jsIndex.js' %}"></script>
         <script type="text/javascript" src="{% static 'dublinbuspredict/js/main.js' %}"></script>
-        <script type="text/javascript" src="{% static 'dublinbuspredict/js/tourism.js' %}"></script>        
+        <script type="text/javascript" src="{% static 'dublinbuspredict/js/tourism.js' %}"></script>     
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHxpqeoG1jNA4VHBlFeopWuRmFoYTh-ME&callback=tourismMap"></script>
+           
         <style type="text/css">@font-face { 
     				font-family: 'London-Tube'; 
     				src:local('fontName Regular'),
@@ -37,13 +36,13 @@
 		</style>
 		<script>
 			var stopIcon2 = "{% static "dublinbuspredict/css/images/icon.png" %}";
-    		var sportIcon = "{% static "dublinbuspredict//cssimages/sport.png" %}";
+    		var sportIcon = "{% static "dublinbuspredict/css/images/sport.png" %}";
     		var museumIcon = "{% static "dublinbuspredict/css/images/museum.png" %}";
     		var musicIcon = "{% static "dublinbuspredict/css/images/music.png" %}";
     		var beerIcon = "{% static "dublinbuspredict/css/images/beer.png" %}";
     		var parkIcon = "{% static "dublinbuspredict/css/images/park.png" %}";
     		var shoppingIcon = "{% static "dublinbuspredict/css/images/shopping.png" %}";
-    		var sightsIcon = "{% static "dublinbuspredict/images/css/sights.png" %}";
+    		var sightsIcon = "{% static "dublinbuspredict/css/images/sights.png" %}";
     		var myLocationIcon = "{% static "dublinbuspredict/css/images/myLocation.png" %}";
     	</script>
     </head>

@@ -40,14 +40,8 @@ $(document).ready(function(){
 	});
 });
 
-//// Map and Marker related functions for map.html
-//$(document).ready(function() {
-//    initMap();
-//});
-
 var map; // define a map as a global variable for use of different functions
 var directionsDisplay;
-//var directionsService = new google.maps.DirectionsService();
 var service;
 var source;
 var destination;
@@ -76,7 +70,7 @@ function initMap() {
     console.log('Info for map', d)
         var data = d.data;
         var points = new Array; 
-        
+        // Loop to display marker
         var marker, i, newMarker, intSrc, intDst, midPoint;
         var infowindow = new google.maps.InfoWindow();
         for (i = 0; i < data.length; i++) {
@@ -95,8 +89,10 @@ function initMap() {
                 map: map,
                 icon: newMarker
             });
+        // push points for directions service.
         points.push(marker.getPosition().toUrlValue());
-                 
+        
+        // function to add click event to marker to display infowindow. 
         google.maps.event.addListener(marker, 'click', (function(marker, i){
         	return function() {
         		if (data[i][0] == intSrc){
@@ -117,9 +113,8 @@ function initMap() {
         if (data[i][0] == intDst){
       	  i = data.length-1;
         }
-        }
-        console.log("Should be center",data[midPoint][1])
-        
+        }     
+        // center the map only on the midpoint of the journey
         map.setCenter({
      		lat : parseFloat(data[midPoint][1]),
      		lng : parseFloat(data[midPoint][2])
@@ -137,13 +132,13 @@ function initMap() {
     	    key: "AIzaSyAMIv5pNbn7yJWpjSYOr2BMuFuhGFJLcPk",
     	    path: points.join('|')
     	  }, function(data) {
-    	    console.log(data);
     	    processSnapToRoadResponse(data);
     	         // drawSnappedPolyline();
     	    var poly = new google.maps.Polyline({ 
 		    	  map: map,
 		    	  strokeColor: '#232943',
 		    	  icons:[{
+		    		  // create arrows to display the direction of the journey. 
 		    		  icon: {
 				          path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
 				          strokeColor:'#232943',
@@ -170,6 +165,8 @@ function initMap() {
     	          }
     	      }
     	  });
+      
+      	// function to display route from point to point on road. 
     	function processSnapToRoadResponse(data) {
     	  snappedCoordinates = [];
     	  placeIdArray = [];
@@ -185,14 +182,12 @@ function initMap() {
     	}
 
 //load in the weather onto map
-// need to change so that it's only displayed if current mode is selected.No forecasts. 
-
 var dWeather;
 function changeWeatherIcon(weatherType) {
     weatherType = weatherType.toLowerCase();
     $("#wIcon").text("");
     $("#wIcon").append("<i></i>");
-
+    // alter the default icons in favour of nicer icons. 
     if (weatherType.indexOf("clouds") != -1) {
         return $("#wIcon").addClass("wi wi-cloudy");
     } else if (weatherType.indexOf("rain") != -1) {
@@ -207,7 +202,7 @@ function changeWeatherIcon(weatherType) {
         return $("#wIcon").addClass("wi wi-day-sunny");
     }
 }
-
+// Function to alter all text for weather floating div. 
 function titleCase(str) {
     var array = str.split(" ");
     for (var i = 0; i < array.length; i++) {
@@ -232,6 +227,7 @@ function getPredictedTimes(bus, stops){
 	last_stop_distance = stops[stops.length - 1][5]
 	console.log('Starting at:', first_stop_distance)
     console.log(bus[0][0].arrival.substring(6, 10), parseInt(bus[0][0].arrival.substring(3, 5)) - 1, bus[0][0].arrival.substring(0, 2), bus[0][0].arrival.substring(11, 13), bus[0][0].arrival.substring(14, 16), bus[0][0].arrival.substring(17, 19), 00)
+    
     var arrival = new Date(bus[0][0].arrival.substring(6, 10), parseInt(bus[0][0].arrival.substring(3, 5)) - 1, bus[0][0].arrival.substring(0, 2), bus[0][0].arrival.substring(11, 13), bus[0][0].arrival.substring(14, 16), bus[0][0].arrival.substring(17, 19), 00);
     console.log(arrival)
     var currentTime = new Date();
