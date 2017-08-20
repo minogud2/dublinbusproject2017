@@ -59,16 +59,17 @@ h3{
 
 .navbar-nav {
     width: 100%;
-    top: -7px;
-    height: 75px;
+    height: 65px;
     background-color: #FFD527;
-    position: absolute;
-    display: block;
+    position: fixed;
 }
 
 .navbar-nav > li {
     float: none;
     display: inline-block;
+}
+.navbar-nav > li.navbar-left {
+    margin-top: 5px;
 }
 
 .navbar-nav > li.navbar-right {
@@ -115,13 +116,17 @@ h3{
     position: absolute;
     display: flex;
     background-color: #FFD527;
+    height: auto !important;
 }
+html.translated-ltr body nav.navbar.navbar-default.navbar-fixed-top { 
+	padding-top: 41px; 
+	}
 
 #google_translate_element div.goog-te-gadget-simple{
     border: 0px;
 	background-color:#FFD527;
 	font-family: London-Tube;
-	    
+	height: auto !important;
 }
 
 #google_translate_element div.goog-te-gadget-simple a.goog-te-menu-value {
@@ -658,14 +663,12 @@ h5{
 
 /* tourism.html */
 #tourism_main_container{
-	margin-bottom: 60px;
-	margin-top: 30px;
+	margin: 65px auto 0;
 }
 
 #map_tourism{
-	top:35px;
-    height: 555px;
-    margin-bottom:5px   
+    height: 550px;
+    white-space: nowrap;
 }
 
 /* tourism.html: Geo-location button: Google Map*/
@@ -711,7 +714,7 @@ h5{
 }
 
 #tourism_buttons{
-    margin-top: 35px;
+    white-space: nowrap;
 }
 
 .events_interests_contents{
