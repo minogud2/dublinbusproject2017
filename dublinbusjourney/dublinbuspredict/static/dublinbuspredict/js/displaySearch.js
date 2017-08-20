@@ -42,17 +42,18 @@ $(document).ready(function(){
 
 var map; // define a map as a global variable for use of different functions
 var directionsDisplay;
+var path;
 var service;
 var source;
 var destination;
 var list_origin_dropdown = [];
+var infoWindow;
+var snappedCoordinates = [];
 
 function initMap() {
     console.log('inside map!')
 //	Function to pull in the map
-    var latlng = new google.maps.LatLng(53.3498053, -6.260309699999993);
 	map = new google.maps.Map(document.getElementById('map'), {
-        center: latlng,
         zoom: 14,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }); //closing map creation	
@@ -119,9 +120,43 @@ function initMap() {
      		lat : parseFloat(data[midPoint][1]),
      		lng : parseFloat(data[midPoint][2])
      	});
+        
+        infoWindow = new google.maps.InfoWindow;
+    	// Find geolocation of user. 
+        // Function adapted from: https://developers.google.com/maps/documentation/javascript/examples/map-geolocation
+      
+      if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+              pos = {
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude
+              };
+              // create marker for new location
+              marker = new google.maps.Marker({
+              	position: pos,
+              	map: map,
+              	icon: myLocationIcon2
+          });  
+              
+          }, function() {
+              handleLocationError(true, infoWindow, map.getCenter());
+          });
+      } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infoWindow, map.getCenter());
+      }
+
+      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+   		  infoWindow.close();
+          infoWindow.setPosition(pos);
+          infoWindow.setContent(browserHasGeolocation ?
+                                'Error: The Geolocation service failed.' :
+                                'Error: Your browser doesn\'t support geolocation.');
+          infoWindow.open(map);
+      }
 
       //Initialize the Path Array
-      var path = new google.maps.MVCArray();
+      path = new google.maps.MVCArray();
       
       //Initialize the Direction Service
       service = new google.maps.DirectionsService();
@@ -146,38 +181,41 @@ function initMap() {
 				          fillOpacity:1 
 				          },
 				          repeat:'100px',
-		                  path:[]
+		                  path:snappedCoordinates
 		    	  		}]  
 		      });
+    	    
+          	// function to display route from point to point on road. 
+        	function processSnapToRoadResponse(data) {
+        	  snappedCoordinates = [];
+        	  var latlng;
+        	  console.log("This is snapped", snappedCoordinates)
+        	  for (var i = 0; i < data.snappedPoints.length; i++) {
+        		    latlng = new google.maps.LatLng(
+        	        data.snappedPoints[i].location.latitude,
+        	        data.snappedPoints[i].location.longitude);
+        	    snappedCoordinates.push(latlng);
+        	  }
+        	}  
 
     	      //Loop and Draw Path Route between the Points on MAP
     	      for (var i = 0; i < snappedCoordinates.length; i++) {
     	          if ((i + 1) < snappedCoordinates.length) {
     	              var src = snappedCoordinates[i];
     	              var des = snappedCoordinates[i + 1];
-    	              path.push(src);
-    	              poly.setPath(path);
     	              service.route({
     	                  origin: src,
     	                  destination: des,
-    	                  travelMode: google.maps.DirectionsTravelMode.TRANSIT
+    	                  travelMode: google.maps.DirectionsTravelMode.TRANSIT,
+    	                  path:snappedCoordinates
     	              })
+    	              path.push(src);
+    	              path.push(des);
+    	              poly.setPath(path);
     	          }
     	      }
     	  });
-      
-      	// function to display route from point to point on road. 
-    	function processSnapToRoadResponse(data) {
-    	  snappedCoordinates = [];
-    	  placeIdArray = [];
-    	  for (var i = 0; i < data.snappedPoints.length; i++) {
-    	    var latlng = new google.maps.LatLng(
-    	        data.snappedPoints[i].location.latitude,
-    	        data.snappedPoints[i].location.longitude);
-    	    snappedCoordinates.push(latlng);
-    	    placeIdArray.push(data.snappedPoints[i].placeId);
-    	  }
-    	}  
+     
     	    });
     	}
 
@@ -653,3 +691,16 @@ function displayPredictionSchedule(bus, busNum, stops){
     document.getElementById('resultArray'+busNum).style.display = 'block';
     busNum += 1;
 }
+
+//function to center based on geolocation button. 
+function geoLocation(){
+	map.setZoom(12);
+	map.setCenter(pos);
+}
+// add click event to geolocation button
+$(document).ready(function (){
+  $("#buttonLocation2").on('click', function ()
+  {
+	  geoLocation();	  
+	});
+});
