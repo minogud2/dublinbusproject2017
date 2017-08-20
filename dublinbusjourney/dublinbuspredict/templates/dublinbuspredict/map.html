@@ -47,10 +47,11 @@
             var stopsIcon = "{% static "dublinbuspredict/css/images/icon.png" %}";
             var stopsIconSrc = "{% static "dublinbuspredict/css/images/src_icon.png" %}";
             var stopsIconDst = "{% static "dublinbuspredict/css/images/dst_icon.png" %}";
+            var myLocationIcon2 = "{% static "dublinbuspredict/css/images/myLocation2.png" %}";
         </script>
     </head>
     <body onload="loadRoutes()">
-         <!-- Main container to give website 12-grid shape -->
+         <!-- Main container to give web-site 12-grid shape -->
         <div class="container-fluid">
             <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
                 <div class="navbar-collapse">
@@ -59,7 +60,6 @@
                             <a href="#" class="custom-white" style="cursor:pointer"  onclick="openNav()">
                                 <span class="glyphicon glyphicon-menu-hamburger"></span>
                             </a></li>
-                           <li class="navbar-center" > 
 
                         {% load static %}
                         <li class="navbar-right">
@@ -96,6 +96,9 @@
             <div class="row"></div>
             	<div id="wrapper">
                 	<div id="map"></div>
+                	<div id="floating-panel2" class="hidden-xs">
+                		<button id="buttonLocation2" class="button"><i class="fa fa-crosshairs" aria-hidden="true"></i></button>
+            		</div>
                 	<div id="displayWeather">
                     	<br>
                     	<p id="wTemp1"></p>

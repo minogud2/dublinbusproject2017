@@ -5,7 +5,6 @@ body{
 }
 
 @media screen and (max-width:480px) { 
-	
 	#google_translate_element div.goog-te-gadget-simple{
 	display: none;
 	}
@@ -170,7 +169,7 @@ html.translated-ltr body nav.navbar.navbar-default.navbar-fixed-top {
     height: 40px;`
     display: inline-block;
     float: right;
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
 
@@ -488,6 +487,37 @@ li.passed::after {
     width: 100%;
 }
 
+#floating-panel2 {
+  	right: 10px;
+   	background: rgba(255, 255, 255, 0.9);
+    height: 29px;
+    width:30px;
+    position: absolute;
+    top: 235px;
+    border: none;
+    z-index: 5;
+    -moz-box-shadow: 0 0 3px #ccc;
+    -webkit-box-shadow: 0 0 3px #ccc;
+    box-shadow: 0 0 3px #ccc;
+    text-align: center;
+}
+
+#buttonLocation2{
+    height: 29px;
+    width: 30px; 
+    padding: 0;
+    font: 11px Arial,Helvetica,Sans-serif;
+    background: rgba(255, 255, 255, 1);
+    color: #595959;
+    border: none;
+    margin-bottom: 50px;
+}
+
+#buttonLocation:hover {
+  box-shadow: inset 0 0 0 60px rgba(0, 0, 0, 0.1);
+}
+
+
 .my-map-div{
     margin-top: 50px;
 }
@@ -669,6 +699,7 @@ h5{
 #map_tourism{
     height: 550px;
     white-space: nowrap;
+    
 }
 
 /* tourism.html: Geo-location button: Google Map*/
