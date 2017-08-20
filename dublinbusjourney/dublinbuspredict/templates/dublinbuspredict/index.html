@@ -9,8 +9,10 @@
         <!-- If IE use the latest rendering engine -->
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-        <!-- Set the page to the width of the device and set the zoom level -->
+        <!-- Required for mobile sizing: Set the page to the width of the device and set the zoom level -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Google translate-->
+        <meta name="google-translate-customization" content="cf4fd9d6a9e017d5-7c969e45eba53879-g303b6a4c71095c23-1c"></meta>
 
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -21,6 +23,7 @@
         <!-- Font awesome loading/spinner icon-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+		<!-- Loading in static files -->
         {% load staticfiles %}
         <link rel="stylesheet" type="text/css" href="{% static 'dublinbuspredict/css/style.css' %}" />
         <script type="text/javascript" src="{% static 'dublinbuspredict/js/jsIndex.js' %}"></script>
@@ -35,7 +38,6 @@
     </head>
 
 	<body onload="loadTwitter()">
-    <!--  <body onload="loadOrigin()">  -->
         <!-- Container for both Navbar and Side-Navbar -->
         <div class="container-fluid">
             <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -61,17 +63,17 @@
                     <a href="/dublinbuspredict/contact" class="w3-bar-item w3-button"><i class="fa fa-phone fa-fw"></i>&nbsp;Contact Us</a>
                 </div>
                 <div id="social-media" class="row col-lg-12 my-social-icons">
-                    <a target="_blank" href="https://twitter.com/" class="col-xs-2 btn btn-social-icon btn-twitter"><span class="fa fa-twitter"></span></a>
-                    <a target="_blank" href="https://facebook.com/" class="col-xs-2 btn btn-social-icon btn-facebook"><span class="fa fa-facebook"></span></a>
-                    <a target="_blank" href="https://instagram.com/" class="col-xs-2 btn btn-social-icon btn-instagram"><span class="fa fa-instagram"></span></a>
-                    <a target="_blank" href="https://linkedin.com/" class="col-xs-2 btn btn-social-icon btn-linkedin"><span class="fa fa-linkedin"></span></a>
-                    <a target="_blank" href="https://googleplus.com/" class="col-xs-2 btn btn-social-icon btn-google"><span class="fa fa-google"></span></a>
+                    <a target="_blank" href="https://twitter.com/dublinbusnews" class="col-xs-2 btn btn-social-icon btn-twitter"><span class="fa fa-twitter"></span></a>
+                    <a target="_blank" href="https://www.facebook.com/DublinBusNews/" class="col-xs-2 btn btn-social-icon btn-facebook"><span class="fa fa-facebook"></span></a>
+                    <a target="_blank" href="https://www.instagram.com/dublinbusnews/?hl=en" class="col-xs-2 btn btn-social-icon btn-instagram"><span class="fa fa-instagram"></span></a>
+                    <a target="_blank" href="https://ie.linkedin.com/company/dublin-bus-bus-tha-cliath" class="col-xs-2 btn btn-social-icon btn-linkedin"><span class="fa fa-linkedin"></span></a>
+                    <a target="_blank" href="https://github.com/LukeO1/summerProject" class="col-xs-2 btn btn-social-icon btn-google"><span class="fa fa-github"></span></a>
                 </div>
             </div>
         </div>
 
             <!-- Image Carousel -->
-            <div class="hidden-xs">
+            <div class="hidden-xs" onclick="closeNav()">
                 <div id="my-carousel" class="carousel slide" data-ride="carousel">
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner">
@@ -110,7 +112,9 @@
                     </a>
                 </div>
             </div>
-            <div class="container-fluid my-index-form">
+            
+            <!-- Submission Form -->
+            <div class="container-fluid my-index-form" onclick="closeNav()">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-xs-12">
@@ -131,7 +135,6 @@
 
                                 <div class="form-group dropdown has-feedback">
                                     <input  class="form-control" id="search-box-2" onkeyup="newSearch()" type="text" name="search2" placeholder="Select a stop">
-                                    <!--<span class="glyphicon glyphicon-refresh fa-spin form-control-feedback text-align" style="display:block; font-size: 1.2em;"></span>-->
                                     <span id ='spinner2' style="display:none"><i class="fa fa-refresh fa-spin form-control-feedback" style="line-height: 35px;"></i></span>
                                     <div class="dropdown-content">
                                         <ul class="dropdown-list" id="dropdown-list-2">
@@ -173,22 +176,37 @@
                     </div>
                 </div>
             </div>
-
-        <div class="container-fluid">
+            
+		<!-- Scroll Button for Twitter Information -->
+        <div class="container-fluid" onclick="closeNav()">
             <div id="scrollpage">
                 <a href="#traffic-div">
                     <button type="button" id= "scrollbtn" class="btn btn-default btn-block"><span class="glyphicon glyphicon-menu-down"></span> Scroll and learn more</button>
                 </a>
             </div>
         </div>
+        		<!-- Google Translation -->
+        		<script type="text/javascript">
+    		function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'en,es,fr,it,ja,ko,pt,ru',layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
         
-        <div id="google_translate_element"></div>
-        <script type="text/javascript">
-			function googleTranslateElementInit() {
-  				new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
-				}
+}
 		</script>
-		<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+		<script type="text/javascript" src="http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+        
+    
+        <div id="google_translate_element" style="float:left; position: fixed;z-index: 1000; "></div>
+
+
+		<style>
+		div#google_translate_element div.goog-te-gadget-simple{background-color:#FFD527;}
+    		div#google_translate_element div.goog-te-gadget-simple a.goog-te-menu-value span{color:darkorange}
+    
+   			 div#google_translate_element div.goog-te-gadget-simple a.goog-te-menu-value span:hover{color:#ffffff}
+
+            .goog-te-gadget-icon{display:none !important;}
+
+		</style>
 	
 		
         <div class="container-fluid" id="primary" onclick="closeNav()"> 
@@ -198,6 +216,7 @@
                     <h3>&emsp;Live Traffic Feed</h3>
                 </div>
             </div>
+        <!-- Twitter Information: Content -->
         <div class="container-fluid my-twitter-feed">
             <aside class="col-md-3 my-sidebar-left">
                 <div class="col-md-12 my-twitter-content" id="tweet1"></div>
@@ -223,7 +242,8 @@
         </div>
         </div>
 		
-		<div class="container-fluid">
+		<!-- Footer -->
+		<div class="container-fluid" onclick="closeNav()">
 			<div class="row">
             <footer class="fixed-bottom my-new-footer">
                 <div class="row">
