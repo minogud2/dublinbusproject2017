@@ -24,12 +24,10 @@ h2{
     font-size: 18px;
 }
 
-/*conflict*/
 h3{
 	font-weight: bold;
     font-size: 20px;
 }
-
 
 
 /* Multiple Pages - FontPalace, 2016  */
@@ -221,23 +219,6 @@ ul {
     background-color: #3e8e41;
 }
 
-/* Language Bar */
-
-/* iframe {
-  margin-top: 20px;
-  margin-bottom: 30px;
-
-  -moz-border-radius: 12px;
-  -webkit-border-radius: 12px;
-  border-radius: 12px;
-
-  -moz-box-shadow: 4px 4px 14px #000;
-  -webkit-box-shadow: 4px 4px 14px #000;
-  box-shadow: 4px 4px 14px #000;
-
-  filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=.2);
-} */
-
 #resultArray0{
 	display: none;
 }
@@ -270,6 +251,9 @@ ul {
 	height: 80px;
     width: 180px;
 }
+
+
+
 
 /* index.html */
 #google_translate_element {
@@ -343,31 +327,12 @@ ul {
     overflow: hidden;
 }
 
-/*#secondary{
-    margin-left: 120px;
-    width: 1000px;
-    margin-top: -40px;
-    height: 800px;
-}
-
-#traffic-div{
-    margin-top: 50px;
-    height: 300px;
-    display: block;
-    margin-bottom: 10px;
-}
-
-#roadwatch-div{
-    height: 300px;
-    display: block;
-    margin-bottom: 10px;
-}*/
-
 .my-index-information{
 	margin-top: 50px;
 	margin-left: 20px;
 	margin-bottom: -20px;
 }
+
 
 /* Display result*/
 .output{
@@ -385,7 +350,7 @@ li.passed {
   overflow: hidden;
   position: relative;
   padding: 0 0 10px 35px;
-  }
+}
 
 li.passed::before {
     content: '';
@@ -439,34 +404,6 @@ li.passed::after {
     height: 45px;
 }
 
-/*#form-holder{
-    position: absolute;
-    background-color: rgba(0,0,0,0.6);
-    margin-bottom: 10px;
-    height: 130px;
-    width: 100%;
-    bottom: 0;
-}*/
-
-/*#form-input{
-    margin-left: 50px;
-    margin-top: 40px;
-}*/
-
-
-/*#find-Journey{
-    color: white;
-    font-size: 14px;
-    height: 45px;
-    width: 250px;
-    background-color: #0c2864;
-    font-weight: bold;
-}*/
-
-/*#find-Journey:hover {
-    background-color: #0c2850; /* Green */
-    /*color: white;
-}*/
 
 
 
@@ -562,7 +499,6 @@ h6{
 
 .resultHeadings{
 	border-bottom: solid 1px gray;
-	/*text-align: left;*/
 }
 
 h5{
@@ -575,43 +511,6 @@ h5{
     padding: 10px;
     width: 100%;
 }
-/*
-.show-details-result{
-	display: inline;
-}
-
-#journeyPrice1{
-	text-align: left;
-}
-
-#journeyPrice2{
-	text-align: left;
-}
-*/
-
-/*
-#showDetails1, #showDetails2{
-	text-align: right;
-}
-
-#displayResults{
-	margin: auto;
-	min-height: 300px;
-	width: 800px;
-}
-*/
-/*
-.my-individual-result{
-	text-align: left;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    height: 20px;
-}
-
-.show-details-result{
-	margin-top: 10px;
-	text-align: left;
-}*/
 
 
 
@@ -652,7 +551,6 @@ h5{
 #my-ticket-body{
 	margin-bottom: 60px;
 }
-
 
 .my-ticket-heading-container{
 	margin-top: 30px;
@@ -697,6 +595,9 @@ h5{
 .my-profile{
     padding: 15px;
 }
+
+
+
 
 /* tourism.html */
 #tourism_main_container{

@@ -5,7 +5,7 @@
         <meta charset="utf-8"/>
         <title>Map - My Journey</title>
 
-        <!-- Set the page to the width of the device and set the zoom level -->
+        <!-- Required for mobile sizing: Set the page to the width of the device and set the zoom level -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <!-- Bootstrap: Latest compiled and minified CSS -->
@@ -27,6 +27,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.5/css/weather-icons.min.css">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
+		<!-- Loading in static files -->
         {% load staticfiles %}
         <link rel="stylesheet" type="text/css" href="{% static 'dublinbuspredict/css/style.css' %}" />
         <script type="text/javascript" src="{% static 'dublinbuspredict/js/displaySearch.js' %}"></script>
@@ -46,6 +47,7 @@
         </script>
     </head>
     <body onload="loadRoutes()">
+    	<!-- Google Translation -->
         <script type="text/javascript">
     		function googleTranslateElementInit() {
         new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'en,es,fr,it,ja,ko,pt,ru',layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
@@ -91,17 +93,17 @@
                     <a href="/dublinbuspredict/contact" class="w3-bar-item w3-button"><i class="fa fa-phone fa-fw"></i>&nbsp;Contact Us</a>
                 </div>
                 <div id="social-media" class="row col-lg-12 my-social-icons">
-                    <a target="_blank" href="https://twitter.com/" class="col-xs-2 btn btn-social-icon btn-twitter"><span class="fa fa-twitter"></span></a>
-                    <a target="_blank" href="https://facebook.com/" class="col-xs-2 btn btn-social-icon btn-facebook"><span class="fa fa-facebook"></span></a>
-                    <a target="_blank" href="https://instagram.com/" class="col-xs-2 btn btn-social-icon btn-instagram"><span class="fa fa-instagram"></span></a>
-                    <a target="_blank" href="https://linkedin.com/" class="col-xs-2 btn btn-social-icon btn-linkedin"><span class="fa fa-linkedin"></span></a>
-                    <a target="_blank" href="https://googleplus.com/" class="col-xs-2 btn btn-social-icon btn-google"><span class="fa fa-google"></span></a>
+                    <a target="_blank" href="https://twitter.com/dublinbusnews" class="col-xs-2 btn btn-social-icon btn-twitter"><span class="fa fa-twitter"></span></a>
+                    <a target="_blank" href="https://www.facebook.com/DublinBusNews/" class="col-xs-2 btn btn-social-icon btn-facebook"><span class="fa fa-facebook"></span></a>
+                    <a target="_blank" href="https://www.instagram.com/dublinbusnews/?hl=en" class="col-xs-2 btn btn-social-icon btn-instagram"><span class="fa fa-instagram"></span></a>
+                    <a target="_blank" href="https://ie.linkedin.com/company/dublin-bus-bus-tha-cliath" class="col-xs-2 btn btn-social-icon btn-linkedin"><span class="fa fa-linkedin"></span></a>
+                    <a target="_blank" href="https://github.com/LukeO1/summerProject" class="col-xs-2 btn btn-social-icon btn-google"><span class="fa fa-github"></span></a>
                 </div> 
             </div>    
         </div>
 
         <!-- Map Container -->
-        <div class="my-map-form" id="pushed-content">
+        <div class="my-map-form" id="pushed-content" onclick="closeNav()">
             <div class="row"></div>
             	<div id="wrapper">
                 	<div id="map"></div>
@@ -116,7 +118,7 @@
             	</div>
 
             <!-- Inline Forms -->
-            <div class="container-fluid">
+            <div class="container-fluid" onclick="closeNav()">
                 <div class="row">
                     <div class="col-xs-12">
                         <br>
@@ -136,7 +138,6 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <!--<input type="text" class="form-control" placeholder="Select a source">-->
                                     <div class="dropdown">
                                         <input class="form-control" id="search-box-5" oninput="searchFunctionSRC2()" type="text" name="search2" placeholder="Select a source">
                                         <div class="dropdown-content">
@@ -147,7 +148,6 @@
                                 </div>
 
                                 <div class="form-group has-feedback">
-                                    <!--<input type="text" class="form-control" placeholder="Select a destination">-->
                                     <div class="dropdown">
                                         <input class="form-control" id="search-box-6" oninput="searchFunctionDest2()" type="text" name="search2" placeholder="Select a destination">
                                         <span id ='spinner6' style="display:none"><i class="fa fa-refresh fa-spin form-control-feedback" style="line-height: 35px;"></i></span>
@@ -165,7 +165,6 @@
                                 <div class="form-group">
                                     <input class="form-control" type="time" value="" id="example-time-input">
                                 </div>
-                                <!--<button type="submit" class="form-control btn btn-primary">Find Journey</button>-->
                                 <div class="form-group"><button type="button" id="submit-route2" class="form-control btn btn-primary">Find Journey</button></div>
                                 <div class="form-group"><button type="button" id="reset-2" onclick="loadRoutes2()" class="form-control btn btn-primary"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                                 </div>
@@ -225,7 +224,7 @@
             </div>
 
             <!-- Container for all Div Results-->
-            <div class="container">
+            <div class="container" onclick="closeNav()">
                 <div class="row my-result">
                     <div class="col-xs-12">
                         <h4>Results</h4>
@@ -319,8 +318,8 @@
             </div>
         </div>
 
-        <!-- Footer Row -->
-        <div class="container-fluid">
+        <!-- Footer -->
+        <div class="container-fluid" onclick="closeNav()">
             <div class="row">
                 <footer class="fixed-bottom my-new-footer">
                     <div class="row">
