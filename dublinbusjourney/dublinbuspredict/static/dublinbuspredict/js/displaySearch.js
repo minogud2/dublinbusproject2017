@@ -54,7 +54,7 @@ function initMap() {
     console.log('inside map!')
 //	Function to pull in the map
 	map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 14,
+        zoom: 12,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }); //closing map creation	
 
@@ -676,6 +676,7 @@ function displayPredictionSchedule(bus, busNum, stops){
     
     console.log("this is number of stops",no_stops)
     console.log("this is stops", stops.length)
+    
     // Calculate the cost section for the trip.
     if (stops.length < 4) {
       $('#journeyPrice'+busNum).append("<b>Adult:</b> €2.00" + "<br>");

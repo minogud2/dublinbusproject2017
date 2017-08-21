@@ -81,7 +81,7 @@ def pilot_routes(request):
     # print("queryyyy", query)
     cursor.execute(query)
     trip_list = cursor.fetchall()
-    print(trip_list)
+#     print(trip_list)
     trip_count_in = 0
     trip_count_out = 0
     trip_inbound = 0
@@ -91,13 +91,13 @@ def pilot_routes(request):
             if i[1] > trip_count_in:
                 trip_inbound = i[0]
                 trip_count_in = i[1]
-                print('IN:', trip_inbound, trip_count_in)
+#                 print('IN:', trip_inbound, trip_count_in)
         elif i[2] == 0:
             if i[1] > trip_count_out:
                 trip_outbound = i[0]
                 trip_count_out = i[1]
-                print('OUT:', trip_outbound, trip_count_out)
-    print(trip_inbound, trip_outbound)
+#                 print('OUT:', trip_outbound, trip_count_out)
+#     print(trip_inbound, trip_outbound)
     query = "SELECT bus_timetable.stop_id, bus_timetable.trip_id " \
             "FROM bus_timetable " \
             "WHERE bus_timetable.trip_id ='" + str(trip_inbound) + "' or bus_timetable.trip_id='" + str(trip_outbound) + "' " \
@@ -113,7 +113,7 @@ def pilot_dest(request):
     route_id = request.GET.get('route')
     global direction, stops_origin_1, stops_destination_1
     trip_id = 0
-    print('ori', stops_origin_1)
+#     print('ori', stops_origin_1)
     for i in stops_origin_1:
         if str(i[0]) == str(source_id):
             trip_id = str(i[1])
@@ -136,7 +136,7 @@ def pilot_dest(request):
         if found:
             stops.append(i)
     stops_destination_1 = stops
-    print('Bus stops for maps!', stops)
+#     print('Bus stops for maps!', stops)
     return HttpResponse(json.dumps({"stops":stops}), content_type='application/json')
 
 def run_model(request):
@@ -150,7 +150,7 @@ def run_model(request):
     destination_id = request.GET.get('destination')
     direction = request.GET.get('direction')
     position = request.GET.get('position')
-    print('inside run model:', route_id, source_id, destination_id, direction, position)
+#     print('inside run model:', route_id, source_id, destination_id, direction, position)
     # buses = locate_bus.get_buses(route_id, source_id)
     # print(buses)
     # direction = 0
@@ -162,16 +162,16 @@ def run_model(request):
     #     print(i)
     #     for_js.append(project_central.main(route_id, source_id, destination_id, direction, i))
     for_js.append(project_central.main(route_id, source_id, destination_id, direction, position))
-    print('Got this from the model!', for_js)
+#     print('Got this from the model!', for_js)
     return HttpResponse(json.dumps({'info_buses': for_js, 'info_stops': stops_destination_1}), content_type='application/json')
 
 
 def get_number_buses(request):
-    print('In the buses!')
+#     print('In the buses!')
     route_id = request.GET.get('route')
     source_id = request.GET.get('source')
     buses = locate_bus.get_buses(route_id, source_id)
-    print('Got buses:', buses)
+#     print('Got buses:', buses)
     if buses != []:
         direction = buses[0]['direction']
         return HttpResponse(json.dumps({'buses': len(buses), 'direction': direction}), content_type='application/json')
@@ -186,7 +186,7 @@ def set_info_next_page(request):
     destination_id = request.GET.get('destination')
     time = request.GET.get('time')
     date = request.GET.get('date')
-    print('Info was set:', route_id, source_id, destination_id, time,date)
+#     print('Info was set:', route_id, source_id, destination_id, time,date)
     return HttpResponse(json.dumps({'ok':'ok'}), content_type='application/json')
 
 
@@ -240,20 +240,20 @@ def run_planner(request):
     if busNumber == 0:
         bus = bus1
         stops = stops1
-        print('ARGHHHHH1:', bus1, stops1)
+#         print('ARGHHHHH1:', bus1, stops1)
         busNumber += 1
     elif busNumber == 1:
         bus = bus2
         stops = stops2
-        print('ARGHHHHH2:', bus2, stops2)
+#         print('ARGHHHHH2:', bus2, stops2)
         busNumber += 1
     elif busNumber == 2:
         bus = bus3
         stops = stops3
-        print('ARGHHHHH3:', bus3, stops3)
+#         print('ARGHHHHH3:', bus3, stops3)
         busNumber += 1
-    print('This is the request:', request)
-    print('Data for the model planner:', route_id, source_id, destination_id, date, time, bus[0], stops)
+#     print('This is the request:', request)
+#     print('Data for the model planner:', route_id, source_id, destination_id, date, time, bus[0], stops)
     # new_info_buses = time_date.time_date(route_id, source_id, destination_id, date, time, direction)
     new_info_buses = time_date.time_date(route_id, source_id, destination_id, date, time, direction, stops, bus)
     return HttpResponse(json.dumps({'info_buses': new_info_buses, 'stops':stops}), content_type='application/json')
@@ -277,8 +277,8 @@ def sampleQuery(rows):
     # Connect to database using these credentials.
     global route_id, source_id, destination_id, stops_destination_1
     global direction
-    print('Route:', route_id)
-    print('direction:', direction)
+#     print('Route:', route_id)
+#     print('direction:', direction)
     # trip_id = 0
     #
     # for i in stops_origin_1:
@@ -301,17 +301,17 @@ def sampleQuery(rows):
 
 def get_stops_starting_from_source(request):
     source_id = request.GET.get('source')
-    print('Running:', source_id)
+#     print('Running:', source_id)
     db = MySQLdb.connect(user='lucas', db='summerProdb', passwd='hello_world', host='csi6220-3-vm3.ucd.ie')
     cursor = db.cursor()
-    print('past the cursor')
+#     print('past the cursor')
     cursor.execute("select distinct(route_id), direction "
                    "from summerProdb.bus_timetable where stop_id ='" + str(source_id) + "';")
     rows = cursor.fetchall()
-    print('Fist query:', rows)
+#     print('Fist query:', rows)
     stops = []
     getting_stops = []
-    print('past the fetchall')
+#     print('past the fetchall')
     for i in rows:
         cursor.execute("select distinct(stop_id) from summerProdb.bus_timetable where route_id='" + str(i[0]) + "' and direction='"+ str(i[1]) + "';")
         result = cursor.fetchall()
@@ -333,26 +333,26 @@ def get_stops_dest_extra_route(request):
     dest_id = request.GET.get('dest')
     db = MySQLdb.connect(user='lucas', db='summerProdb', passwd='hello_world', host='csi6220-3-vm3.ucd.ie')
     cursor = db.cursor()
-    print('past the cursor')
+#     print('past the cursor')
     cursor.execute("select distinct(route_id) "
                    "from summerProdb.bus_timetable where stop_id ='" + str(source_id) + "';")
     rows = cursor.fetchall()
     routes = []
     for i in rows:
         routes.append(i[0])
-    print('routes:', routes)
+#     print('routes:', routes)
     cursor.execute("select distinct(route_id) "
                    "from summerProdb.bus_timetable where stop_id='" + str(dest_id) + "'order by bus_timetable.route_id + 0;")
     rows2 = cursor.fetchall()
     routes2 = []
     for i in rows2:
         routes2.append(i[0])
-    print('routes 2:', routes2)
+#     print('routes 2:', routes2)
     routes3 = []
     for i in routes:
         if i in routes2:
             routes3.append(i)
-    print('routes 3:', routes3)
+#     print('routes 3:', routes3)
     return HttpResponse(json.dumps({'routes': routes3}), content_type="application/json")
 
 def run_queries(request):
@@ -367,7 +367,7 @@ def run_queries(request):
     stops2 = list_stops[2]
     stops3 = list_stops[3]
     busNumber = 0
-    print('AYAAA:', list_stops)
+#     print('AYAAA:', list_stops)
     return HttpResponse(json.dumps({'list_stops': list_stops,'stops':stops_destination_1}), content_type="application/json")
 
 # Function for loading basic tourist page info

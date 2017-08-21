@@ -11,7 +11,7 @@ def get_stop_list(route, direction, dest):
         direction = 1
     elif direction == 'Outbound':
         direction = 0
-    print(route, direction, dest)
+#     print(route, direction, dest)
     db = pymysql.connect(user='lucas', db='summerProdb', passwd='hello_world', host='csi6220-3-vm3.ucd.ie')
     cursor = db.cursor()
     query = "SELECT bus_timetable.trip_id " \
@@ -89,7 +89,7 @@ def get_buses(route_id, source_id):
         first_3_buses.append({'duetime':i['duetime'], 'scheduledarrivaldatetime':i['scheduledarrivaldatetime'], 'arrivaldatetime':i['arrivaldatetime'],
                               'direction':i['direction'], 'origin':i['origin'], 'destination':i['destination'], 'order':counter})
         counter += 1
-    print(first_3_buses)
+#     print(first_3_buses)
     return first_3_buses
 
 if __name__ == '__main__':
@@ -99,6 +99,6 @@ if __name__ == '__main__':
     buses = get_buses(route, source)
     direction = buses[0]['direction']
     # list_stops = get_stop_list(route, direction, dest)
-    for i in range(len(buses)):
-        print(central(route, source, dest, direction, i))
-        print('\n\n\n\n\n<<<<<<<<<<<------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+#     for i in range(len(buses)):
+#         print(central(route, source, dest, direction, i))
+#         print('\n\n\n\n\n<<<<<<<<<<<------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')

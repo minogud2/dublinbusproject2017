@@ -121,7 +121,7 @@
                                 <div class="form-group">
                                     {% load static %}
                                     <div class="dropdown has-feedback">
-                                        <input class="form-control" id="search-box-4" oninput="searchFunctionRoute2()" type="text" name="search" placeholder="Enter a route">
+                                        <input class="form-control" id="search-box-4" data-toggle="dropdown" oninput="searchFunctionRoute2()" type="text" name="search" placeholder="Enter a route">
                                         <div class="dropdown-content">
                                             <ul class="dropdown-list" id ="dropdown-list-4">
                                             </ul>
@@ -131,7 +131,7 @@
 
                                 <div class="form-group">
                                     <div class="dropdown">
-                                        <input class="form-control" id="search-box-5" oninput="searchFunctionSRC2()" type="text" name="search2" placeholder="Select a source">
+                                        <input class="form-control" id="search-box-5" data-toggle="dropdown" oninput="searchFunctionSRC2()" type="text" name="search2" placeholder="Select a source">
                                         <div class="dropdown-content">
                                             <ul class="dropdown-list" id="dropdown-list-5">
                                             </ul>
@@ -141,7 +141,7 @@
 
                                 <div class="form-group has-feedback">
                                     <div class="dropdown">
-                                        <input class="form-control" id="search-box-6" oninput="searchFunctionDest2()" type="text" name="search2" placeholder="Select a destination">
+                                        <input class="form-control" id="search-box-6" data-toggle="dropdown" oninput="searchFunctionDest2()" type="text" name="search2" placeholder="Select a destination">
                                         <span id ='spinner6' style="display:none"><i class="fa fa-refresh fa-spin form-control-feedback" style="line-height: 35px;"></i></span>
                                         <div class="dropdown-content">
                                             <ul class="dropdown-list" id="dropdown-list-6">
@@ -149,7 +149,12 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <!-- Toggle dropdown menus based on click-->
+                                <script>
+                              	$('.dropdown-menu a').on('click', function(){    
+								    $('.dropdown-toggle').html($(this).html());    
+								})
+								</script>
                                 <div class="form-group">
                                     <input class="form-control" type="date" value="" id="example-date-input">
                                 </div>      

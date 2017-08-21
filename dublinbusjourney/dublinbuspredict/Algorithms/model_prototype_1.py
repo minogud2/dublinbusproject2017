@@ -26,8 +26,6 @@ def model(bus_route, stopid, arrival_time, day, p_holiday, s_holiday, rtr, trip_
     # 1 request the lon and lat from a query in sql based on the stop id.
     db = pymysql.connect(user='lucas', db='summerProdb', passwd='hello_world', host='csi6220-3-vm3.ucd.ie')
     cursor = db.cursor()
-    print(trip_id)
-    print(stopid)
     # if day < 5:
     #     d = 'business_day'
     # elif day == 5:
@@ -47,19 +45,14 @@ def model(bus_route, stopid, arrival_time, day, p_holiday, s_holiday, rtr, trip_
                    '" AND bus_timetable.stop_id = "' + str(stopid) + \
                    '" ORDER BY bus_timetable.stop_sequence;')
     rows3 = cursor.fetchall()
-    print(rows3)
-    print("This is LAT")
-    print("THIS IS LON")
+
     lat = rows3[0][3]
     lon = rows3[0][5]
-    print("This is LAT", lat)
-    print("THIS IS LON", lon)
+
     dist_nxt_stop = rows3[0][4]
-    print("DISTANCE NEXT STOP",dist_nxt_stop)
+
     global direction
     direction = rows3[0][1]
-    print("THIS IS DIRECTION",direction)
-
     # 2 convert your arrival time to an integer. Arrival time needs to be replaced with your time variable.
     arrival_time = parser.parse(arrival_time)
     new_arrival_time = (arrival_time.hour*3600) + (arrival_time.minute*60) + (arrival_time.second)
@@ -95,10 +88,6 @@ def model(bus_route, stopid, arrival_time, day, p_holiday, s_holiday, rtr, trip_
     input_data = input_data.loc[:, cols]
     
     # 4 load in the model.
-
-#      with open("C:\\Users\\minogud2\\BusLightyear\\cleaning\\trained_modelv9.pkl", "rb") as f:
-#     rtr = joblib.load(f)
-
 
     # 5 predict the delay based on the input.
     predict_duration = rtr.predict(input_data)
