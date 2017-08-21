@@ -59,8 +59,6 @@
                             <a href="#" class="custom-white" style="cursor:pointer"  onclick="openNav()">
                                 <span class="glyphicon glyphicon-menu-hamburger"></span>
                             </a></li>
-                           <li class="navbar-center" > 
-
                         {% load static %}
                         <li class="navbar-right">
                         <!-- Google Translation -->
@@ -93,8 +91,9 @@
         </div>
 
 		<!-- Main container for Map and Lists -->
-        <div class="container-fluid" id="tourism_main_container" onclick="closeNav()">
+        <div class="container-fluid" onclick="closeNav()">
             <div class="row">
+            <div id="tourism_main_container">
                 <div class="col-lg-8" id="map_tourism"></div>
                 <div class="col-lg-4" onclick="closeNav()">
                 	<div id="floating-panel" class="hidden-xs">
@@ -152,6 +151,7 @@
                   	</div>
         		</div>
         	</div>
+      	</div>
       	</div>
                 
         

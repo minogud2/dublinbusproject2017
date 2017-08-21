@@ -19,6 +19,9 @@
 
         <!-- Font for side navbar Awesome CDN Source: http://fontawesome.io/ -->
         <script src="https://use.fontawesome.com/e8a4c811a1.js"></script>
+        
+         <!-- Link to jQuery libraries -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
         <!-- Font awesome loading/spinner icon-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -50,8 +53,6 @@
                             <a href="#" class="custom-white" style="cursor:pointer"  onclick="openNav()">
                                 <span class="glyphicon glyphicon-menu-hamburger"></span>
                             </a></li>
-                           <li class="navbar-center" > 
-
                         {% load static %}
                         <li class="navbar-right">
                         <!-- Google Translation -->
@@ -133,7 +134,7 @@
                             <div class="form-group">
                                 {% load static %}
                                 <div class="form-group dropdown has-feedback">
-                                    <input class="form-control" id="search-box-1" data-toggle="dropdown" oninput="searchFunctionRoute()" type="text" name="search" placeholder="Enter a route">
+                                    <input class="form-control main" data-toggle="dropdown" id="search-box-1" oninput="searchFunctionRoute()" type="text" name="search" placeholder="Enter a route">
                                     <span id ='spinner1' style="display:none"><i class="fa fa-refresh fa-spin form-control-feedback" style="line-height: 35px;"></i></span>
                                     <div class="dropdown-content">
                                         <ul class="dropdown-list" id ="dropdown-list-1">
@@ -143,9 +144,9 @@
                                         </ul>
                                     </div>  
                                 </div>
-
+                                
                                 <div class="form-group dropdown has-feedback">
-                                    <input  class="form-control" id="search-box-2" data-toggle="dropdown" onkeyup="newSearch()" type="text" name="search2" placeholder="Select a stop">
+                                    <input  class="form-control main" data-toggle="dropdown" id="search-box-2" onkeyup="newSearch()" type="text" name="search2" placeholder="Select a stop">
                                     <span id ='spinner2' style="display:none"><i class="fa fa-refresh fa-spin form-control-feedback" style="line-height: 35px;"></i></span>
                                     <div class="dropdown-content">
                                         <ul class="dropdown-list" id="dropdown-list-2">
@@ -154,7 +155,7 @@
                               	</div>
 
                                 <div class="form-group dropdown has-feedback">
-                                    <input class="form-control" id="search-box-3" data-toggle="dropdown" oninput="searchFunctionDest()" type="text" name="search2" placeholder="">
+                                    <input class="form-control main" id="search-box-3" data-toggle="dropdown" oninput="searchFunctionDest()" type="text" name="search2" placeholder="Select a destination">
                                     <span id ='spinner3' style="display:none"><i class="fa fa-refresh fa-spin form-control-feedback" style="line-height: 35px;"></i></span>
                                     <div class="dropdown-content">
                                         <ul class="dropdown-list" id="dropdown-list-3"></ul>
@@ -170,12 +171,15 @@
                                 <div class="form-group">
                                     <input class="form-control" type="text" id="date-input-index" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Today">
                                 </div>
+                                
+
 
                                 <div class="form-group">
                                     <input class="form-control" type="text" id="time-input-index" onfocus="(this.type='time')" onblur="(this.type='text')" placeholder="Now">
                                 </div>
-                                <div class="form-group"><button type="button" id="submit-route" onclick="window.location='http://127.0.0.1:8000/dublinbuspredict/map';" class="form-control btn btn-primary">Find Journey</button></div>
+                                <div class="form-group"><button type="button" id="submit-route" onclick="window.location='http://127.0.0.1:8000/dublinbuspredict/map';" class="form-control btn btn-primary" disabled>Find Journey</button></div>
                                 <div class="form-group"><button type="button" id="reset-1" onclick="loadRoutes()" class="form-control btn btn-primary"><i class="fa fa-refresh" aria-hidden="true"></i></button></div>
+  
                                 <script>
                                     document.getElementById("submit-route").addEventListener("click", function(){
                                         route = document.getElementById("search-box-1").value;
@@ -185,6 +189,8 @@
                                         time = document.getElementById("time-input-index").value;
                                         $.getJSON("http://127.0.0.1:8000/dublinbuspredict/setInfoNextPage", {"route":route, "source":source, "destination":destination, "time":time, "date":date}, function(d) {});
                                     });
+                                    
+                                  
 
                                 </script>
                                 </div>
