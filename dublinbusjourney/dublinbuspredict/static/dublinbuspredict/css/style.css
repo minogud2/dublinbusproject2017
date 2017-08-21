@@ -270,6 +270,7 @@ html.translated-ltr body nav.navbar.navbar-default.navbar-fixed-top {
 }
 
 ul {
+	text-align: left;
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -277,19 +278,24 @@ ul {
 
 .dropdown-content a {
     color: black;
+    text-align: left;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
 }
 
-.dropdown-content a:hover {background-color: #f1f1f1}
+.dropdown-content a:hover {
+	background-color: #f1f1f1
+	}
 
-.dropdown:hover .dropdown-content {
+.dropdown.open .dropdown-content {
+	width: 100%;
     display: block;
 }
 
-.dropdown:hover .dropbtn {
-    background-color: #3e8e41;
+.btn.btn-primary[disabled] {
+	background-color: #004C99;
+    color: white;
 }
 
 #resultArray0{

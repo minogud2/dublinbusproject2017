@@ -54,7 +54,7 @@ function initMap() {
     console.log('inside map!')
 //	Function to pull in the map
 	map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 14,
+        zoom: 12,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }); //closing map creation	
 
@@ -424,6 +424,15 @@ function getStopsDest2(source) {
 
 function getStopsDestExtra2(stop){
     document.getElementById("search-box-6").value = stop;
+    
+    // Enable button once route, source and destination are input
+	var routeInput = document.getElementById("search-box-4").value;
+	var sourceInput = document.getElementById("search-box-5").value;
+	var destInput = document.getElementById("search-box-6").value;
+	
+	if (routeInput !='' && sourceInput !='' && sourceInput !=''){
+		document.getElementById("submit-route2").disabled = false;
+	}    
 }
 
 function searchFunctionDest2() {
@@ -478,6 +487,15 @@ function getStopsDestExtraRoute2(route){
 
 function getExtraRoute2(route){
     document.getElementById("search-box-4").value = route;
+    
+    // Enable button once route, source and destination are input
+	var routeInput = document.getElementById("search-box-4").value;
+	var sourceInput = document.getElementById("search-box-5").value;
+	var destInput = document.getElementById("search-box-6").value;
+	
+	if (routeInput !='' && sourceInput !='' && sourceInput !=''){
+		document.getElementById("submit-route2").disabled = false;
+	}
 }
 
 function loadRoutes2(){
@@ -676,6 +694,7 @@ function displayPredictionSchedule(bus, busNum, stops){
     
     console.log("this is number of stops",no_stops)
     console.log("this is stops", stops.length)
+    
     // Calculate the cost section for the trip.
     if (stops.length < 4) {
       $('#journeyPrice'+busNum).append("<b>Adult:</b> €2.00" + "<br>");

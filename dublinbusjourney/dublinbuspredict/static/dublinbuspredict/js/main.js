@@ -2,6 +2,7 @@ window.onload = function(){
     openNav();
     closeNav();
     googleTranslateElementInit();
+    clickForms();
 };
 
 // functions for opening and closing navbar
@@ -17,6 +18,7 @@ function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
 }
 
+
 //functions to load in google language bar
 function googleTranslateElementInit() {
     new google.translate.TranslateElement({pageLanguage: 'en', 
@@ -28,31 +30,33 @@ function googleTranslateElementInit() {
 // function for loading in twitter data from python script for AA roadwatch. 
 // The last 9 tweets displayed from the account.
 function loadTwitter(){
-    var text = $.getJSON("http://127.0.0.1:8000/dublinbuspredict/getTwitterText", null, function(d) {
-    for (i = 0; i < 10; i++){
-    	var twitterText = d['text'][i];
-    	if (typeof twitterText !== 'undefined'){
-    		if (twitterText.includes("https")){
-    			console.log("Twitter Text",twitterText)
-    		var https_find = twitterText.indexOf("https")
-    		twitterText=twitterText.substring(0,https_find)
-    		twitterText=twitterText.substring(0,twitterText.lastIndexOf(".")+1)
-	    	var twitterTime=d['create_time'][i]
-    		var length = twitterTime.length
-	        twitterTime=twitterTime.substring(0,length-10)
-	        document.getElementById('tweet'+(i+1)).innerHTML = "<b><i class='fa fa-twitter fa-fw'></i>&nbsp;Update:&nbsp;</b>" 
-	        	+twitterTime+"<br><br>"+twitterText;
-    		}
-    		else{
-    			console.log("Twitter Text outside",twitterText)
-        		twitterText=twitterText.substring(0,twitterText.lastIndexOf(".")+1)
-    	    	var twitterTime=d['create_time'][i]
-        		var length = twitterTime.length
-    	        twitterTime=twitterTime.substring(0,length-10)
-    	        document.getElementById('tweet'+(i+1)).innerHTML = "<b><i class='fa fa-twitter fa-fw'></i>&nbsp;Update:&nbsp;</b>" 
-    	        	+twitterTime+"<br><br>"+twitterText;
-    		}
-    	}	    	
-    }
-    }
-  )};                
+	   var text = $.getJSON("http://127.0.0.1:8000/dublinbuspredict/getTwitterText", null, function(d) {
+	   for (i = 0; i < 10; i++){
+	       var twitterText = d['text'][i];
+	       if (typeof twitterText !== 'undefined'){
+	           if (twitterText.includes("http")){
+	               console.log("Twitter Text",twitterText)
+	           var https_find = twitterText.indexOf("http")
+	           twitterText=twitterText.substring(0,https_find)
+	           if(twitterText.lastIndexOf(".") !==-1)
+	               //console.log("number",twitterText.lastIndexOf("."))
+	               twitterText=twitterText.substring(0,twitterText.lastIndexOf(".")+1)
+	            var twitterTime=d['create_time'][i]
+	           var length = twitterTime.length
+	            twitterTime=twitterTime.substring(0,length-10)
+	            document.getElementById('tweet'+(i+1)).innerHTML = "<b><i class='fa fa-twitter fa-fw'></i>&nbsp;Update:&nbsp;</b>" 
+	                +twitterTime+"<br><br>"+twitterText;
+	           }
+	           else{
+	               console.log("Twitter Text outside",twitterText)
+	               twitterText=twitterText.substring(0,twitterText.lastIndexOf(".")+1)
+	               var twitterTime=d['create_time'][i]
+	               var length = twitterTime.length
+	               twitterTime=twitterTime.substring(0,length-10)
+	               document.getElementById('tweet'+(i+1)).innerHTML = "<b><i class='fa fa-twitter fa-fw'></i>&nbsp;Update:&nbsp;</b>"
+	                   +twitterTime+"<br><br>"+twitterText;
+	           }
+	       }            
+	   }
+	   }
+	 )};
