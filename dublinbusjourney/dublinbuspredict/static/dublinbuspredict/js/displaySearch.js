@@ -424,6 +424,15 @@ function getStopsDest2(source) {
 
 function getStopsDestExtra2(stop){
     document.getElementById("search-box-6").value = stop;
+    
+    // Enable button once route, source and destination are input
+	var routeInput = document.getElementById("search-box-4").value;
+	var sourceInput = document.getElementById("search-box-5").value;
+	var destInput = document.getElementById("search-box-6").value;
+	
+	if (routeInput !='' && sourceInput !='' && sourceInput !=''){
+		document.getElementById("submit-route2").disabled = false;
+	}    
 }
 
 function searchFunctionDest2() {
@@ -478,6 +487,15 @@ function getStopsDestExtraRoute2(route){
 
 function getExtraRoute2(route){
     document.getElementById("search-box-4").value = route;
+    
+    // Enable button once route, source and destination are input
+	var routeInput = document.getElementById("search-box-4").value;
+	var sourceInput = document.getElementById("search-box-5").value;
+	var destInput = document.getElementById("search-box-6").value;
+	
+	if (routeInput !='' && sourceInput !='' && sourceInput !=''){
+		document.getElementById("submit-route2").disabled = false;
+	}
 }
 
 function loadRoutes2(){

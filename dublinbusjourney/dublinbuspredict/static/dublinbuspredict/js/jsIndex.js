@@ -64,14 +64,13 @@ function getStopsDest(source) {
 
 function getStopsDestExtra(stop){
     document.getElementById("search-box-3").value = stop;   
-	var validate = false;
-	
+    
+ // Enable button once route, source and destination are input
 	var routeInput = document.getElementById("search-box-1").value;
 	var sourceInput = document.getElementById("search-box-2").value;
 	var destInput = document.getElementById("search-box-3").value;
 	
 	if (routeInput !='' && sourceInput !='' && sourceInput !=''){
-		validate = true;
 		document.getElementById("submit-route").disabled = false;
 	}
 }
@@ -129,14 +128,13 @@ function getStopsDestExtraRoute(route){
 
 function getExtraRoute(route){
 	document.getElementById("search-box-1").value = route;
-	var validate = false;
 	
+	// Enable button once route, source and destination are input
 	var routeInput = document.getElementById("search-box-1").value;
 	var sourceInput = document.getElementById("search-box-2").value;
 	var destInput = document.getElementById("search-box-3").value;
 	
 	if (routeInput !='' && sourceInput !='' && sourceInput !=''){
-		validate = true;
 		document.getElementById("submit-route").disabled = false;
 	}
 }
