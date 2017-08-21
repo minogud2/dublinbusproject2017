@@ -118,7 +118,8 @@
                                 <div class="form-group">
                                     {% load static %}
                                     <div class="dropdown has-feedback">
-                                        <input class="form-control" id="search-box-4" oninput="searchFunctionRoute2()" type="text" name="search" placeholder="Enter a route">
+                                        <input class="form-control" id="search-box-4" data-toggle="dropdown" oninput="searchFunctionRoute2()" type="text" name="search" placeholder="Enter a route">
+                                        <span id ='spinner4' style="display:none"><i class="fa fa-refresh fa-spin form-control-feedback" style="line-height: 35px;"></i></span>
                                         <div class="dropdown-content">
                                             <ul class="dropdown-list" id ="dropdown-list-4">
                                             </ul>
@@ -128,7 +129,8 @@
 
                                 <div class="form-group">
                                     <div class="dropdown">
-                                        <input class="form-control" id="search-box-5" oninput="searchFunctionSRC2()" type="text" name="search2" placeholder="Select a source">
+                                        <input class="form-control" id="search-box-5" data-toggle="dropdown" onkeyup="newSearch2()" type="text" name="search2" placeholder="Select a source">
+                                        <span id ='spinner5' style="display:none"><i class="fa fa-refresh fa-spin form-control-feedback" style="line-height: 35px;"></i></span>
                                         <div class="dropdown-content">
                                             <ul class="dropdown-list" id="dropdown-list-5">
                                             </ul>
@@ -138,7 +140,7 @@
 
                                 <div class="form-group has-feedback">
                                     <div class="dropdown">
-                                        <input class="form-control" id="search-box-6" oninput="searchFunctionDest2()" type="text" name="search2" placeholder="Select a destination">
+                                        <input class="form-control" id="search-box-6" data-toggle="dropdown" oninput="searchFunctionDest2()" type="text" name="search2" placeholder="">
                                         <span id ='spinner6' style="display:none"><i class="fa fa-refresh fa-spin form-control-feedback" style="line-height: 35px;"></i></span>
                                         <div class="dropdown-content">
                                             <ul class="dropdown-list" id="dropdown-list-6">
@@ -147,6 +149,12 @@
                                     </div>
                                 </div>
 
+                                <!-- Toggle dropdown menus based on click-->
+                                <script>
+                                    $('.dropdown-menu a').on('click', function(){
+                                        $('.dropdown-toggle').html($(this).html());
+                                    })
+								</script>
                                 <div class="form-group">
                                     <input class="form-control" type="date" value="" id="example-date-input">
                                 </div>      
@@ -154,25 +162,25 @@
                                 <div class="form-group">
                                     <input class="form-control" type="time" value="" id="example-time-input">
                                 </div>
-                                <div class="form-group"><button type="button" id="submit-route2" class="form-control btn btn-primary">Find Journey</button></div>
+                                <div class="form-group"><button type="button" id="submit-route2" onclick="window.location='http://127.0.0.1:8000/dublinbuspredict/map';" class="form-control btn btn-primary">Find Journey</button></div>
                                 <div class="form-group"><button type="button" id="reset-2" onclick="loadRoutes2()" class="form-control btn btn-primary"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                                 </div>
                                 <script>
-                                    function setDefault(){
-                                        var b = $.getJSON("http://127.0.0.1:8000/dublinbuspredict/getInfoNextPage", null,
-                                                          function(d) {
-                                            route = d['route'];
-                                            source = d['source'];
-                                            destination = d['destination'];
-                                            var RouteID = document.querySelector("#search-box-4");
-                                            RouteID.value = route;
-                                            var SourceID =document.querySelector("#search-box-5");
-                                            SourceID.value = source;
-                                            var DestinationID =document.querySelector("#search-box-6");
-                                            DestinationID.value = destination;
-                                        })
-                                        }
-                                    setDefault();
+                                    <!--function setDefault(){-->
+                                        <!--var b = $.getJSON("http://127.0.0.1:8000/dublinbuspredict/getInfoNextPage", null,-->
+                                                          <!--function(d) {-->
+                                            <!--route = d['route'];-->
+                                            <!--source = d['source'];-->
+                                            <!--destination = d['destination'];-->
+                                            <!--var RouteID = document.querySelector("#search-box-4");-->
+                                            <!--RouteID.value = route;-->
+                                            <!--var SourceID =document.querySelector("#search-box-5");-->
+                                            <!--SourceID.value = source;-->
+                                            <!--var DestinationID =document.querySelector("#search-box-6");-->
+                                            <!--DestinationID.value = destination;-->
+                                        <!--})-->
+                                        <!--}-->
+                                    <!--setDefault();-->
 
                                     document.getElementById("submit-route2").addEventListener("click", function(){
                                         route = document.getElementById("search-box-4").value;
@@ -188,20 +196,23 @@
                                         document.getElementById("journeyTime0").innerHTML = "";
                                         document.getElementById("journeyPrice0").innerHTML = "";
                                         document.getElementById("distance0").innerHTML = "";
+                                        document.getElementById("spinner-result-0").style.display = 'none';
                                         document.getElementById("resultArray1").style.display = 'none';
                                         document.getElementById("ulOutput1").innerHTML = "";
                                         document.getElementById("dueTime1").innerHTML = "";
                                         document.getElementById("journeyTime1").innerHTML = "";
                                         document.getElementById("journeyPrice1").innerHTML = "";
                                         document.getElementById("distance1").innerHTML = "";
+                                        document.getElementById("spinner-result-1").style.display = 'none';
                                         document.getElementById("resultArray2").style.display = 'none';
                                         document.getElementById("ulOutput2").innerHTML = "";
                                         document.getElementById("dueTime2").innerHTML = "";
                                         document.getElementById("journeyTime2").innerHTML = "";
                                         document.getElementById("journeyPrice2").innerHTML = "";
                                         document.getElementById("distance2").innerHTML = "";
+                                        document.getElementById("spinner-result-2").style.display = 'none';
                                         $.getJSON("http://127.0.0.1:8000/dublinbuspredict/setInfoNextPage", {"route":route, "source":source, "destination":destination, "time":time, "date":date}, function() {
-                                            initMap()
+                                            <!--initMap()-->
                                             loadRoutes()
                                         });
                                     });

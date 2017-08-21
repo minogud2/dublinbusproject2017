@@ -40,7 +40,7 @@
 		</style>
     </head>
 
-	<body onload="loadTwitter()">
+	<body onload="loadOrigin();loadTwitter()">
         <!-- Container for both Navbar and Side-Navbar -->
         <div class="container-fluid">
             <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -133,7 +133,7 @@
                             <div class="form-group">
                                 {% load static %}
                                 <div class="form-group dropdown has-feedback">
-                                    <input class="form-control" id="search-box-1" oninput="searchFunctionRoute()" type="text" name="search" placeholder="Enter a route">
+                                    <input class="form-control" id="search-box-1" data-toggle="dropdown" oninput="searchFunctionRoute()" type="text" name="search" placeholder="Enter a route">
                                     <span id ='spinner1' style="display:none"><i class="fa fa-refresh fa-spin form-control-feedback" style="line-height: 35px;"></i></span>
                                     <div class="dropdown-content">
                                         <ul class="dropdown-list" id ="dropdown-list-1">
@@ -145,7 +145,7 @@
                                 </div>
 
                                 <div class="form-group dropdown has-feedback">
-                                    <input  class="form-control" id="search-box-2" onkeyup="newSearch()" type="text" name="search2" placeholder="Select a stop">
+                                    <input  class="form-control" id="search-box-2" data-toggle="dropdown" onkeyup="newSearch()" type="text" name="search2" placeholder="Select a stop">
                                     <span id ='spinner2' style="display:none"><i class="fa fa-refresh fa-spin form-control-feedback" style="line-height: 35px;"></i></span>
                                     <div class="dropdown-content">
                                         <ul class="dropdown-list" id="dropdown-list-2">
@@ -154,13 +154,19 @@
                               	</div>
 
                                 <div class="form-group dropdown has-feedback">
-                                    <input class="form-control" id="search-box-3" oninput="searchFunctionDest()" type="text" name="search2" placeholder="Select a destination">
+                                    <input class="form-control" id="search-box-3" data-toggle="dropdown" oninput="searchFunctionDest()" type="text" name="search2" placeholder="">
                                     <span id ='spinner3' style="display:none"><i class="fa fa-refresh fa-spin form-control-feedback" style="line-height: 35px;"></i></span>
                                     <div class="dropdown-content">
                                         <ul class="dropdown-list" id="dropdown-list-3"></ul>
                                     </div>
                                 </div>
 
+                                <!-- Toggle dropdown menus based on click-->
+                                <script>
+                                    $('.dropdown-menu a').on('click', function(){
+                                        $('.dropdown-toggle').html($(this).html());
+                                    })
+								</script>
                                 <div class="form-group">
                                     <input class="form-control" type="text" id="date-input-index" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Today">
                                 </div>

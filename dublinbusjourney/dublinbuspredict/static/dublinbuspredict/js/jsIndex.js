@@ -85,14 +85,14 @@ function searchFunctionDest() {
 function getStopsStartingFromSource(stop){
     console.log('Stop is', stop)
     document.getElementById("search-box-2").value = stop
+    document.getElementById("dropdown-list-1").innerHTML = "";
+    document.getElementById("search-box-1").value = "";
+    document.getElementById("dropdown-list-3").innerHTML = "";
+    document.getElementById("search-box-3").value = "";
     document.getElementById('spinner3').style.display = 'block';
     console.log('Display;', document.getElementById('spinner3').style.display)
     $.getJSON("http://127.0.0.1:8000/dublinbuspredict/getStopsStartingFromSource", {"source":stop}, function(d) {
         console.log(d)
-        document.getElementById("dropdown-list-1").innerHTML = "";
-        document.getElementById("search-box-1").value = "";
-        document.getElementById("dropdown-list-3").innerHTML = "";
-        document.getElementById("search-box-3").value = "";
         $.each(d['stops'], function(i, p) {
             $('#dropdown-list-3').append($('<li></li>').val(p).html('<a onclick=getStopsDestExtraRoute(' + p + ')>'+ p + '</a>'));
         });
@@ -104,14 +104,15 @@ function getStopsStartingFromSource(stop){
 function getStopsDestExtraRoute(route){
     document.getElementById("search-box-3").value = route;
     document.getElementById("dropdown-list-1").innerHTML = "";
+    document.getElementById("search-box-1").value = "";
     source = document.getElementById("search-box-2").value;
     dest = document.getElementById("search-box-3").value;
     document.getElementById('spinner1').style.display = 'block';
     $.getJSON("http://127.0.0.1:8000/dublinbuspredict/getStopsDestExtraRoute", {"source":source, "dest":dest}, function(d) {
         console.log(d)
         $.each(d['routes'], function(i, p) {
-            console.log(p)
-            $('#dropdown-list-1').append($('<li></li>').val(p).html('<a onclick=getExtraRoute("' + p + '")>'+ p + '</a>'));
+            console.log('Is the distance in there?', p)
+            $('#dropdown-list-1').append($('<li></li>').val(p[0]).html('<a onclick=getExtraRoute("' + p[0] + '")>'+ p[0] + '&emsp;&emsp;' + p[1] + 'Km</a>'));
         });
         document.getElementById('spinner1').style.display = 'none';
     });
@@ -119,6 +120,9 @@ function getStopsDestExtraRoute(route){
 
 function getExtraRoute(route){
     document.getElementById("search-box-1").value = route;
+    source = document.getElementById("search-box-2").value;
+    dest = document.getElementById("search-box-3").value;
+    $.getJSON("http://127.0.0.1:8000/dublinbuspredict/setStopsForMaps", {"route":route, "source":source, "dest":dest}, function() {});
 }
 
 function loadRoutes(){
@@ -141,12 +145,14 @@ function loadRoutes(){
     });
 }
 
+var list_origin_dropdown = [];
 function loadOrigin(){
     console.log('hereee!')
     $.getJSON("http://127.0.0.1:8000/dublinbuspredict/loadRoutesForMap", null, function(d) {
              $.each(d['list_stops'], function(i, p) {
                 list_origin_dropdown.push(p);
              });
+             console.log(list_origin_dropdown)
     });
 
 }

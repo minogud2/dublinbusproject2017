@@ -47,18 +47,18 @@ def model(bus_route, stopid, arrival_time, day, p_holiday, s_holiday, rtr, trip_
                    '" AND bus_timetable.stop_id = "' + str(stopid) + \
                    '" ORDER BY bus_timetable.stop_sequence;')
     rows3 = cursor.fetchall()
-    print(rows3)
-    print("This is LAT")
-    print("THIS IS LON")
+    # print(rows3)
+    # print("This is LAT")
+    # print("THIS IS LON")
     lat = rows3[0][3]
     lon = rows3[0][5]
-    print("This is LAT", lat)
-    print("THIS IS LON", lon)
+    # print("This is LAT", lat)
+    # print("THIS IS LON", lon)
     dist_nxt_stop = rows3[0][4]
-    print("DISTANCE NEXT STOP",dist_nxt_stop)
+    # print("DISTANCE NEXT STOP",dist_nxt_stop)
     global direction
     direction = rows3[0][1]
-    print("THIS IS DIRECTION",direction)
+    # print("THIS IS DIRECTION",direction)
 
     # 2 convert your arrival time to an integer. Arrival time needs to be replaced with your time variable.
     arrival_time = parser.parse(arrival_time)

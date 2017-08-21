@@ -26,7 +26,7 @@ time, date = 0, 0
 day_of_week = ''
 new_info_buses = ['1']
 old_info_buses = []
-stops_origin_1, stops_destination_1, list_stops = [], [], []
+stops_origin_1, stops_destination_1, stops_destination_2, list_stops = [], [], [], []
 bus1, bus2, bus3, busNumber = 0, 0, 0, 0
 stops1, stops2, stops3 = [], [], []
 list_routes = ['1', '4', '7', '9', '11', '13', '14', '15', '16', '17', '18', '25', '27', '31', '32',
@@ -111,7 +111,7 @@ def pilot_routes(request):
 def pilot_dest(request):
     source_id = request.GET.get('source')
     route_id = request.GET.get('route')
-    global direction, stops_origin_1, stops_destination_1
+    global direction, stops_origin_1, stops_destination_1, stops_destination_2
     trip_id = 0
     print('ori', stops_origin_1)
     for i in stops_origin_1:
@@ -127,15 +127,18 @@ def pilot_dest(request):
     bus_stops = cursor.fetchall()
     db.close()
     stops = []
+    stops2 = []
     found = False
     for i in bus_stops:
         if str(i[0]) == str(source_id):
+            stops2.append(i)
             found = True
-            stops.append(i)
             continue
         if found:
             stops.append(i)
+            stops2.append(i)
     stops_destination_1 = stops
+    stops_destination_2 = stops2
     print('Bus stops for maps!', stops)
     return HttpResponse(json.dumps({"stops":stops}), content_type='application/json')
 
@@ -166,6 +169,8 @@ def run_model(request):
     return HttpResponse(json.dumps({'info_buses': for_js, 'info_stops': stops_destination_1}), content_type='application/json')
 
 
+# This is a support function called from the javascript to know how many buses are arriving next at the origin stop, up to 3 buses
+# and use the number to query/model and display predictions one by one.
 def get_number_buses(request):
     print('In the buses!')
     route_id = request.GET.get('route')
@@ -275,10 +280,16 @@ def tickets_fares(request):
 
 def sampleQuery(rows):
     # Connect to database using these credentials.
-    global route_id, source_id, destination_id, stops_destination_1
+    global route_id, source_id, destination_id, stops_destination_2
     global direction
     print('Route:', route_id)
     print('direction:', direction)
+    # db = MySQLdb.connect(user='lucas', db='summerProdb', passwd='hello_world', host='csi6220-3-vm3.ucd.ie')
+    # cursor = db.cursor()
+    # cursor.execute("SELECT bus_timetable.direction "
+    #                "FROM bus_timetable "
+    #                "WHERE bus_timetable.stop_id = '" + str(source_id) + "' AND bus_timetable.route_id = '" + str(route_id) + "' limit 1;")
+    # rows = cursor.fetchall()[0]
     # trip_id = 0
     #
     # for i in stops_origin_1:
@@ -297,7 +308,8 @@ def sampleQuery(rows):
     # #     break
     # db.close()
     # print(rows)
-    return HttpResponse(json.dumps({'data': stops_destination_1}), content_type="application/json")
+    print('Why is that not working?:', stops_destination_2)
+    return HttpResponse(json.dumps({'data': stops_destination_2}), content_type="application/json")
 
 def get_stops_starting_from_source(request):
     source_id = request.GET.get('source')
@@ -313,17 +325,18 @@ def get_stops_starting_from_source(request):
     getting_stops = []
     print('past the fetchall')
     for i in rows:
-        cursor.execute("select distinct(stop_id) from summerProdb.bus_timetable where route_id='" + str(i[0]) + "' and direction='"+ str(i[1]) + "';")
+        cursor.execute("select distinct(stop_id), stop_sequence from summerProdb.bus_timetable where route_id='" + str(i[0]) + "' and direction='"+ str(i[1]) + "';")
         result = cursor.fetchall()
         found = False
         for i in result:
             if str(i[0]) == str(source_id):
                 found = True
             elif found:
-                if i[0] not in getting_stops:
+                if i[0] not in getting_stops and i[1] > result[0][1]:
                     getting_stops.append(i[0])
     db.close()
     getting_stops = sorted(getting_stops)
+    print('Something wrong with my stops?', getting_stops)
     # for i in getting_stops:
     #     print(i)
     return HttpResponse(json.dumps({'stops': getting_stops}), content_type="application/json")
@@ -351,8 +364,24 @@ def get_stops_dest_extra_route(request):
     routes3 = []
     for i in routes:
         if i in routes2:
-            routes3.append(i)
+            cursor.execute("select accum_dist "
+                "from summerProdb.bus_timetable where stop_id='" + str(source_id) + "' AND route_id='" + str(i) + "' ORDER BY bus_timetable.stop_sequence limit 1;")
+            distance_src = cursor.fetchall()
+            cursor.execute("select accum_dist "
+                "from summerProdb.bus_timetable where stop_id='" + str(dest_id) + "' AND route_id='" + str(i) + "' and accum_dist > 0 ORDER BY bus_timetable.stop_sequence limit 1;")
+            distance_dst = cursor.fetchall()
+            print('Distances 0:', distance_src, distance_dst)
+            if distance_dst != () and distance_src != ():
+                if distance_dst[0][0] > distance_src[0][0]:
+                    distance = (distance_dst[0][0] - distance_src[0][0])
+                elif distance_dst[0][0] < distance_src[0][0]:
+                    distance = (distance_src[0][0] - distance_dst[0][0])
+                print('Diff:', distance)
+                if distance >= 0:
+                    distance = round(distance, 1)
+                    routes3.append((i, distance))
     print('routes 3:', routes3)
+    routes3 = sorted(routes3, key=lambda x: x[1])
     return HttpResponse(json.dumps({'routes': routes3}), content_type="application/json")
 
 def run_queries(request):
@@ -410,3 +439,39 @@ def get_TwitterAPIAARoadwatch(request):
          create_time.append(i['created_at'])
          text.append(i['text'])
     return HttpResponse(json.dumps({'create_time': create_time,'text':text}), content_type="application/json")
+
+def set_stops_for_maps(request):
+    global stops_destination_1, stops_destination_2
+    route = request.GET.get('route')
+    source = request.GET.get('source')
+    dest = request.GET.get('dest')
+    db = MySQLdb.connect(user='lucas', db='summerProdb', passwd='hello_world', host='csi6220-3-vm3.ucd.ie')
+    cursor = db.cursor()
+    cursor.execute("SELECT bus_timetable.trip_id "
+                   "FROM bus_timetable, bus_stops "
+                   "WHERE bus_timetable.stop_id = '" + str(source) + "' AND bus_timetable.route_id = '" + str(route) + "' limit 1;")
+    trip_id = cursor.fetchall()[0][0]
+    cursor.execute("SELECT bus_timetable.stop_id, bus_stops.lat, bus_stops.lon, bus_stops.long_name, bus_stops.name, bus_timetable.accum_dist "
+                   "FROM bus_timetable, bus_stops "
+                   "WHERE bus_timetable.route_id = '" + str(route) + "' AND bus_timetable.trip_id = '" + str(trip_id) + "' AND bus_timetable.stop_id = bus_stops.stop_id "
+                   "ORDER BY bus_timetable.stop_sequence;")
+    rows = cursor.fetchall()
+    db.close()
+    stops = []
+    stops2 = []
+    found = False
+    for i in rows:
+        if str(i[0]) == str(source):
+            found = True
+            stops.append(i)
+            stops2.append(i)
+            continue
+        if found:
+            stops.append(i)
+            stops2.append(i)
+        if str(i[0]) == str(dest):
+            break
+    stops_destination_1 = stops
+    stops_destination_2 = stops2
+    print('Are these my stops?', stops_destination_1)
+    return HttpResponse(json.dumps({'ok':'ok'}), content_type='application/json')

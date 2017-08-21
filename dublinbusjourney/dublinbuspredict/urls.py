@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^getTwitterText$',views.get_TwitterAPIAARoadwatch, name='get_TwitterAPIAARoadwatch'), # twitter API from AA roadwatch
     url(r'^getNumberBuses$', views.get_number_buses, name='get_number_buses'),
     url(r'^runQueries$', views.run_queries, name='run_queries'),
+    url(r'^setStopsForMaps$', views.set_stops_for_maps, name='set_stops_for_maps'),
     ]

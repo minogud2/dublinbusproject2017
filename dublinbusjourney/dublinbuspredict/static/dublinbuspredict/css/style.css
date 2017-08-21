@@ -278,13 +278,17 @@ ul {
     display: block;
 }
 
-.dropdown-content a:hover {background-color: #f1f1f1}
+.dropdown-content a:hover {
 
-.dropdown:hover .dropdown-content {
+	background-color: #f1f1f1
+	}
+
+.dropdown.open .dropdown-content {
+	width: 100%;
     display: block;
 }
 
-.dropdown:hover .dropbtn {
+.dropdown.open .dropbtn {
     background-color: #3e8e41;
 }
 
